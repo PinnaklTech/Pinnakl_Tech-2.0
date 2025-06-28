@@ -163,7 +163,7 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay - Only visible on mobile */}
+      {/* Full Screen Mobile Menu - Only visible on mobile */}
       <div
         className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ease-in-out ${
           isMenuOpen 
@@ -175,65 +175,59 @@ const Header: React.FC = () => {
         aria-modal="true"
         aria-labelledby="mobile-menu-title"
       >
-        {/* Backdrop */}
+        {/* Full Screen Menu Panel */}
         <div 
-          className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-            isMenuOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          onClick={() => setIsMenuOpen(false)}
-          aria-hidden="true"
-        />
-        
-        {/* Menu Panel - Slides in from right */}
-        <div 
-          className={`absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl transform transition-transform duration-300 ease-out ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          className={`absolute inset-0 w-full h-full bg-white transform transition-transform duration-300 ease-out ${
+            isMenuOpen ? 'translate-y-0' : '-translate-y-full'
           }`}
         >
           {/* Menu Content */}
           <div className="flex flex-col h-full">
-            {/* Simplified Header - Just logo */}
-            <div className="flex items-center p-6 border-b border-gray-100 bg-gray-50">
+            {/* Header with Logo - matches main header height */}
+            <div className="flex items-center justify-between px-4 sm:px-6 h-16 md:h-20 bg-white border-b border-gray-100">
               <img
                 src="/logo_b.png"
                 alt="Pinnakl Technologies"
-                className="h-8 w-auto"
+                className="h-8 sm:h-10 w-auto"
               />
+              {/* Close button for additional accessibility */}
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                aria-label="Close menu"
+              >
+                <X className="w-6 h-6" />
+              </button>
             </div>
 
-            {/* Navigation Links */}
-            <div className="flex-1 px-6 py-8 overflow-y-auto">
-              <nav className="space-y-2" role="navigation">
+            {/* Navigation Links - Centered */}
+            <div className="flex-1 flex flex-col justify-center px-6 sm:px-8">
+              <nav className="space-y-4" role="navigation">
                 {navItems.map((item, index) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`block w-full text-left text-lg font-semibold text-gray-800 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 py-4 px-4 rounded-lg border-b border-gray-100 last:border-b-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-blue-50 ${
-                      'transform hover:translate-x-2'
+                    className={`block w-full text-center text-2xl sm:text-3xl font-bold text-gray-800 hover:text-blue-600 transition-all duration-300 py-4 px-6 rounded-xl hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-blue-50 transform hover:scale-105 ${
+                      'opacity-0 animate-fade-in-up'
                     }`}
                     style={{ 
-                      animationDelay: `${index * 50}ms`,
-                      animation: isMenuOpen ? 'slideInFromRight 0.3s ease-out forwards' : 'none'
+                      animationDelay: `${index * 100}ms`,
+                      animationFillMode: 'forwards'
                     }}
                     aria-label={`Navigate to ${item.label} section`}
                   >
-                    <span className="flex items-center justify-between">
-                      {item.label}
-                      <span className="text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                        →
-                      </span>
-                    </span>
+                    {item.label}
                   </button>
                 ))}
                 
                 {/* CTA Button */}
-                <div className="pt-6">
+                <div className="pt-8">
                   <button
                     onClick={() => scrollToSection("contact")}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className={`w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-6 rounded-2xl text-xl font-bold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 opacity-0 animate-fade-in-up`}
                     style={{ 
-                      animationDelay: `${navItems.length * 50}ms`,
-                      animation: isMenuOpen ? 'slideInFromRight 0.3s ease-out forwards' : 'none'
+                      animationDelay: `${navItems.length * 100}ms`,
+                      animationFillMode: 'forwards'
                     }}
                   >
                     Get Quote
@@ -243,24 +237,24 @@ const Header: React.FC = () => {
             </div>
 
             {/* Footer Contact Info */}
-            <div className="p-6 bg-gray-50 border-t border-gray-100">
-              <div className="text-center space-y-3">
-                <p className="text-sm font-medium text-gray-900 mb-3">Ready to get started?</p>
+            <div className="px-6 sm:px-8 py-8 bg-gray-50 border-t border-gray-100">
+              <div className="text-center space-y-4">
+                <p className="text-lg font-semibold text-gray-900 mb-4">Ready to get started?</p>
                 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <a 
                     href="mailto:info@pinnakl.tech"
-                    className="flex items-center justify-center space-x-2 text-sm text-gray-700 hover:text-blue-600 transition-colors duration-200 p-2 rounded-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex items-center justify-center space-x-3 text-base text-gray-700 hover:text-blue-600 transition-colors duration-200 p-3 rounded-xl hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
-                    <Mail className="w-4 h-4" />
+                    <Mail className="w-5 h-5" />
                     <span>info@pinnakl.tech</span>
                   </a>
                   
                   <a 
                     href="tel:+1000000000"
-                    className="flex items-center justify-center space-x-2 text-sm text-gray-700 hover:text-blue-600 transition-colors duration-200 p-2 rounded-lg hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="flex items-center justify-center space-x-3 text-base text-gray-700 hover:text-blue-600 transition-colors duration-200 p-3 rounded-xl hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
-                    <Phone className="w-4 h-4" />
+                    <Phone className="w-5 h-5" />
                     <span>+1 (000) 000-0000</span>
                   </a>
                 </div>
