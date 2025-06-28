@@ -183,14 +183,8 @@ const Header: React.FC = () => {
         >
           {/* Menu Content */}
           <div className="flex flex-col h-full">
-            {/* Simplified Header - No logo to avoid overlap */}
-            <div className="flex items-center justify-between px-4 sm:px-6 h-16 md:h-20 bg-white border-b border-gray-100">
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-                <span className="text-lg font-semibold text-gray-900">Menu</span>
-              </div>
-              
-              {/* Close button */}
+            {/* Minimal Header - Just close button */}
+            <div className="flex items-center justify-end px-4 sm:px-6 h-16 md:h-20 bg-white border-b border-gray-100">
               <button
                 onClick={() => setIsMenuOpen(false)}
                 className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
