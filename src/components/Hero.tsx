@@ -64,16 +64,16 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* Image indicators - Much smaller and more subtle */}
-      <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-1 sm:space-x-1.5 z-20">
+      {/* Image indicators - Fixed small size for all devices */}
+      <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-0.5 z-20">
         {backgroundImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
             className={`transition-all duration-300 rounded-full ${
               index === currentImageIndex
-                ? "bg-white scale-125 w-1 h-1 sm:w-1.5 sm:h-1.5 md:w-2 md:h-2"
-                : "bg-white/40 hover:bg-white/60 w-0.5 h-0.5 sm:w-1 sm:h-1 md:w-1.5 md:h-1.5"
+                ? "bg-white scale-125 w-1 h-1"
+                : "bg-white/40 hover:bg-white/60 w-0.5 h-0.5"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
