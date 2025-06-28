@@ -7,7 +7,6 @@ const Hero: React.FC = () => {
 
   // Array of background images - replace with your actual image URLs
   const backgroundImages = [
-    // "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero1.jpg", // Building
     "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero2.jpg", // Oil And Gas
     "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero3.jpg", // Manufacturing
     "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero4.jpg", // Supply chain
@@ -66,12 +65,12 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Image indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
         {backgroundImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
               index === currentImageIndex
                 ? "bg-white scale-125"
                 : "bg-white/50 hover:bg-white/70"
@@ -81,22 +80,22 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-6xl mx-auto text-center px-4 sm:px-6 lg:px-8">
         <div
           className={`transform transition-all duration-1000 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
           }`}
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-4 sm:mb-6 leading-tight">
             Engineering
-            <span className="block text-blue-300 ">Excellence</span>
-            <span className="block text-2xl md:text-3xl lg:text-4xl font-normal text-white/90 mt-2">
+            <span className="block text-blue-300">Excellence</span>
+            <span className="block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-white/90 mt-2">
               Delivered
             </span>
           </h1>
 
           <p
-            className={`text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed transform transition-all duration-1000 delay-300 ${
+            className={`text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-4 transform transition-all duration-1000 delay-300 ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-8 opacity-0"
@@ -108,7 +107,7 @@ const Hero: React.FC = () => {
           </p>
 
           <div
-            className={`flex flex-col sm:flex-row gap-4 justify-center items-center transform transition-all duration-1000 delay-500 ${
+            className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 transform transition-all duration-1000 delay-500 ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-8 opacity-0"
@@ -116,15 +115,14 @@ const Hero: React.FC = () => {
           >
             <button
               onClick={scrollToContact}
-              className="text-white border-2 border-white/30 px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
+              className="w-full sm:w-auto text-white border-2 border-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
             >
               <span>Get a Quote</span>
-              
             </button>
 
             <button
               onClick={scrollToAbout}
-              className="text-white border-2 border-white/30 px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
+              className="w-full sm:w-auto text-white border-2 border-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
             >
               Learn More
             </button>

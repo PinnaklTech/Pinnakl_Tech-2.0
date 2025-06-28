@@ -55,7 +55,7 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-24 overflow-hidden">
+    <section id="about" ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         {/* Base gradient */}
@@ -85,32 +85,32 @@ const About: React.FC = () => {
         </div>
         
         {/* Subtle corner accents */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-purple-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-tl from-purple-100/40 to-transparent rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div
-          className={`text-center mb-20 transform transition-all duration-1000 ${
+          className={`text-center mb-12 sm:mb-16 lg:mb-20 transform transition-all duration-1000 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
           }`}
         >
-          <div className="inline-block mb-6">
-            <span className="px-4 py-2 bg-white/80 border border-gray-200 rounded-full text-gray-700 text-sm font-medium backdrop-blur-sm shadow-sm">
+          <div className="inline-block mb-4 sm:mb-6">
+            <span className="px-3 sm:px-4 py-2 bg-white/80 border border-gray-200 rounded-full text-gray-700 text-sm font-medium backdrop-blur-sm shadow-sm">
               About Our Company
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-gray-900 mb-8 leading-none tracking-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-black text-gray-900 mb-6 sm:mb-8 leading-none tracking-tight">
             PINNAKL
-            <span className="block text-4xl md:text-5xl lg:text-6xl font-light text-gray-600 mt-2">
+            <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-600 mt-2">
               Technologies
             </span>
           </h1>
           
-          <div className="max-w-4xl mx-auto">
-            <p className="text-xl md:text-2xl text-gray-700 leading-relaxed font-light">
+          <div className="max-w-4xl mx-auto px-4">
+            <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 leading-relaxed font-light">
               We are a <span className="text-gray-900 font-semibold">leading engineering</span> and manufacturing consultancy, 
               dedicated to delivering <span className="text-gray-900 font-semibold">innovative solutions</span> that drive 
               <span className="text-gray-900 font-semibold"> industrial excellence</span> and technological advancement.
@@ -118,9 +118,9 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Stats Section - Redesigned */}
-        <div className="mb-24">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {/* Stats Section - Mobile Optimized */}
+        <div className="mb-16 sm:mb-20 lg:mb-24">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {stats.map((stat, index) => {
               const IconComponent = stat.icon;
               return (
@@ -135,16 +135,16 @@ const About: React.FC = () => {
                   onMouseEnter={() => setHoveredStat(index)}
                   onMouseLeave={() => setHoveredStat(null)}
                 >
-                  <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 h-full hover:bg-white hover:border-gray-300 hover:shadow-lg transition-all duration-300">
-                    <div className={`w-12 h-12 rounded-xl border-2 ${stat.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                      <IconComponent className={`h-6 w-6 ${stat.accent.split(' ')[1]}`} />
+                  <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 h-full hover:bg-white hover:border-gray-300 hover:shadow-lg transition-all duration-300">
+                    <div className={`w-8 h-8 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl border-2 ${stat.accent} flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                      <IconComponent className={`h-4 w-4 sm:h-6 sm:w-6 ${stat.accent.split(' ')[1]}`} />
                     </div>
                     
-                    <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 group-hover:scale-105 transition-transform duration-300">
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 group-hover:scale-105 transition-transform duration-300">
                       {stat.number}
                     </div>
                     
-                    <div className="text-gray-600 font-medium text-sm leading-tight">
+                    <div className="text-gray-600 font-medium text-xs sm:text-sm leading-tight">
                       {stat.label}
                     </div>
                   </div>
@@ -154,8 +154,8 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-12 gap-12 mb-24">
+        {/* Main Content Grid - Mobile Responsive */}
+        <div className="grid lg:grid-cols-12 gap-8 sm:gap-12 mb-16 sm:mb-20 lg:mb-24">
           {/* Content Column */}
           <div className="lg:col-span-7">
             <div
@@ -165,7 +165,7 @@ const About: React.FC = () => {
                   : "-translate-x-8 opacity-0"
               }`}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 sm:mb-8 leading-tight">
                 Engineering the{" "}
                 <span className="relative">
                   <span className="relative z-10 text-blue-600">Future</span>
@@ -174,7 +174,7 @@ const About: React.FC = () => {
                 of Manufacturing
               </h2>
               
-              <div className="space-y-6 text-lg text-gray-700 leading-relaxed mb-10">
+              <div className="space-y-4 sm:space-y-6 text-base sm:text-lg text-gray-700 leading-relaxed mb-8 sm:mb-10">
                 <p>
                   <strong className="text-gray-900">Pinnakl</strong> is an engineering and technology services company 
                   based in <span className="text-gray-900 font-medium">Memphis, Tennessee</span>. We specialize in 
@@ -199,7 +199,7 @@ const About: React.FC = () => {
               </div>
 
               {/* CTA Button */}
-              <button className="group relative overflow-hidden bg-gray-900 text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center space-x-3 shadow-lg hover:shadow-xl">
+              <button className="group relative overflow-hidden bg-gray-900 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center space-x-3 shadow-lg hover:shadow-xl w-full sm:w-auto justify-center sm:justify-start">
                 <span>Explore Our Portfolio</span>
                 <ArrowRight className="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" />
               </button>
@@ -207,7 +207,7 @@ const About: React.FC = () => {
           </div>
 
           {/* Image Column */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 order-first lg:order-last">
             <div
               className={`transform transition-all duration-1000 ${
                 isVisible
@@ -216,15 +216,15 @@ const About: React.FC = () => {
               }`}
             >
               <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-600/20 to-slate-700/20 rounded-2xl blur-xl transform group-hover:scale-105 transition-transform duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-600/20 to-slate-700/20 rounded-xl sm:rounded-2xl blur-xl transform group-hover:scale-105 transition-transform duration-500"></div>
                 
-                <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white/50 backdrop-blur-sm shadow-lg">
+                <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-gray-200 bg-white/50 backdrop-blur-sm shadow-lg">
                   <div className="aspect-[4/3] relative">
                     {!imageLoaded && (
                       <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
                         <div className="text-center">
-                          <div className="w-12 h-12 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-                          <p className="text-gray-600 font-medium">Loading Excellence...</p>
+                          <div className="w-8 h-8 sm:w-12 sm:h-12 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+                          <p className="text-gray-600 font-medium text-sm sm:text-base">Loading Excellence...</p>
                         </div>
                       </div>
                     )}
@@ -246,22 +246,22 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Capabilities Grid */}
-        <div className="mb-24">
+        {/* Capabilities Grid - Mobile Responsive */}
+        <div className="mb-16 sm:mb-20 lg:mb-24">
           <div
-            className={`text-center mb-16 transform transition-all duration-1000 ${
+            className={`text-center mb-12 sm:mb-16 transform transition-all duration-1000 ${
               isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
           >
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Our Core <span className="text-gray-600">Capabilities</span>
             </h3>
-            <p className="text-gray-700 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-700 text-base sm:text-lg max-w-2xl mx-auto px-4">
               Comprehensive engineering solutions backed by decades of experience and cutting-edge technology
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
             {capabilities.map((capability, index) => {
               const IconComponent = capability.icon;
               return (
@@ -274,17 +274,17 @@ const About: React.FC = () => {
                   }`}
                   style={{ transitionDelay: `${index * 150}ms` }}
                 >
-                  <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 h-full hover:bg-white hover:border-gray-300 hover:shadow-lg transition-all duration-300 group">
+                  <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl sm:rounded-2xl p-6 sm:p-8 h-full hover:bg-white hover:border-gray-300 hover:shadow-lg transition-all duration-300 group">
                     <div className="flex items-start space-x-4">
-                      <div className="w-14 h-14 bg-gray-100 border border-gray-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-blue-50 group-hover:border-blue-200 transition-all duration-300">
-                        <IconComponent className="h-7 w-7 text-gray-700 group-hover:text-blue-600 transition-colors duration-300" />
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gray-100 border border-gray-200 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-blue-50 group-hover:border-blue-200 transition-all duration-300">
+                        <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-gray-700 group-hover:text-blue-600 transition-colors duration-300" />
                       </div>
                       
                       <div>
-                        <h4 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-gray-800 transition-colors duration-300">
+                        <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3 group-hover:text-gray-800 transition-colors duration-300">
                           {capability.title}
                         </h4>
-                        <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
+                        <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300 text-sm sm:text-base">
                           {capability.description}
                         </p>
                       </div>
@@ -296,8 +296,8 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Mission & Vision - Redesigned */}
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Mission & Vision - Mobile Responsive */}
+        <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
           <div
             className={`transform transition-all duration-1000 ${
               isVisible
@@ -306,14 +306,14 @@ const About: React.FC = () => {
             }`}
             style={{ transitionDelay: "400ms" }}
           >
-            <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 h-full hover:bg-white hover:border-blue-200 hover:shadow-lg transition-all duration-300 group">
-              <div className="flex items-center mb-6">
-                <div className="w-14 h-14 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 group-hover:bg-blue-100 transition-all duration-300">
-                  <Target className="h-7 w-7 text-blue-600" />
+            <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl sm:rounded-2xl p-6 sm:p-8 h-full hover:bg-white hover:border-blue-200 hover:shadow-lg transition-all duration-300 group">
+              <div className="flex items-center mb-4 sm:mb-6">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 group-hover:bg-blue-100 transition-all duration-300">
+                  <Target className="h-6 w-6 sm:h-7 sm:w-7 text-blue-600" />
                 </div>
-                <h4 className="text-2xl font-bold text-gray-900">Our Mission</h4>
+                <h4 className="text-xl sm:text-2xl font-bold text-gray-900">Our Mission</h4>
               </div>
-              <p className="text-gray-700 leading-relaxed text-lg group-hover:text-gray-800 transition-colors duration-300">
+              <p className="text-gray-700 leading-relaxed text-base sm:text-lg group-hover:text-gray-800 transition-colors duration-300">
                 Pinnakl helps customers find and use the <span className="text-gray-900 font-medium">right technologies</span> to 
                 improve their work and <span className="text-gray-900 font-medium">grow their business</span>.
               </p>
@@ -328,14 +328,14 @@ const About: React.FC = () => {
             }`}
             style={{ transitionDelay: "600ms" }}
           >
-            <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 h-full hover:bg-white hover:border-emerald-200 hover:shadow-lg transition-all duration-300 group">
-              <div className="flex items-center mb-6">
-                <div className="w-14 h-14 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 group-hover:bg-emerald-100 transition-all duration-300">
-                  <Zap className="h-7 w-7 text-emerald-600" />
+            <div className="bg-white/70 backdrop-blur-sm border border-gray-200 rounded-xl sm:rounded-2xl p-6 sm:p-8 h-full hover:bg-white hover:border-emerald-200 hover:shadow-lg transition-all duration-300 group">
+              <div className="flex items-center mb-4 sm:mb-6">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 group-hover:bg-emerald-100 transition-all duration-300">
+                  <Zap className="h-6 w-6 sm:h-7 sm:w-7 text-emerald-600" />
                 </div>
-                <h4 className="text-2xl font-bold text-gray-900">Our Vision</h4>
+                <h4 className="text-xl sm:text-2xl font-bold text-gray-900">Our Vision</h4>
               </div>
-              <p className="text-gray-700 leading-relaxed text-lg group-hover:text-gray-800 transition-colors duration-300">
+              <p className="text-gray-700 leading-relaxed text-base sm:text-lg group-hover:text-gray-800 transition-colors duration-300">
                 To be the <span className="text-gray-900 font-medium">trusted partner</span> for our customers, making 
                 advanced technologies <span className="text-gray-900 font-medium">simple, affordable, and effective</span>.
               </p>

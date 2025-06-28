@@ -39,23 +39,23 @@ const Header: React.FC = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-3">
+        <div className="flex justify-between items-center py-3 md:py-4">
           {/* Logo */}
           <div className="flex items-center space-x-2">
             <img
               src={isScrolled ? "/logo_b.png" : "/logo_w.png"}
               alt="Pinnakl Technologies Logo"
-              className="h-10 w-auto object-contain transition-all duration-300"
+              className="h-8 sm:h-10 w-auto object-contain transition-all duration-300"
             />
           </div>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`font-medium transition-all duration-300 hover:scale-105 ${
+                className={`font-medium transition-all duration-300 hover:scale-105 text-sm xl:text-base ${
                   isScrolled
                     ? "text-gray-700 hover:text-blue-600"
                     : "text-white/90 hover:text-white"
@@ -66,7 +66,7 @@ const Header: React.FC = () => {
             ))}
             <button
               onClick={() => scrollToSection("contact")}
-              className="bg-blue-600 text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="bg-blue-600 text-white px-4 xl:px-6 py-2 xl:py-3 rounded-full font-medium hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm xl:text-base"
             >
               Get Quote
             </button>
@@ -75,9 +75,10 @@ const Header: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`md:hidden p-2 rounded-lg transition-colors duration-300 ${
+            className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
               isScrolled ? "text-gray-900" : "text-white"
             }`}
+            aria-label="Toggle menu"
           >
             {isMenuOpen ? (
               <X className="h-6 w-6" />
@@ -101,29 +102,35 @@ const Header: React.FC = () => {
             {/* Close button */}
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="absolute top-6 right-6 p-2 rounded-full bg-gray-100 text-gray-700 hover:text-blue-600 hover:bg-blue-100 transition duration-200 shadow-sm"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-gray-100 text-gray-700 hover:text-blue-600 hover:bg-blue-100 transition duration-200 shadow-sm"
               aria-label="Close Menu"
             >
               <X className="w-6 h-6" />
             </button>
 
             {/* Navigation Links */}
-            <div className="flex flex-col items-center space-y-6 mt-8">
-              {navItems.map((item) => (
-                <button
+            <div className="flex flex-col items-center space-y-6 sm:space-y-8 mt-8">
+              {navItems.map((item, index) => (
+                <motion.button
                   key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-lg text-gray-800 font-semibold hover:text-blue-600 transition duration-200"
+                  className="text-xl sm:text-2xl text-gray-800 font-semibold hover:text-blue-600 transition duration-200"
                 >
                   {item.label}
-                </button>
+                </motion.button>
               ))}
-              <button
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navItems.length * 0.1 }}
                 onClick={() => scrollToSection("contact")}
-                className="mt-4 bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700 transition duration-300 shadow-md"
+                className="mt-4 bg-blue-600 text-white px-8 py-4 rounded-full font-medium hover:bg-blue-700 transition duration-300 shadow-md text-lg"
               >
                 Get Quote
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         )}

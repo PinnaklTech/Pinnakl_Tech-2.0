@@ -14,6 +14,10 @@ export default {
         "move-line-y": "moveY 20s linear infinite",
         "float-horizontal": "floatX 12s ease-in-out infinite",
         "float-vertical": "floatY 18s ease-in-out infinite",
+        "pulse-slow": "pulse 4s ease-in-out infinite",
+        "pulse-slower": "pulse 6s ease-in-out infinite",
+        "slide-up": "slideUp 20s linear infinite",
+        "slide-down": "slideDown 25s linear infinite",
       },
       keyframes: {
         float: {
@@ -36,6 +40,16 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(30px)" },
         },
+        slideUp: {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "50%": { opacity: "1" },
+          "100%": { transform: "translateY(-100%)", opacity: "0" },
+        },
+        slideDown: {
+          "0%": { transform: "translateY(-100%)", opacity: "0" },
+          "50%": { opacity: "1" },
+          "100%": { transform: "translateY(100%)", opacity: "0" },
+        },
       },
       colors: {
         blue: {
@@ -50,6 +64,9 @@ export default {
           800: "#1e40af",
           900: "#1e3a8a",
         },
+      },
+      screens: {
+        'xs': '475px',
       },
     },
   },

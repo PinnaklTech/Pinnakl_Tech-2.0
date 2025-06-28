@@ -93,63 +93,63 @@ const Contact: React.FC = () => {
   ];
 
   return (
-    <section id="contact" ref={sectionRef} className="py-20 bg-white">
+    <section id="contact" ref={sectionRef} className="py-16 sm:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div 
-          className={`text-center mb-16 transform transition-all duration-1000 ${
+          className={`text-center mb-12 sm:mb-16 transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
             Get in Touch
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
             Ready to start your next engineering project? Contact our expert team for a consultation 
             and discover how we can help bring your vision to life.
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
           {/* Contact Information */}
           <div 
             className={`transform transition-all duration-1000 ${
               isVisible ? 'translate-x-0 opacity-100' : '-translate-x-8 opacity-0'
             }`}
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-8">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8">
               Let's Start a Conversation
             </h3>
             
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed">
               Whether you need engineering consulting, product development, or manufacturing optimization, 
               our team is here to help. Reach out to discuss your project requirements and get expert guidance.
             </p>
 
             {/* Contact Info Cards */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {contactInfo.map((info, index) => {
                 const IconComponent = info.icon;
                 return (
                   <div
                     key={info.title}
-                    className={`bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 ${
+                    className={`bg-gray-50 rounded-lg sm:rounded-xl p-4 sm:p-6 hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 ${
                       isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                     }`}
                     style={{ transitionDelay: `${index * 200}ms` }}
                   >
-                    <div className="flex items-start space-x-4">
-                      <div className="bg-blue-600 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <IconComponent className="h-6 w-6 text-white" />
+                    <div className="flex items-start space-x-3 sm:space-x-4">
+                      <div className="bg-blue-600 w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                        <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">
                           {info.title}
                         </h4>
-                        <p className="text-gray-700 font-medium">
+                        <p className="text-gray-700 font-medium text-sm sm:text-base">
                           {info.details}
                         </p>
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-gray-500 text-xs sm:text-sm">
                           {info.subDetails}
                         </p>
                       </div>
@@ -160,8 +160,8 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Trust Indicators */}
-            <div className="mt-12 p-6 bg-blue-50 rounded-xl">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="mt-8 sm:mt-12 p-4 sm:p-6 bg-blue-50 rounded-lg sm:rounded-xl">
+              <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
                 Why Choose Pinnakl Technologies?
               </h4>
               <ul className="space-y-2">
@@ -174,7 +174,7 @@ const Contact: React.FC = () => {
                 ].map((item) => (
                   <li key={item} className="flex items-center space-x-3">
                     <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-gray-700">{item}</span>
+                    <span className="text-gray-700 text-sm sm:text-base">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -187,25 +187,25 @@ const Contact: React.FC = () => {
               isVisible ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
             }`}
           >
-            <div className="bg-gray-50 rounded-2xl p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-6 sm:p-8">
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
                 Request a Quote
               </h3>
 
               {isSubmitted ? (
-                <div className="text-center py-12">
-                  <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />
-                  <h4 className="text-xl font-semibold text-gray-900 mb-2">
+                <div className="text-center py-8 sm:py-12">
+                  <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 text-green-600 mx-auto mb-4" />
+                  <h4 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
                     Thank you for your inquiry!
                   </h4>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-sm sm:text-base">
                     We'll get back to you within 24 hours with a detailed response.
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                   {/* Name and Email Row */}
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                         Full Name *
@@ -217,7 +217,7 @@ const Contact: React.FC = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
                         placeholder="Your full name"
                       />
                     </div>
@@ -232,14 +232,14 @@ const Contact: React.FC = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
                         placeholder="your@email.com"
                       />
                     </div>
                   </div>
 
                   {/* Company and Phone Row */}
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
                         Company
@@ -250,7 +250,7 @@ const Contact: React.FC = () => {
                         name="company"
                         value={formData.company}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
                         placeholder="Your company name"
                       />
                     </div>
@@ -264,7 +264,7 @@ const Contact: React.FC = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300"
+                        className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
                         placeholder="(555) 123-4567"
                       />
                     </div>
@@ -280,7 +280,7 @@ const Contact: React.FC = () => {
                       name="service"
                       value={formData.service}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 text-sm sm:text-base"
                     >
                       <option value="">Select a service</option>
                       {services.map((service) => (
@@ -302,8 +302,8 @@ const Contact: React.FC = () => {
                       value={formData.message}
                       onChange={handleInputChange}
                       required
-                      rows={5}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 resize-none"
+                      rows={4}
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300 resize-none text-sm sm:text-base"
                       placeholder="Tell us about your project requirements, timeline, and any specific challenges you're facing..."
                     />
                   </div>
@@ -311,13 +311,13 @@ const Contact: React.FC = () => {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 flex items-center justify-center space-x-2 hover:scale-105 hover:shadow-lg"
+                    className="w-full bg-blue-600 text-white py-3 sm:py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 flex items-center justify-center space-x-2 hover:scale-105 hover:shadow-lg text-sm sm:text-base"
                   >
                     <span>Send Message</span>
-                    <Send className="h-5 w-5" />
+                    <Send className="h-4 w-4 sm:h-5 sm:w-5" />
                   </button>
 
-                  <p className="text-sm text-gray-500 text-center">
+                  <p className="text-xs sm:text-sm text-gray-500 text-center">
                     By submitting this form, you agree to our privacy policy and terms of service.
                   </p>
                 </form>
