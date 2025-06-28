@@ -15,7 +15,9 @@ import {
   ChevronLeft,
   ChevronRight,
   FileText,
-  Filter
+  Filter,
+  Grid3X3,
+  ChevronDown
 } from 'lucide-react';
 
 const Projects: React.FC = () => {
@@ -25,6 +27,7 @@ const Projects: React.FC = () => {
   const [direction, setDirection] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -286,7 +289,7 @@ const Projects: React.FC = () => {
     );
   }
 
-  // Mobile Card Component
+  // Mobile Project Card Component
   const MobileProjectCard = ({ project, index }: { project: any; index: number }) => {
     const colors = getColorClasses(project.color);
     
@@ -295,24 +298,28 @@ const Projects: React.FC = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={isVisible ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: index * 0.1, duration: 0.5 }}
-        className={`bg-white rounded-2xl shadow-lg overflow-hidden border ${colors.border} hover:shadow-xl transition-all duration-300`}
+        className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden border border-gray-200/50 hover:shadow-xl hover:border-gray-300/50 transition-all duration-300 group"
       >
         {/* Image */}
         <div className="relative h-48 overflow-hidden">
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           
-          {/* Category and Year */}
-          <div className="absolute top-4 left-4 flex flex-col gap-2">
-            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${colors.gradient} text-white shadow-lg`}>
+          {/* Category Badge */}
+          <div className="absolute top-4 left-4">
+            <span className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r ${colors.gradient} text-white shadow-lg backdrop-blur-sm`}>
               {project.category}
             </span>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/90 backdrop-blur-sm text-gray-900">
+          </div>
+
+          {/* Year Badge */}
+          <div className="absolute top-4 right-4">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-white/90 backdrop-blur-sm text-gray-900 shadow-sm">
               <Calendar className="w-3 h-3 mr-1" />
               {project.year}
             </span>
@@ -320,75 +327,79 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
+        <div className="p-5">
+          <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-blue-600 transition-colors duration-300">
             {project.title}
           </h3>
           <p className={`text-sm font-medium ${colors.text} mb-3`}>
             {project.subtitle}
           </p>
-          <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+          <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
             {project.description}
           </p>
 
-          {/* Meta Info */}
-          <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
-            <div className="flex items-center">
-              <Users className="w-4 h-4 text-gray-400 mr-2" />
+          {/* Meta Info Grid */}
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Users className="w-4 h-4 text-gray-600" />
+              </div>
               <div>
-                <div className="text-gray-500">Client</div>
-                <div className="font-medium text-gray-900">{project.client}</div>
+                <div className="text-xs text-gray-500">Client</div>
+                <div className="text-xs font-medium text-gray-900 truncate">{project.client}</div>
               </div>
             </div>
-            <div className="flex items-center">
-              <Clock className="w-4 h-4 text-gray-400 mr-2" />
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                <Clock className="w-4 h-4 text-gray-600" />
+              </div>
               <div>
-                <div className="text-gray-500">Duration</div>
-                <div className="font-medium text-gray-900">{project.duration}</div>
+                <div className="text-xs text-gray-500">Duration</div>
+                <div className="text-xs font-medium text-gray-900">{project.duration}</div>
               </div>
             </div>
           </div>
 
           {/* Technologies */}
           <div className="mb-4">
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1.5">
               {project.technologies.slice(0, 3).map((tech: string, techIndex: number) => (
                 <span
                   key={techIndex}
-                  className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700"
+                  className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200"
                 >
                   {tech}
                 </span>
               ))}
               {project.technologies.length > 3 && (
-                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-600">
+                <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-200 text-gray-600 border border-gray-300">
                   +{project.technologies.length - 3}
                 </span>
               )}
             </div>
           </div>
 
-          {/* Results */}
-          <div className="mb-4">
+          {/* Key Results */}
+          <div className="mb-5">
             <h4 className="text-xs font-semibold text-gray-900 mb-2 flex items-center">
-              <TrendingUp className="w-4 h-4 mr-1 text-green-600" />
+              <TrendingUp className="w-3 h-3 mr-1 text-green-600" />
               Key Results:
             </h4>
             <div className="space-y-1">
               {project.results.slice(0, 2).map((result: string, resultIndex: number) => (
                 <div key={resultIndex} className="flex items-center text-xs text-gray-600">
                   <CheckCircle className="w-3 h-3 text-green-500 mr-2 flex-shrink-0" />
-                  <span>{result}</span>
+                  <span className="line-clamp-1">{result}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Case Study Button */}
-          <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg text-sm`}>
+          <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-3 px-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] text-sm group-hover:shadow-xl`}>
             <FileText className="h-4 w-4" />
             <span>View Case Study</span>
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </motion.div>
@@ -456,30 +467,64 @@ const Projects: React.FC = () => {
             cutting-edge engineering solutions and strategic implementations.
           </motion.p>
 
-          {/* Filter Tabs - Mobile Optimized */}
+          {/* Filter Section - Mobile Optimized */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mb-8"
           >
-            {/* Mobile Filter Dropdown */}
+            {/* Mobile Filter - Custom Dropdown */}
             <div className="lg:hidden">
-              <div className="relative">
-                <select
-                  value={activeFilter}
-                  onChange={(e) => setActiveFilter(e.target.value)}
-                  className="w-full max-w-xs mx-auto block appearance-none bg-white border border-gray-300 rounded-lg px-4 py-3 pr-8 text-base font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+              <div className="relative max-w-sm mx-auto">
+                <button
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className="w-full bg-white/90 backdrop-blur-sm border border-gray-200 rounded-xl px-4 py-3 text-left font-medium text-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-between group"
                 >
-                  {categories.map((category) => (
-                    <option key={category} value={category}>
-                      {category}
-                    </option>
-                  ))}
-                </select>
-                <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <Filter className="h-5 w-5 text-gray-400" />
-                </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
+                      <Grid3X3 className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-gray-900">{activeFilter}</span>
+                  </div>
+                  <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* Dropdown Menu */}
+                <AnimatePresence>
+                  {isFilterOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl shadow-2xl z-50 overflow-hidden"
+                    >
+                      {categories.map((category, index) => (
+                        <button
+                          key={category}
+                          onClick={() => {
+                            setActiveFilter(category);
+                            setIsFilterOpen(false);
+                          }}
+                          className={`w-full px-4 py-3 text-left font-medium transition-all duration-200 flex items-center gap-3 ${
+                            activeFilter === category
+                              ? 'bg-gradient-to-r from-blue-50 to-purple-50 text-blue-700 border-l-4 border-blue-500'
+                              : 'text-gray-700 hover:bg-gray-50'
+                          }`}
+                        >
+                          <div className={`w-2 h-2 rounded-full ${
+                            activeFilter === category ? 'bg-blue-500' : 'bg-gray-300'
+                          }`}></div>
+                          <span>{category}</span>
+                          {activeFilter === category && (
+                            <CheckCircle className="w-4 h-4 text-blue-500 ml-auto" />
+                          )}
+                        </button>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
 
