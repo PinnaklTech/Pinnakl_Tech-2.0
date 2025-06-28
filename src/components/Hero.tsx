@@ -5,27 +5,22 @@ const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Array of background images - replace with your actual image URLs
   const backgroundImages = [
-    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero2.jpg", // Oil And Gas
-    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero3.jpg", // Manufacturing
-    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero4.jpg", // Supply chain
-    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech//PowerTransmission.webp", //power Transmission
+    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero2.jpg",
+    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero3.jpg",
+    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero4.jpg",
+    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech//PowerTransmission.webp",
   ];
 
   useEffect(() => {
     setIsVisible(true);
-
-    // Carousel effect - change image every 10 seconds for smoother experience
     const imageInterval = setInterval(() => {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === backgroundImages.length - 1 ? 0 : prevIndex + 1
       );
     }, 10000);
 
-    return () => {
-      clearInterval(imageInterval);
-    };
+    return () => clearInterval(imageInterval);
   }, [backgroundImages.length]);
 
   const scrollToAbout = () => {
@@ -38,7 +33,7 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Images Container */}
+      {/* Background Images */}
       <div className="absolute inset-0">
         {backgroundImages.map((image, index) => (
           <div
@@ -48,8 +43,7 @@ const Hero: React.FC = () => {
             }`}
             style={{
               backgroundImage: `url(${image})`,
-              transform:
-                index === currentImageIndex ? "scale(1.02)" : "scale(1)",
+              transform: index === currentImageIndex ? "scale(1.02)" : "scale(1)",
               transitionProperty: "opacity, transform",
               transitionDuration: "3000ms",
               transitionTimingFunction: "cubic-bezier(0.4, 0.0, 0.2, 1)",
@@ -57,14 +51,12 @@ const Hero: React.FC = () => {
           />
         ))}
 
-        {/* Enhanced gradient overlay */}
+        {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>
-
-        {/* Additional overlay for text readability */}
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* Image indicators - Responsive sizing */}
+      {/* Dot Indicators */}
       <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-1 sm:space-x-2 z-20">
         {backgroundImages.map((_, index) => (
           <button
@@ -97,9 +89,7 @@ const Hero: React.FC = () => {
 
           <p
             className={`text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-4 transform transition-all duration-1000 delay-300 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-8 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
           >
             Transforming ideas into reality through cutting-edge engineering
@@ -109,9 +99,7 @@ const Hero: React.FC = () => {
 
           <div
             className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 transform transition-all duration-1000 delay-500 ${
-              isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-8 opacity-0"
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
             }`}
           >
             <button
