@@ -66,86 +66,84 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-3 md:py-4">
-            {/* Logo */}
-            <div 
-              className="flex items-center space-x-2 cursor-pointer z-50"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            >
-              <img
-                src={isScrolled ? "/logo_b.png" : "/logo_w.png"}
-                alt="Pinnakl Technologies Logo"
-                className="h-8 sm:h-10 w-auto object-contain transition-all duration-300"
-              />
-            </div>
-
-            {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`font-medium transition-all duration-300 hover:scale-105 text-sm xl:text-base ${
-                    isScrolled
-                      ? "text-gray-700 hover:text-blue-600"
-                      : "text-white/90 hover:text-white"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="bg-blue-600 text-white px-4 xl:px-6 py-2 xl:py-3 rounded-full font-medium hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm xl:text-base"
-              >
-                Get Quote
-              </button>
-            </nav>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`lg:hidden p-2 rounded-lg transition-colors duration-300 z-50 relative ${
-                isScrolled || isMenuOpen ? "text-gray-900" : "text-white"
-              }`}
-              aria-label="Toggle menu"
-            >
-              <AnimatePresence mode="wait">
-                {isMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="h-6 w-6" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="h-6 w-6" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </button>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-3 md:py-4">
+          {/* Logo */}
+          <div 
+            className="flex items-center space-x-2 cursor-pointer z-50"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
+            <img
+              src={isScrolled ? "/logo_b.png" : "/logo_w.png"}
+              alt="Pinnakl Technologies Logo"
+              className="h-8 sm:h-10 w-auto object-contain transition-all duration-300"
+            />
           </div>
-        </div>
-      </header>
 
-      {/* Mobile Navigation Overlay */}
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`font-medium transition-all duration-300 hover:scale-105 text-sm xl:text-base ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-blue-600"
+                    : "text-white/90 hover:text-white"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="bg-blue-600 text-white px-4 xl:px-6 py-2 xl:py-3 rounded-full font-medium hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm xl:text-base"
+            >
+              Get Quote
+            </button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`lg:hidden p-2 rounded-lg transition-colors duration-300 z-50 relative ${
+              isScrolled || isMenuOpen ? "text-gray-900" : "text-white"
+            }`}
+            aria-label="Toggle menu"
+          >
+            <AnimatePresence mode="wait">
+              {isMenuOpen ? (
+                <motion.div
+                  key="close"
+                  initial={{ rotate: -90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <X className="h-6 w-6" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="menu"
+                  initial={{ rotate: 90, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: -90, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Menu className="h-6 w-6" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Overlay - Now inside the header */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -154,6 +152,7 @@ const Header: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 lg:hidden"
+            style={{ top: 0 }} // Ensure it starts from the very top
           >
             {/* Backdrop */}
             <motion.div
@@ -228,7 +227,7 @@ const Header: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   );
 };
 
