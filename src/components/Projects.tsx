@@ -10,7 +10,6 @@ import {
   Target,
   TrendingUp,
   CheckCircle,
-  Star,
   Clock,
   Layers,
   ChevronLeft,
@@ -61,8 +60,6 @@ const Projects: React.FC = () => {
       budget: "$2.5M",
       technologies: ["ERP", "IoT", "Analytics", "Automation", "Predictive Maintenance", "Real-time Monitoring"],
       results: ["40% efficiency increase", "30% cost reduction", "Real-time monitoring", "Predictive maintenance", "Zero downtime achieved", "ROI within 6 months"],
-      stats: { value: "40%", label: "Efficiency Gain" },
-      rating: 5,
       color: "blue",
       featured: false
     },
@@ -79,8 +76,6 @@ const Projects: React.FC = () => {
       budget: "$3.2M",
       technologies: ["AI/ML", "Blockchain", "Cloud", "Analytics", "IoT Sensors", "Mobile Apps"],
       results: ["25% faster delivery", "15% cost savings", "99.9% accuracy", "Global visibility", "Reduced inventory costs", "Customer satisfaction up 35%"],
-      stats: { value: "25%", label: "Faster Delivery" },
-      rating: 5,
       color: "emerald",
       featured: false
     },
@@ -97,8 +92,6 @@ const Projects: React.FC = () => {
       budget: "$1.8M",
       technologies: ["Sensors", "Automation", "ML", "Quality Control", "Computer Vision", "Data Analytics"],
       results: ["50% defect reduction", "20% productivity gain", "Automated reporting", "Zero downtime", "Quality consistency", "Reduced waste by 30%"],
-      stats: { value: "50%", label: "Defect Reduction" },
-      rating: 5,
       color: "purple",
       featured: false
     },
@@ -115,8 +108,6 @@ const Projects: React.FC = () => {
       budget: "$4.1M",
       technologies: ["Smart Grid", "Predictive Analytics", "IoT", "Energy Management", "SCADA", "Cloud Computing"],
       results: ["30% energy savings", "Reduced downtime", "Predictive maintenance", "Grid stability", "Cost optimization", "Environmental impact reduced"],
-      stats: { value: "30%", label: "Energy Savings" },
-      rating: 5,
       color: "amber",
       featured: false
     },
@@ -133,8 +124,6 @@ const Projects: React.FC = () => {
       budget: "$2.9M",
       technologies: ["CAD Integration", "Testing Automation", "Compliance", "Collaboration", "Simulation", "Project Management"],
       results: ["60% faster development", "Reduced time-to-market", "Automated testing", "Regulatory compliance", "Improved collaboration", "Cost reduction 25%"],
-      stats: { value: "60%", label: "Faster Development" },
-      rating: 5,
       color: "indigo",
       featured: false
     },
@@ -151,8 +140,6 @@ const Projects: React.FC = () => {
       budget: "$3.7M",
       technologies: ["Odoo", "Custom Modules", "API Integration", "Business Intelligence", "Mobile Apps", "Cloud Infrastructure"],
       results: ["Unified operations", "Real-time insights", "Process automation", "Scalable architecture", "Data consistency", "Operational efficiency up 45%"],
-      stats: { value: "100%", label: "Process Integration" },
-      rating: 5,
       color: "red",
       featured: false
     }
@@ -436,25 +423,6 @@ const Projects: React.FC = () => {
                             <Calendar className="w-4 h-4 mr-2" />
                             {currentProject.year}
                           </span>
-                        </div>
-
-                        {/* Rating Stars */}
-                        <div className="absolute bottom-6 left-6 flex items-center gap-1">
-                          {[...Array(currentProject.rating)].map((_, i) => (
-                            <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                          ))}
-                        </div>
-
-                        {/* Stats Overlay */}
-                        <div className="absolute bottom-6 right-6">
-                          <div className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3">
-                            <div className={`text-2xl font-bold ${colors.text}`}>
-                              {currentProject.stats.value}
-                            </div>
-                            <div className="text-sm text-gray-600 font-medium">
-                              {currentProject.stats.label}
-                            </div>
-                          </div>
                         </div>
 
                         {/* PROMINENT CASE STUDY BUTTON ON IMAGE */}
