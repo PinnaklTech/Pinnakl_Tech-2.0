@@ -56,16 +56,18 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* Dot Indicators - Hidden on mobile, visible on desktop */}
-      <div className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 space-x-2 z-20">
+      {/* Subtle Dot Indicators - Responsive design */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-1.5 sm:space-x-2 z-20">
         {backgroundImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
             className={`rounded-full transition-all duration-300 ${
               index === currentImageIndex
-                ? "bg-white scale-125 w-3 h-3"
-                : "bg-white/50 hover:bg-white/70 w-2.5 h-2.5"
+                ? // Active dot - subtle on mobile, more prominent on desktop
+                  "bg-white/60 sm:bg-white scale-110 sm:scale-125 w-1.5 h-1.5 sm:w-3 sm:h-3"
+                : // Inactive dots - very subtle on mobile, semi-transparent on desktop
+                  "bg-white/20 sm:bg-white/50 hover:bg-white/40 sm:hover:bg-white/70 w-1 h-1 sm:w-2.5 sm:h-2.5"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
