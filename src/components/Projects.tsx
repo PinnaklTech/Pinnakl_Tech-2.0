@@ -1,3 +1,6 @@
+Here's the fixed version with all missing closing brackets added:
+
+```typescript
 import React, { useEffect, useRef, useState } from 'react';
 import { ExternalLink, ArrowRight, Calendar, Tag, Award, TrendingUp, Users, Zap, Target, Sparkles } from 'lucide-react';
 
@@ -520,12 +523,3 @@ const Projects: React.FC = () => {
                   View All Projects
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default Projects;
