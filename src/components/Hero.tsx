@@ -66,8 +66,8 @@ const Hero: React.FC = () => {
               onClick={() => setCurrentImageIndex(index)}
               className={`rounded-full transition-all duration-300 ${
                 index === currentImageIndex
-                  ? "bg-white/90 w-[3px] h-[3px]"
-                  : "bg-white/25 hover:bg-white/40 w-[2px] h-[2px]"
+                  ? "bg-white/90 w-[2px] h-[2px]"
+                  : "bg-white/25 hover:bg-white/40 w-[1px] h-[1px]"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
