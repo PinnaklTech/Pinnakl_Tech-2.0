@@ -160,65 +160,51 @@ const Projects: React.FC = () => {
       [key: string]: {
         gradient: string;
         bg: string;
-        border: string;
         text: string;
         accent: string;
-        hover: string;
         shadow: string;
       };
     } = {
       blue: {
         gradient: "from-blue-500 to-blue-600",
         bg: "bg-blue-50/50",
-        border: "border-blue-200/30",
         text: "text-blue-700",
         accent: "bg-blue-100",
-        hover: "hover:border-blue-300/50",
         shadow: "shadow-blue-500/20"
       },
       emerald: {
         gradient: "from-emerald-500 to-emerald-600",
         bg: "bg-emerald-50/50",
-        border: "border-emerald-200/30",
         text: "text-emerald-700",
         accent: "bg-emerald-100",
-        hover: "hover:border-emerald-300/50",
         shadow: "shadow-emerald-500/20"
       },
       purple: {
         gradient: "from-purple-500 to-purple-600",
         bg: "bg-purple-50/50",
-        border: "border-purple-200/30",
         text: "text-purple-700",
         accent: "bg-purple-100",
-        hover: "hover:border-purple-300/50",
         shadow: "shadow-purple-500/20"
       },
       amber: {
         gradient: "from-amber-500 to-amber-600",
         bg: "bg-amber-50/50",
-        border: "border-amber-200/30",
         text: "text-amber-700",
         accent: "bg-amber-100",
-        hover: "hover:border-amber-300/50",
         shadow: "shadow-amber-500/20"
       },
       indigo: {
         gradient: "from-indigo-500 to-indigo-600",
         bg: "bg-indigo-50/50",
-        border: "border-indigo-200/30",
         text: "text-indigo-700",
         accent: "bg-indigo-100",
-        hover: "hover:border-indigo-300/50",
         shadow: "shadow-indigo-500/20"
       },
       red: {
         gradient: "from-red-500 to-red-600",
         bg: "bg-red-50/50",
-        border: "border-red-200/30",
         text: "text-red-700",
         accent: "bg-red-100",
-        hover: "hover:border-red-300/50",
         shadow: "shadow-red-500/20"
       },
     };
@@ -280,7 +266,7 @@ const Projects: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-100/80 to-purple-100/80 backdrop-blur-sm rounded-full mb-6 border border-white/50 shadow-lg"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-100/80 to-purple-100/80 backdrop-blur-sm rounded-full mb-6 shadow-lg"
           >
             <Target className="h-4 w-4 text-blue-600" />
             <span className="text-blue-700 font-medium text-sm">
@@ -328,7 +314,7 @@ const Projects: React.FC = () => {
                 className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 ${
                   activeFilter === category
                     ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25'
-                    : 'bg-white/70 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-md border border-gray-200/50'
+                    : 'bg-white/70 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-md'
                 }`}
               >
                 {category}
@@ -337,7 +323,7 @@ const Projects: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Enhanced Projects Grid - Consistent Card Heights */}
+        {/* Enhanced Projects Grid - Clean Cards Without Outlines */}
         <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20 lg:mb-24">
           {filteredProjects.map((project, index) => {
             const colors = getColorClasses(project.color);
@@ -351,9 +337,9 @@ const Projects: React.FC = () => {
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 onMouseEnter={() => setHoveredProject(index)}
                 onMouseLeave={() => setHoveredProject(null)}
-                className={`group relative bg-white/80 backdrop-blur-sm border ${colors.border} ${colors.hover} rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl ${colors.shadow} ${
+                className={`group relative bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl ${colors.shadow} ${
                   isHovered ? "scale-[1.02] shadow-2xl" : "hover:scale-[1.01]"
-                } ${project.featured ? 'ring-2 ring-blue-200/50' : ''} h-full flex flex-col`}
+                } h-full flex flex-col shadow-lg`}
               >
                 {/* Featured Badge */}
                 {project.featured && (
@@ -498,7 +484,7 @@ const Projects: React.FC = () => {
           transition={{ delay: 1.0, duration: 0.6 }}
           className="relative z-10"
         >
-          <div className="relative rounded-3xl p-8 md:p-16 overflow-hidden shadow-2xl border border-white/20 bg-white/30 backdrop-blur-lg">
+          <div className="relative rounded-3xl p-8 md:p-16 overflow-hidden shadow-2xl bg-white/30 backdrop-blur-lg">
             {/* Enhanced Background layers */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-[url('/8410.jpg')] bg-cover opacity-10"></div>
@@ -510,7 +496,7 @@ const Projects: React.FC = () => {
             {/* Content */}
             <div className="relative z-10 text-center">
               <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl shadow-sm border border-white/50">
+                <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl shadow-sm">
                   <Zap className="h-6 w-6 text-blue-600" />
                 </div>
                 <span className="text-blue-700 font-semibold text-lg tracking-wide">
@@ -544,7 +530,7 @@ const Projects: React.FC = () => {
                   <ArrowRight className="h-5 w-5" />
                 </button>
 
-                <button className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-800 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:border-gray-300 transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2">
+                <button className="bg-white/80 backdrop-blur-md text-gray-800 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2">
                   <Award className="h-5 w-5" />
                   <span>View All Projects</span>
                 </button>
