@@ -58,23 +58,21 @@ const Hero: React.FC = () => {
 
       {/* Ultra Subtle Carousel Indicators */}
       <div className="absolute bottom-3 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-  {/* Mobile: Ultra-small minimal dots */}
-  <div className="flex sm:hidden space-x-1 px-2 py-1.5 bg-black/15 backdrop-blur-sm rounded-full">
-    {backgroundImages.map((_, index) => (
-      <button
-        key={index}
-        onClick={() => setCurrentImageIndex(index)}
-        className={`rounded-full transition-all duration-300 ${
-          index === currentImageIndex
-            ? "w-1 h-1 bg-white/90"
-            : "w-0.5 h-0.5 bg-white/25 hover:bg-white/40"
-        }`}
-        aria-label={`Go to slide ${index + 1}`}
-      />
-    ))}
-  </div>
-</div>
-
+        {/* Mobile: Ultra-small minimal dots */}
+        <div className="flex sm:hidden space-x-1 px-2 py-1.5 bg-black/15 backdrop-blur-sm rounded-full">
+          {backgroundImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`rounded-full transition-all duration-300 ${
+                index === currentImageIndex
+                  ? "w-1 h-1 bg-white/90"
+                  : "w-0.5 h-0.5 bg-white/25 hover:bg-white/40"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
         
         {/* Desktop: Classic dots with enhanced styling */}
         <div className="hidden sm:flex space-x-2 px-4 py-3 bg-black/20 backdrop-blur-sm rounded-full">
