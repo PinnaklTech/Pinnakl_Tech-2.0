@@ -56,7 +56,7 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* Dot Indicators */}
+      {/* Dot Indicators - Reduced mobile size */}
       <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-1 sm:space-x-2 z-20">
         {backgroundImages.map((_, index) => (
           <button
@@ -64,8 +64,8 @@ const Hero: React.FC = () => {
             onClick={() => setCurrentImageIndex(index)}
             className={`rounded-full transition-all duration-300 ${
               index === currentImageIndex
-                ? "bg-white scale-125 w-1.5 h-1.5 sm:w-3 sm:h-3"
-                : "bg-white/50 hover:bg-white/70 w-1 h-1 sm:w-2.5 sm:h-2.5"
+                ? "bg-white scale-125 w-1 h-1 sm:w-3 sm:h-3"
+                : "bg-white/50 hover:bg-white/70 w-0.5 h-0.5 sm:w-2.5 sm:h-2.5"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
