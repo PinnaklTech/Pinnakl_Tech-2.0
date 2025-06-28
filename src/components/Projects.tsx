@@ -14,7 +14,8 @@ import {
   Clock,
   Layers,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  FileText
 } from 'lucide-react';
 
 const Projects: React.FC = () => {
@@ -455,10 +456,20 @@ const Projects: React.FC = () => {
                             </div>
                           </div>
                         </div>
+
+                        {/* PROMINENT CASE STUDY BUTTON ON IMAGE */}
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:hidden">
+                          <button className={`bg-gradient-to-r ${colors.gradient} text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-white/20`}>
+                            <FileText className="h-5 w-5" />
+                            <span>View Case Study</span>
+                            <ArrowRight className="h-4 w-4" />
+                          </button>
+                        </div>
                       </div>
 
                       {/* Project Content */}
-                      <div className="relative p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
+                      <div className="relative p-6 sm:p-8 lg:p-12 flex flex-col">
+                        {/* Header with prominent case study button */}
                         <div className="flex items-start justify-between mb-6">
                           <div className="flex-1">
                             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
@@ -468,15 +479,23 @@ const Projects: React.FC = () => {
                               {currentProject.subtitle}
                             </p>
                           </div>
-                          <ExternalLink className="w-6 h-6 text-gray-400 hover:text-blue-600 transition-colors duration-300 ml-4 flex-shrink-0" />
+                          
+                          {/* PROMINENT CASE STUDY BUTTON - Desktop */}
+                          <div className="hidden lg:block ml-4">
+                            <button className={`bg-gradient-to-r ${colors.gradient} text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 whitespace-nowrap`}>
+                              <FileText className="h-5 w-5" />
+                              <span>View Case Study</span>
+                              <ArrowRight className="h-4 w-4" />
+                            </button>
+                          </div>
                         </div>
 
-                        <p className="text-gray-600 mb-8 leading-relaxed text-base lg:text-lg">
+                        <p className="text-gray-600 mb-6 leading-relaxed text-base lg:text-lg">
                           {currentProject.description}
                         </p>
 
                         {/* Project Meta */}
-                        <div className="grid grid-cols-2 gap-6 mb-8">
+                        <div className="grid grid-cols-2 gap-4 mb-6">
                           <div className="flex items-center">
                             <Users className="w-5 h-5 text-gray-400 mr-3" />
                             <div>
@@ -501,10 +520,10 @@ const Projects: React.FC = () => {
                         </div>
 
                         {/* Technologies */}
-                        <div className="mb-8">
+                        <div className="mb-6">
                           <h4 className="text-sm font-semibold text-gray-900 mb-3">Technologies Used:</h4>
                           <div className="flex flex-wrap gap-2">
-                            {currentProject.technologies.map((tech, techIndex) => (
+                            {currentProject.technologies.slice(0, 4).map((tech, techIndex) => (
                               <span
                                 key={techIndex}
                                 className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 transition-colors duration-200"
@@ -512,30 +531,38 @@ const Projects: React.FC = () => {
                                 {tech}
                               </span>
                             ))}
+                            {currentProject.technologies.length > 4 && (
+                              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-200 text-gray-600">
+                                +{currentProject.technologies.length - 4} more
+                              </span>
+                            )}
                           </div>
                         </div>
 
                         {/* Key Results */}
-                        <div className="mb-8">
+                        <div className="mb-6 flex-1">
                           <h4 className="text-sm font-semibold text-gray-900 mb-4 flex items-center">
                             <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
                             Key Results:
                           </h4>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {currentProject.results.map((result, resultIndex) => (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            {currentProject.results.slice(0, 4).map((result, resultIndex) => (
                               <div key={resultIndex} className="flex items-center text-sm text-gray-600">
-                                <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
+                                <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
                                 <span>{result}</span>
                               </div>
                             ))}
                           </div>
                         </div>
 
-                        {/* CTA Button */}
-                        <button className={`bg-gradient-to-r ${colors.gradient} text-white py-4 px-8 rounded-xl font-semibold flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 hover:scale-105 text-lg`}>
-                          <span>View Full Case Study</span>
-                          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                        </button>
+                        {/* BOTTOM CASE STUDY BUTTON - Mobile */}
+                        <div className="lg:hidden mt-auto">
+                          <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-4 px-6 rounded-xl font-semibold flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 hover:scale-105 text-lg`}>
+                            <FileText className="h-5 w-5" />
+                            <span>View Full Case Study</span>
+                            <ArrowRight className="h-5 w-5" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
