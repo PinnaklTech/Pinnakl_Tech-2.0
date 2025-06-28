@@ -19,16 +19,23 @@ html, body {
   overflow-x: hidden;
 }
 
-/* Ensure only one header exists */
-header {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 50 !important;
+/* Ensure smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-/* Prevent duplicate headers */
-body > div > header:not(:first-of-type) {
-  display: none !important;
+/* Remove any default margins/padding that might cause issues */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure main content starts below fixed header */
+main {
+  padding-top: 0;
+}
+
+/* Fix z-index stacking */
+.fixed {
+  position: fixed !important;
 }
