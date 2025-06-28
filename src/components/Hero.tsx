@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 const Hero: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,6 +31,18 @@ const Hero: React.FC = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const goToPrevious = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? backgroundImages.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNext = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === backgroundImages.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Images */}
@@ -55,6 +67,24 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
+
+      {/* Previous Button */}
+      <button
+        onClick={goToPrevious}
+        className="absolute left-4 sm:left-6 lg:left-8 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 lg:p-4 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-white/20 hover:border-white/40 group"
+        aria-label="Previous image"
+      >
+        <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 group-hover:scale-110 transition-transform duration-300" />
+      </button>
+
+      {/* Next Button */}
+      <button
+        onClick={goToNext}
+        className="absolute right-4 sm:right-6 lg:right-8 top-1/2 transform -translate-y-1/2 z-20 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 lg:p-4 rounded-full transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-white/20 hover:border-white/40 group"
+        aria-label="Next image"
+      >
+        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 group-hover:scale-110 transition-transform duration-300" />
+      </button>
 
       {/* Subtle Dot Indicators - Responsive design */}
       <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-1.5 sm:space-x-2 z-20">
