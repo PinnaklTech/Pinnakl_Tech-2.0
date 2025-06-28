@@ -101,41 +101,41 @@ const Blog: React.FC = () => {
   const regularPosts = blogPosts.filter(post => !post.featured);
 
   return (
-    <section id="blog" ref={sectionRef} className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header - Responsive */}
+    <section id="blog" ref={sectionRef} className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        {/* Header */}
         <div 
-          className={`text-center mb-8 sm:mb-12 md:mb-16 transform transition-all duration-1000 ${
+          className={`text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
         >
-          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6">
+          <h2 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 lg:mb-6">
             Latest Insights
           </h2>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">
+          <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">
             Stay updated with the latest trends, insights, and innovations in engineering and manufacturing 
             through our expert analysis and industry perspectives.
           </p>
         </div>
 
-        {/* Featured Post - Mobile Responsive */}
+        {/* Featured Post */}
         {featuredPost && (
           <div 
-            className={`mb-8 sm:mb-12 md:mb-16 transform transition-all duration-1000 ${
+            className={`mb-6 sm:mb-8 md:mb-12 lg:mb-16 transform transition-all duration-1000 ${
               isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}
           >
-            <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02]">
+            <div className="bg-white rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02]">
               <div className="lg:flex">
                 <div className="lg:w-1/2">
                   <img
                     src={featuredPost.image}
                     alt={featuredPost.title}
-                    className="w-full h-48 sm:h-64 lg:h-full object-cover"
+                    className="w-full h-32 xs:h-40 sm:h-48 md:h-64 lg:h-full object-cover"
                     loading="lazy"
                   />
                 </div>
-                <div className="lg:w-1/2 p-4 sm:p-6 md:p-8 lg:p-12">
+                <div className="lg:w-1/2 p-3 sm:p-4 md:p-6 lg:p-8 xl:p-12">
                   <div className="flex items-center mb-2 sm:mb-3 md:mb-4">
                     <span className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getCategoryColor(featuredPost.category)}`}>
                       {featuredPost.category}
@@ -143,15 +143,15 @@ const Blog: React.FC = () => {
                     <span className="text-blue-600 text-xs sm:text-sm font-medium ml-2 sm:ml-3">Featured</span>
                   </div>
                   
-                  <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 leading-tight">
+                  <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 mb-2 sm:mb-3 md:mb-4 leading-tight">
                     {featuredPost.title}
                   </h3>
                   
-                  <p className="text-gray-600 mb-3 sm:mb-4 md:mb-6 leading-relaxed text-sm sm:text-base">
+                  <p className="text-gray-600 mb-2 sm:mb-3 md:mb-4 lg:mb-6 leading-relaxed text-xs sm:text-sm md:text-base">
                     {featuredPost.excerpt}
                   </p>
 
-                  <div className="flex items-center text-gray-500 text-xs sm:text-sm mb-3 sm:mb-4 md:mb-6 flex-wrap gap-2 sm:gap-4">
+                  <div className="flex items-center text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3 md:mb-4 lg:mb-6 flex-wrap gap-2 sm:gap-4">
                     <div className="flex items-center">
                       <User className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                       <span>{featuredPost.author}</span>
@@ -166,7 +166,7 @@ const Blog: React.FC = () => {
                     </div>
                   </div>
 
-                  <button className="inline-flex items-center space-x-2 bg-blue-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm sm:text-base touch-manipulation">
+                  <button className="inline-flex items-center space-x-1.5 sm:space-x-2 bg-blue-600 text-white px-3 sm:px-4 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-md sm:rounded-lg font-medium hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg text-xs sm:text-sm md:text-base touch-manipulation">
                     <span>Read More</span>
                     <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
                   </button>
@@ -176,12 +176,12 @@ const Blog: React.FC = () => {
           </div>
         )}
 
-        {/* Blog Posts Grid - Mobile Responsive */}
-        <div className="grid gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 xl:grid-cols-3 mb-8 sm:mb-12 md:mb-16">
+        {/* Blog Posts Grid */}
+        <div className="grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 sm:grid-cols-2 xl:grid-cols-3 mb-6 sm:mb-8 md:mb-12 lg:mb-16">
           {regularPosts.map((post, index) => (
             <article
               key={post.title}
-              className={`group bg-white rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden ${
+              className={`group bg-white rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
               style={{ transitionDelay: `${(index + 1) * 150}ms` }}
@@ -191,7 +191,7 @@ const Blog: React.FC = () => {
                 <img
                   src={post.image}
                   alt={post.title}
-                  className="w-full h-36 sm:h-40 md:h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-28 xs:h-32 sm:h-36 md:h-40 lg:h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                 />
                 <div className="absolute top-2 sm:top-3 md:top-4 left-2 sm:left-3 md:left-4">
@@ -203,7 +203,7 @@ const Blog: React.FC = () => {
 
               {/* Content */}
               <div className="p-3 sm:p-4 md:p-6">
-                <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-2 sm:mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2 md:mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
                   {post.title}
                 </h3>
                 
@@ -240,15 +240,15 @@ const Blog: React.FC = () => {
           ))}
         </div>
 
-        {/* View All Posts CTA - Responsive */}
+        {/* View All Posts CTA */}
         <div 
           className={`text-center transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
         >
-          <button className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base md:text-lg font-semibold hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg touch-manipulation">
+          <button className="inline-flex items-center space-x-1.5 sm:space-x-2 bg-blue-600 text-white px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-semibold hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg touch-manipulation">
             <span>View All Articles</span>
-            <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+            <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
           </button>
         </div>
       </div>

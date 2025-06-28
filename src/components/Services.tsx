@@ -202,50 +202,30 @@ const Services: React.FC = () => {
     <section
       id="services"
       ref={sectionRef}
-      className="relative py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28 overflow-hidden"
+      className="relative py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"></div>
-        <div className="absolute inset-0 overflow-hidden opacity-30 sm:opacity-40 lg:opacity-50">
+        <div className="absolute inset-0 overflow-hidden opacity-20 sm:opacity-30 lg:opacity-40">
           <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent animate-pulse-slow"></div>
           <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent animate-pulse-slower"></div>
           <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-200/50 to-transparent animate-slide-up"></div>
           <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-200/50 to-transparent animate-slide-down"></div>
-          <div className="absolute inset-0 opacity-30">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern
-                  id="grid"
-                  x="0"
-                  y="0"
-                  width="60"
-                  height="60"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path
-                    d="M60 0H0v60h60V0zM30 30m-1 0a1 1 0 1 1 2 0 1 1 0 1 1-2 0"
-                    fill="rgba(59, 130, 246, 0.1)"
-                  />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" />
-            </svg>
-          </div>
         </div>
-        <div className="absolute top-0 left-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-gradient-to-tl from-purple-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-96 xl:h-96 bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-96 xl:h-96 bg-gradient-to-tl from-purple-100/40 to-transparent rounded-full blur-3xl"></div>
       </div>
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section - Fully Responsive */}
-        <div className="text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20">
+      <div className="relative max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="text-center mb-6 sm:mb-8 md:mb-12 lg:mb-16 xl:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-100/80 backdrop-blur-sm rounded-full mb-3 sm:mb-4 md:mb-6"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-blue-100/80 backdrop-blur-sm rounded-full mb-2 sm:mb-3 md:mb-4 lg:mb-6"
           >
             <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
             <span className="text-blue-700 font-medium text-xs sm:text-sm">
@@ -257,7 +237,7 @@ const Services: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 leading-tight px-2 sm:px-4"
+            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 leading-tight px-2 sm:px-4"
           >
             Comprehensive engineering solutions backed by{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -269,7 +249,7 @@ const Services: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed px-4"
+            className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-gray-600 max-w-5xl mx-auto leading-relaxed px-4"
           >
             From product development to supply chain optimization, we deliver
             innovative solutions that drive efficiency, excellence, and
@@ -277,8 +257,8 @@ const Services: React.FC = () => {
           </motion.p>
         </div>
 
-        {/* Services Grid - Mobile First Responsive */}
-        <div className="grid gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 xl:grid-cols-3 mb-12 sm:mb-16 md:mb-20 lg:mb-24">
+        {/* Services Grid */}
+        <div className="grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 sm:grid-cols-2 xl:grid-cols-3 mb-8 sm:mb-12 md:mb-16 lg:mb-20">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             const colors = getColorClasses(service.color);
@@ -296,7 +276,7 @@ const Services: React.FC = () => {
                   colors.border
                 } ${
                   colors.hover
-                } rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-black/5 ${
+                } rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-black/5 ${
                   isActive
                     ? "scale-105 shadow-2xl shadow-black/10"
                     : "hover:scale-[1.02]"
@@ -304,17 +284,17 @@ const Services: React.FC = () => {
               >
                 {/* Background gradient on hover */}
                 <div
-                  className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-5 rounded-xl sm:rounded-2xl transition-opacity duration-300`}
+                  className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-5 rounded-lg sm:rounded-xl md:rounded-2xl transition-opacity duration-300`}
                 ></div>
 
-                {/* Top section */}
+                {/* Content */}
                 <div className="relative">
-                  <div className="flex items-start justify-between mb-3 sm:mb-4 md:mb-6">
-                    <div className={`p-2 sm:p-3 ${colors.accent} rounded-lg sm:rounded-xl`}>
-                      <IconComponent className={`h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 ${colors.text}`} />
+                  <div className="flex items-start justify-between mb-2 sm:mb-3 md:mb-4 lg:mb-6">
+                    <div className={`p-1.5 sm:p-2 md:p-3 ${colors.accent} rounded-md sm:rounded-lg md:rounded-xl`}>
+                      <IconComponent className={`h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 ${colors.text}`} />
                     </div>
                     <div className="text-right">
-                      <div className={`text-base sm:text-lg md:text-xl lg:text-2xl font-bold ${colors.text}`}>
+                      <div className={`text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-bold ${colors.text}`}>
                         {service.stats.value}
                       </div>
                       <div className="text-xs sm:text-sm text-gray-500 font-medium">
@@ -323,11 +303,11 @@ const Services: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="mb-3 sm:mb-4 md:mb-6">
-                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
+                  <div className="mb-2 sm:mb-3 md:mb-4 lg:mb-6">
+                    <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
                       {service.title}
                     </h3>
-                    <p className={`text-xs sm:text-sm font-medium ${colors.text} mb-2 sm:mb-3`}>
+                    <p className={`text-xs sm:text-sm font-medium ${colors.text} mb-1 sm:mb-2 md:mb-3`}>
                       {service.subtitle}
                     </p>
                     <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
@@ -335,26 +315,26 @@ const Services: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Features as tags - Responsive */}
-                  <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4 md:mb-6">
+                  {/* Features as tags */}
+                  <div className="flex flex-wrap gap-1 sm:gap-1.5 md:gap-2 mb-2 sm:mb-3 md:mb-4 lg:mb-6">
                     {service.features.slice(0, 3).map((feature, idx) => (
                       <span
                         key={idx}
-                        className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full"
+                        className="px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 bg-gray-100 text-gray-700 text-xs font-medium rounded-full"
                       >
                         {feature}
                       </span>
                     ))}
                     {service.features.length > 3 && (
-                      <span className="px-2 sm:px-3 py-1 bg-gray-100 text-gray-500 text-xs font-medium rounded-full">
+                      <span className="px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 bg-gray-100 text-gray-500 text-xs font-medium rounded-full">
                         +{service.features.length - 3} more
                       </span>
                     )}
                   </div>
 
-                  {/* CTA - Touch friendly */}
+                  {/* CTA */}
                   <button
-                    className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-3 px-4 rounded-lg sm:rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 group-hover:scale-105 text-xs sm:text-sm md:text-base touch-manipulation`}
+                    className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-2.5 md:py-3 px-3 sm:px-4 rounded-md sm:rounded-lg md:rounded-xl font-medium flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 group-hover:scale-105 text-xs sm:text-sm md:text-base touch-manipulation`}
                   >
                     <span>Learn More</span>
                     <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
@@ -365,14 +345,14 @@ const Services: React.FC = () => {
           })}
         </div>
 
-        {/* Enhanced CTA Section - Mobile Responsive */}
+        {/* Enhanced CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8, duration: 0.6 }}
           className="relative z-10"
         >
-          <div className="relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 overflow-hidden shadow-2xl border border-white/20 bg-white/30 backdrop-blur-lg">
+          <div className="relative rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 xl:p-16 overflow-hidden shadow-2xl border border-white/20 bg-white/30 backdrop-blur-lg">
             {/* Background layers */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-[url('/8410.jpg')] bg-cover opacity-10"></div>
@@ -381,23 +361,23 @@ const Services: React.FC = () => {
 
             {/* Content */}
             <div className="relative z-10">
-              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:mb-6 justify-center sm:justify-start">
-                <div className="p-2 sm:p-3 bg-blue-100 rounded-lg sm:rounded-xl shadow-sm">
-                  <Target className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-blue-600" />
+              <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 mb-2 sm:mb-3 md:mb-4 lg:mb-6 justify-center sm:justify-start">
+                <div className="p-1.5 sm:p-2 md:p-3 bg-blue-100 rounded-md sm:rounded-lg md:rounded-xl shadow-sm">
+                  <Target className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-blue-600" />
                 </div>
-                <span className="text-blue-700 font-semibold text-sm sm:text-base md:text-lg tracking-wide">
+                <span className="text-blue-700 font-semibold text-xs sm:text-sm md:text-base lg:text-lg tracking-wide">
                   Ready to get started?
                 </span>
               </div>
 
-              <h3 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 text-gray-900 leading-tight text-center sm:text-left">
+              <h3 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 md:mb-4 lg:mb-6 text-gray-900 leading-tight text-center sm:text-left">
                 Transform Your Engineering
                 <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   Challenges Into Success
                 </span>
               </h3>
 
-              <p className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 lg:mb-10 max-w-4xl leading-relaxed text-center sm:text-left">
+              <p className="text-gray-700 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl mb-4 sm:mb-6 md:mb-8 lg:mb-10 max-w-4xl leading-relaxed text-center sm:text-left">
                 Join over{" "}
                 <strong className="text-blue-600">
                   250+ forward-thinking companies
@@ -406,22 +386,22 @@ const Services: React.FC = () => {
                 Let's create impactful solutions together.
               </p>
 
-              {/* Buttons - Responsive */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-start">
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 justify-center sm:justify-start">
                 <button
                   onClick={() =>
                     document
                       .getElementById("contact")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-300/30 flex items-center justify-center gap-2 touch-manipulation"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-md sm:rounded-lg md:rounded-xl text-xs sm:text-sm md:text-base lg:text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-300/30 flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation"
                 >
                   <span>Start Your Project</span>
-                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
                 </button>
 
-                <button className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-semibold hover:bg-white hover:border-gray-300 transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2 touch-manipulation">
-                  <Shield className="h-4 w-4 sm:h-5 sm:w-5" />
+                <button className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-800 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-md sm:rounded-lg md:rounded-xl text-xs sm:text-sm md:text-base lg:text-lg font-semibold hover:bg-white hover:border-gray-300 transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-1.5 sm:gap-2 touch-manipulation">
+                  <Shield className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5" />
                   <span>View Case Studies</span>
                 </button>
               </div>
