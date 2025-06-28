@@ -91,7 +91,7 @@ const Projects: React.FC = () => {
       stats: { value: "50%", label: "Defect Reduction" },
       rating: 5,
       color: "purple",
-      featured: true
+      featured: false
     },
     {
       id: 4,
@@ -127,7 +127,7 @@ const Projects: React.FC = () => {
       stats: { value: "60%", label: "Faster Development" },
       rating: 5,
       color: "indigo",
-      featured: true
+      featured: false
     },
     {
       id: 6,
@@ -151,9 +151,13 @@ const Projects: React.FC = () => {
 
   const categories = ['All', 'Manufacturing', 'Logistics', 'Metallurgy', 'Energy', 'Product Development', 'ERP Solutions'];
 
+  // Get featured project and non-featured projects
+  const featuredProject = projects.find(project => project.featured);
+  const nonFeaturedProjects = projects.filter(project => !project.featured);
+  
   const filteredProjects = activeFilter === 'All' 
-    ? projects 
-    : projects.filter(project => project.category === activeFilter);
+    ? nonFeaturedProjects 
+    : nonFeaturedProjects.filter(project => project.category === activeFilter);
 
   const getColorClasses = (color: string) => {
     const colorMap: {
@@ -323,7 +327,141 @@ const Projects: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Enhanced Projects Grid - Clean Cards Without Outlines */}
+        {/* Featured Project Section - Hero Layout */}
+        {featuredProject && (
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="mb-16 sm:mb-20 lg:mb-24"
+          >
+            <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl">
+              {/* Featured Badge */}
+              <div className="absolute top-6 left-6 z-20">
+                <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-lg">
+                  <Star className="w-4 h-4 fill-current" />
+                  FEATURED PROJECT
+                </div>
+              </div>
+
+              <div className="lg:flex">
+                {/* Image Section */}
+                <div className="lg:w-1/2 relative">
+                  <div className="aspect-[4/3] lg:aspect-auto lg:h-full relative overflow-hidden">
+                    <img
+                      src={featuredProject.image}
+                      alt={featuredProject.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-black/30" />
+                    
+                    {/* Stats Overlay */}
+                    <div className="absolute bottom-6 right-6">
+                      <div className="bg-white/95 backdrop-blur-sm rounded-xl px-4 py-3 shadow-lg">
+                        <div className={`text-2xl font-bold ${getColorClasses(featuredProject.color).text}`}>
+                          {featuredProject.stats.value}
+                        </div>
+                        <div className="text-sm text-gray-600 font-medium">
+                          {featuredProject.stats.label}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content Section */}
+                <div className="lg:w-1/2 p-8 sm:p-12 lg:p-16">
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gradient-to-r ${getColorClasses(featuredProject.color).gradient} text-white`}>
+                      {featuredProject.category}
+                    </span>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-700">
+                      <Calendar className="w-3 h-3 mr-1" />
+                      {featuredProject.year}
+                    </span>
+                  </div>
+
+                  <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+                    {featuredProject.title}
+                  </h3>
+                  
+                  <p className={`text-lg font-medium ${getColorClasses(featuredProject.color).text} mb-6`}>
+                    {featuredProject.subtitle}
+                  </p>
+                  
+                  <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+                    {featuredProject.description}
+                  </p>
+
+                  {/* Project Details Grid */}
+                  <div className="grid grid-cols-2 gap-6 mb-8">
+                    <div>
+                      <div className="flex items-center mb-2">
+                        <Users className="w-4 h-4 text-gray-400 mr-2" />
+                        <span className="text-sm font-medium text-gray-500">Client</span>
+                      </div>
+                      <span className="text-gray-900 font-semibold">{featuredProject.client}</span>
+                    </div>
+                    <div>
+                      <div className="flex items-center mb-2">
+                        <Clock className="w-4 h-4 text-gray-400 mr-2" />
+                        <span className="text-sm font-medium text-gray-500">Duration</span>
+                      </div>
+                      <span className="text-gray-900 font-semibold">{featuredProject.duration}</span>
+                    </div>
+                    <div className="col-span-2">
+                      <div className="flex items-center mb-2">
+                        <Layers className="w-4 h-4 text-gray-400 mr-2" />
+                        <span className="text-sm font-medium text-gray-500">Investment</span>
+                      </div>
+                      <span className="text-gray-900 font-semibold text-lg">{featuredProject.budget}</span>
+                    </div>
+                  </div>
+
+                  {/* Technologies */}
+                  <div className="mb-8">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3">Technologies Used:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {featuredProject.technologies.map((tech, index) => (
+                        <span
+                          key={index}
+                          className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 transition-colors duration-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Key Results */}
+                  <div className="mb-8">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                      <TrendingUp className="w-4 h-4 mr-2 text-green-600" />
+                      Key Results:
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {featuredProject.results.map((result, index) => (
+                        <div key={index} className="flex items-center text-gray-600">
+                          <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
+                          <span>{result}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA Button */}
+                  <button className={`bg-gradient-to-r ${getColorClasses(featuredProject.color).gradient} text-white px-8 py-4 rounded-xl text-lg font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center gap-3`}>
+                    <span>View Full Case Study</span>
+                    <ArrowRight className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Regular Projects Grid */}
         <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20 lg:mb-24">
           {filteredProjects.map((project, index) => {
             const colors = getColorClasses(project.color);
@@ -334,23 +472,13 @@ const Projects: React.FC = () => {
                 key={project.id}
                 initial={{ opacity: 0, y: 40 }}
                 animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
+                transition={{ delay: (index + 1) * 0.1, duration: 0.6 }}
                 onMouseEnter={() => setHoveredProject(index)}
                 onMouseLeave={() => setHoveredProject(null)}
                 className={`group relative bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl ${colors.shadow} ${
                   isHovered ? "scale-[1.02] shadow-2xl" : "hover:scale-[1.01]"
                 } h-full flex flex-col shadow-lg`}
               >
-                {/* Featured Badge */}
-                {project.featured && (
-                  <div className="absolute top-4 left-4 z-20">
-                    <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
-                      <Star className="w-3 h-3 fill-current" />
-                      FEATURED
-                    </div>
-                  </div>
-                )}
-
                 {/* Background gradient on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
 
