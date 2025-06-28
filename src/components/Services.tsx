@@ -202,12 +202,12 @@ const Services: React.FC = () => {
     <section
       id="services"
       ref={sectionRef}
-      className="relative py-16 sm:py-20 lg:py-24 overflow-hidden"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28 overflow-hidden"
     >
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"></div>
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden opacity-30 sm:opacity-40 lg:opacity-50">
           <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent animate-pulse-slow"></div>
           <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent animate-pulse-slower"></div>
           <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-200/50 to-transparent animate-slide-up"></div>
@@ -233,22 +233,22 @@ const Services: React.FC = () => {
             </svg>
           </div>
         </div>
-        <div className="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-tl from-purple-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-96 lg:h-96 bg-gradient-to-tl from-purple-100/40 to-transparent rounded-full blur-3xl"></div>
       </div>
 
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+        {/* Header Section - Fully Responsive */}
+        <div className="text-center mb-8 sm:mb-12 md:mb-16 lg:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-100/80 backdrop-blur-sm rounded-full mb-4 sm:mb-6"
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-100/80 backdrop-blur-sm rounded-full mb-3 sm:mb-4 md:mb-6"
           >
-            <Zap className="h-4 w-4 text-blue-600" />
-            <span className="text-blue-700 font-medium text-sm">
+            <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
+            <span className="text-blue-700 font-medium text-xs sm:text-sm">
               Our Core Capabilities
             </span>
           </motion.div>
@@ -257,7 +257,7 @@ const Services: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-4"
+            className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 leading-tight px-2 sm:px-4"
           >
             Comprehensive engineering solutions backed by{" "}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -269,7 +269,7 @@ const Services: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4"
+            className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed px-4"
           >
             From product development to supply chain optimization, we deliver
             innovative solutions that drive efficiency, excellence, and
@@ -277,8 +277,8 @@ const Services: React.FC = () => {
           </motion.p>
         </div>
 
-        {/* Services Grid - Mobile Responsive */}
-        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 mb-16 sm:mb-20 lg:mb-24">
+        {/* Services Grid - Mobile First Responsive */}
+        <div className="grid gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 xl:grid-cols-3 mb-12 sm:mb-16 md:mb-20 lg:mb-24">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             const colors = getColorClasses(service.color);
@@ -309,34 +309,34 @@ const Services: React.FC = () => {
 
                 {/* Top section */}
                 <div className="relative">
-                  <div className="flex items-start justify-between mb-4 sm:mb-6">
+                  <div className="flex items-start justify-between mb-3 sm:mb-4 md:mb-6">
                     <div className={`p-2 sm:p-3 ${colors.accent} rounded-lg sm:rounded-xl`}>
-                      <IconComponent className={`h-5 w-5 sm:h-6 sm:w-6 ${colors.text}`} />
+                      <IconComponent className={`h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 ${colors.text}`} />
                     </div>
                     <div className="text-right">
-                      <div className={`text-lg sm:text-xl lg:text-2xl font-bold ${colors.text}`}>
+                      <div className={`text-base sm:text-lg md:text-xl lg:text-2xl font-bold ${colors.text}`}>
                         {service.stats.value}
                       </div>
-                      <div className="text-xs text-gray-500 font-medium">
+                      <div className="text-xs sm:text-sm text-gray-500 font-medium">
                         {service.stats.label}
                       </div>
                     </div>
                   </div>
 
-                  <div className="mb-4 sm:mb-6">
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
+                  <div className="mb-3 sm:mb-4 md:mb-6">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
                       {service.title}
                     </h3>
                     <p className={`text-xs sm:text-sm font-medium ${colors.text} mb-2 sm:mb-3`}>
                       {service.subtitle}
                     </p>
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
                       {service.description}
                     </p>
                   </div>
 
-                  {/* Features as tags */}
-                  <div className="flex flex-wrap gap-1 sm:gap-2 mb-4 sm:mb-6">
+                  {/* Features as tags - Responsive */}
+                  <div className="flex flex-wrap gap-1 sm:gap-2 mb-3 sm:mb-4 md:mb-6">
                     {service.features.slice(0, 3).map((feature, idx) => (
                       <span
                         key={idx}
@@ -352,12 +352,12 @@ const Services: React.FC = () => {
                     )}
                   </div>
 
-                  {/* CTA */}
+                  {/* CTA - Touch friendly */}
                   <button
-                    className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-3 px-4 rounded-lg sm:rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 group-hover:scale-105 text-sm sm:text-base`}
+                    className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-3 px-4 rounded-lg sm:rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 group-hover:scale-105 text-xs sm:text-sm md:text-base touch-manipulation`}
                   >
                     <span>Learn More</span>
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
                   </button>
                 </div>
               </motion.div>
@@ -381,23 +381,23 @@ const Services: React.FC = () => {
 
             {/* Content */}
             <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-4 sm:mb-6">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:mb-6 justify-center sm:justify-start">
                 <div className="p-2 sm:p-3 bg-blue-100 rounded-lg sm:rounded-xl shadow-sm">
-                  <Target className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+                  <Target className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-blue-600" />
                 </div>
-                <span className="text-blue-700 font-semibold text-base sm:text-lg tracking-wide">
+                <span className="text-blue-700 font-semibold text-sm sm:text-base md:text-lg tracking-wide">
                   Ready to get started?
                 </span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 leading-tight">
+              <h3 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 md:mb-6 text-gray-900 leading-tight text-center sm:text-left">
                 Transform Your Engineering
                 <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   Challenges Into Success
                 </span>
               </h3>
 
-              <p className="text-gray-700 text-base sm:text-lg mb-6 sm:mb-8 lg:mb-10 max-w-3xl leading-relaxed">
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-8 lg:mb-10 max-w-4xl leading-relaxed text-center sm:text-left">
                 Join over{" "}
                 <strong className="text-blue-600">
                   250+ forward-thinking companies
@@ -406,21 +406,21 @@ const Services: React.FC = () => {
                 Let's create impactful solutions together.
               </p>
 
-              {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              {/* Buttons - Responsive */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center sm:justify-start">
                 <button
                   onClick={() =>
                     document
                       .getElementById("contact")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-300/30 flex items-center justify-center gap-2"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-300/30 flex items-center justify-center gap-2 touch-manipulation"
                 >
                   <span>Start Your Project</span>
                   <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
 
-                <button className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold hover:bg-white hover:border-gray-300 transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2">
+                <button className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-semibold hover:bg-white hover:border-gray-300 transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2 touch-manipulation">
                   <Shield className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>View Case Studies</span>
                 </button>
