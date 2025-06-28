@@ -1,6 +1,3 @@
-Here's the fixed version with all missing closing brackets added:
-
-```typescript
 import React, { useEffect, useRef, useState } from 'react';
 import { ExternalLink, ArrowRight, Calendar, Tag, Award, TrendingUp, Users, Zap, Target, Sparkles } from 'lucide-react';
 
@@ -523,3 +520,32 @@ const Projects: React.FC = () => {
                   View All Projects
                 </button>
               </div>
+
+              {/* Trust indicators */}
+              <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mt-10 pt-8 border-t border-white/20">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">250+</div>
+                  <div className="text-white/70 text-sm">Projects Delivered</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">98%</div>
+                  <div className="text-white/70 text-sm">Success Rate</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">15+</div>
+                  <div className="text-white/70 text-sm">Years Experience</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white">50+</div>
+                  <div className="text-white/70 text-sm">Expert Engineers</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Projects;
