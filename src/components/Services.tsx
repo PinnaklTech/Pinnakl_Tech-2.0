@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Settings,
   Workflow,
@@ -51,6 +52,7 @@ const Services: React.FC = () => {
       ],
       stats: { value: "250+", label: "Projects Delivered" },
       color: "blue",
+      path: "/services/product-development",
     },
     {
       icon: Workflow,
@@ -67,6 +69,7 @@ const Services: React.FC = () => {
       ],
       stats: { value: "98%", label: "Success Rate" },
       color: "purple",
+      path: "/services/odoo-erp",
     },
     {
       icon: Wrench,
@@ -83,6 +86,7 @@ const Services: React.FC = () => {
       ],
       stats: { value: "15+", label: "Years Experience" },
       color: "emerald",
+      path: "/services/failure-analysis",
     },
     {
       icon: FileText,
@@ -99,6 +103,7 @@ const Services: React.FC = () => {
       ],
       stats: { value: "50+", label: "Expert Engineers" },
       color: "amber",
+      path: "/services/technical-specifications",
     },
     {
       icon: Factory,
@@ -115,6 +120,7 @@ const Services: React.FC = () => {
       ],
       stats: { value: "40%", label: "Avg. Cost Savings" },
       color: "red",
+      path: "/services/manufacturing",
     },
     {
       icon: Truck,
@@ -131,6 +137,7 @@ const Services: React.FC = () => {
       ],
       stats: { value: "30%", label: "Efficiency Gain" },
       color: "indigo",
+      path: "/services/supply-chain",
     },
   ];
 
@@ -333,12 +340,13 @@ const Services: React.FC = () => {
                   </div>
 
                   {/* CTA */}
-                  <button
+                  <Link
+                    to={service.path}
                     className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-2.5 md:py-3 px-3 sm:px-4 rounded-md sm:rounded-lg md:rounded-xl font-medium flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 group-hover:scale-105 text-xs sm:text-sm md:text-base touch-manipulation`}
                   >
                     <span>Learn More</span>
                     <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
-                  </button>
+                  </Link>
                 </div>
               </motion.div>
             );
