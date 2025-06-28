@@ -9,12 +9,16 @@ import {
   Zap, 
   Target,
   TrendingUp,
-  CheckCircle
+  CheckCircle,
+  Star,
+  Clock,
+  Layers
 } from 'lucide-react';
 
 const Projects: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [activeFilter, setActiveFilter] = useState('All');
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -39,93 +43,117 @@ const Projects: React.FC = () => {
       id: 1,
       title: "Advanced Manufacturing Solutions",
       subtitle: "Smart Factory Implementation",
-      description: "Comprehensive ERP implementation for a leading manufacturing company, streamlining operations and increasing efficiency by 40%.",
+      description: "Comprehensive ERP implementation for a leading manufacturing company, streamlining operations and increasing efficiency by 40%. This project involved complete digital transformation with IoT integration and real-time monitoring systems.",
       image: "/Manufacturing.jpg",
       category: "Manufacturing",
       year: "2024",
       client: "Industrial Corp",
       duration: "8 months",
+      budget: "$2.5M",
       technologies: ["ERP", "IoT", "Analytics", "Automation"],
       results: ["40% efficiency increase", "30% cost reduction", "Real-time monitoring", "Predictive maintenance"],
       stats: { value: "40%", label: "Efficiency Gain" },
-      color: "blue"
+      rating: 5,
+      color: "blue",
+      featured: true
     },
     {
       id: 2,
       title: "Supply Chain Optimization",
       subtitle: "End-to-end logistics transformation",
-      description: "AI-powered supply chain management system with real-time tracking and predictive analytics for global operations.",
+      description: "AI-powered supply chain management system with real-time tracking and predictive analytics for global operations. Revolutionized inventory management and reduced operational costs significantly.",
       image: "/supply-chain.jpg",
       category: "Logistics",
       year: "2023",
       client: "Global Logistics Ltd",
       duration: "12 months",
+      budget: "$3.2M",
       technologies: ["AI/ML", "Blockchain", "Cloud", "Analytics"],
       results: ["25% faster delivery", "15% cost savings", "99.9% accuracy", "Global visibility"],
       stats: { value: "25%", label: "Faster Delivery" },
-      color: "emerald"
+      rating: 5,
+      color: "emerald",
+      featured: false
     },
     {
       id: 3,
       title: "Metallurgy Process Control",
       subtitle: "Automated quality assurance",
-      description: "Advanced sensor-based quality control system for metallurgical processes with machine learning integration.",
+      description: "Advanced sensor-based quality control system for metallurgical processes with machine learning integration. Implemented cutting-edge monitoring and automated defect detection.",
       image: "/Metallurgy.jpg",
       category: "Metallurgy",
       year: "2023",
       client: "Steel Industries Inc",
       duration: "6 months",
+      budget: "$1.8M",
       technologies: ["Sensors", "Automation", "ML", "Quality Control"],
       results: ["50% defect reduction", "20% productivity gain", "Automated reporting", "Zero downtime"],
       stats: { value: "50%", label: "Defect Reduction" },
-      color: "purple"
+      rating: 5,
+      color: "purple",
+      featured: true
     },
     {
       id: 4,
       title: "Power Transmission Systems",
       subtitle: "Smart grid modernization",
-      description: "Next-generation smart grid management solution with predictive maintenance and energy optimization capabilities.",
+      description: "Next-generation smart grid management solution with predictive maintenance and energy optimization capabilities. Enhanced grid reliability and energy distribution efficiency.",
       image: "/PowerTransmission.webp",
       category: "Energy",
       year: "2024",
       client: "Power Grid Solutions",
       duration: "10 months",
+      budget: "$4.1M",
       technologies: ["Smart Grid", "Predictive Analytics", "IoT", "Energy Management"],
       results: ["30% energy savings", "Reduced downtime", "Predictive maintenance", "Grid stability"],
       stats: { value: "30%", label: "Energy Savings" },
-      color: "amber"
+      rating: 5,
+      color: "amber",
+      featured: false
     },
     {
       id: 5,
       title: "Product Development Platform",
       subtitle: "Innovation acceleration framework",
-      description: "Comprehensive product development platform with integrated design tools, testing protocols, and compliance management.",
+      description: "Comprehensive product development platform with integrated design tools, testing protocols, and compliance management. Streamlined the entire product lifecycle from concept to market.",
       image: "/Product_development.jpg",
       category: "Product Development",
       year: "2024",
       client: "Innovation Labs",
       duration: "14 months",
+      budget: "$2.9M",
       technologies: ["CAD Integration", "Testing Automation", "Compliance", "Collaboration"],
       results: ["60% faster development", "Reduced time-to-market", "Automated testing", "Regulatory compliance"],
       stats: { value: "60%", label: "Faster Development" },
-      color: "indigo"
+      rating: 5,
+      color: "indigo",
+      featured: true
     },
     {
       id: 6,
       title: "ERP Integration Suite",
       subtitle: "Enterprise-wide digital transformation",
-      description: "Complete Odoo ERP implementation with custom modules, integrations, and advanced analytics for multi-location operations.",
+      description: "Complete Odoo ERP implementation with custom modules, integrations, and advanced analytics for multi-location operations. Unified all business processes under one comprehensive system.",
       image: "/ERP.jpg",
       category: "ERP Solutions",
       year: "2023",
       client: "Enterprise Solutions Inc",
       duration: "16 months",
+      budget: "$3.7M",
       technologies: ["Odoo", "Custom Modules", "API Integration", "Business Intelligence"],
       results: ["Unified operations", "Real-time insights", "Process automation", "Scalable architecture"],
       stats: { value: "100%", label: "Process Integration" },
-      color: "red"
+      rating: 5,
+      color: "red",
+      featured: false
     }
   ];
+
+  const categories = ['All', 'Manufacturing', 'Logistics', 'Metallurgy', 'Energy', 'Product Development', 'ERP Solutions'];
+
+  const filteredProjects = activeFilter === 'All' 
+    ? projects 
+    : projects.filter(project => project.category === activeFilter);
 
   const getColorClasses = (color: string) => {
     const colorMap: {
@@ -136,6 +164,7 @@ const Projects: React.FC = () => {
         text: string;
         accent: string;
         hover: string;
+        shadow: string;
       };
     } = {
       blue: {
@@ -145,6 +174,7 @@ const Projects: React.FC = () => {
         text: "text-blue-700",
         accent: "bg-blue-100",
         hover: "hover:border-blue-300/50",
+        shadow: "shadow-blue-500/20"
       },
       emerald: {
         gradient: "from-emerald-500 to-emerald-600",
@@ -153,6 +183,7 @@ const Projects: React.FC = () => {
         text: "text-emerald-700",
         accent: "bg-emerald-100",
         hover: "hover:border-emerald-300/50",
+        shadow: "shadow-emerald-500/20"
       },
       purple: {
         gradient: "from-purple-500 to-purple-600",
@@ -161,6 +192,7 @@ const Projects: React.FC = () => {
         text: "text-purple-700",
         accent: "bg-purple-100",
         hover: "hover:border-purple-300/50",
+        shadow: "shadow-purple-500/20"
       },
       amber: {
         gradient: "from-amber-500 to-amber-600",
@@ -169,6 +201,7 @@ const Projects: React.FC = () => {
         text: "text-amber-700",
         accent: "bg-amber-100",
         hover: "hover:border-amber-300/50",
+        shadow: "shadow-amber-500/20"
       },
       indigo: {
         gradient: "from-indigo-500 to-indigo-600",
@@ -177,6 +210,7 @@ const Projects: React.FC = () => {
         text: "text-indigo-700",
         accent: "bg-indigo-100",
         hover: "hover:border-indigo-300/50",
+        shadow: "shadow-indigo-500/20"
       },
       red: {
         gradient: "from-red-500 to-red-600",
@@ -185,6 +219,7 @@ const Projects: React.FC = () => {
         text: "text-red-700",
         accent: "bg-red-100",
         hover: "hover:border-red-300/50",
+        shadow: "shadow-red-500/20"
       },
     };
 
@@ -197,23 +232,33 @@ const Projects: React.FC = () => {
       ref={sectionRef}
       className="relative py-16 sm:py-20 lg:py-24 overflow-hidden"
     >
-      {/* Animated Background - Same as Services */}
+      {/* Enhanced Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"></div>
         
-        {/* Animated geometric lines */}
+        {/* Complex animated patterns */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent animate-pulse-slow"></div>
-          <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent animate-pulse-slower"></div>
-          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-200/50 to-transparent animate-slide-up"></div>
-          <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-200/50 to-transparent animate-slide-down"></div>
+          {/* Diagonal moving lines */}
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent animate-pulse-slow transform rotate-12"></div>
+            <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent animate-pulse-slower transform -rotate-12"></div>
+          </div>
           
-          {/* Grid pattern overlay */}
-          <div className="absolute inset-0 opacity-30">
+          {/* Floating geometric shapes */}
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-100/20 rounded-full blur-xl animate-float"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-purple-100/20 rounded-full blur-xl animate-float-horizontal"></div>
+          <div className="absolute top-1/2 right-1/3 w-20 h-20 bg-emerald-100/20 rounded-full blur-xl animate-float-vertical"></div>
+          
+          {/* Enhanced grid pattern */}
+          <div className="absolute inset-0 opacity-20">
             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <pattern id="projects-grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-                  <path d="M60 0H0v60h60V0zM30 30m-1 0a1 1 0 1 1 2 0 1 1 0 1 1-2 0" fill="rgba(59, 130, 246, 0.1)"/>
+                <pattern id="projects-grid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+                  <circle cx="40" cy="40" r="1" fill="rgba(59, 130, 246, 0.3)"/>
+                  <circle cx="0" cy="0" r="1" fill="rgba(147, 51, 234, 0.2)"/>
+                  <circle cx="80" cy="0" r="1" fill="rgba(16, 185, 129, 0.2)"/>
+                  <circle cx="0" cy="80" r="1" fill="rgba(245, 158, 11, 0.2)"/>
+                  <circle cx="80" cy="80" r="1" fill="rgba(239, 68, 68, 0.2)"/>
                 </pattern>
               </defs>
               <rect width="100%" height="100%" fill="url(#projects-grid)"/>
@@ -221,36 +266,41 @@ const Projects: React.FC = () => {
           </div>
         </div>
         
-        {/* Corner accents */}
-        <div className="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-tl from-purple-100/40 to-transparent rounded-full blur-3xl"></div>
+        {/* Enhanced corner accents */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 via-purple-100/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-emerald-100/30 via-amber-100/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-indigo-100/20 to-red-100/20 rounded-full blur-3xl"></div>
       </div>
 
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
+        {/* Enhanced Header Section */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-100/80 backdrop-blur-sm rounded-full mb-4 sm:mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-100/80 to-purple-100/80 backdrop-blur-sm rounded-full mb-6 border border-white/50 shadow-lg"
           >
             <Target className="h-4 w-4 text-blue-600" />
             <span className="text-blue-700 font-medium text-sm">
               Our Success Stories
             </span>
+            <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
           </motion.div>
 
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-4"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 mb-6 leading-tight px-4"
           >
             Transforming Industries with{" "}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Innovative Solutions
+            <span className="relative">
+              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">
+                Innovative Solutions
+              </span>
+              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 rounded-full opacity-30"></div>
             </span>
           </motion.h2>
 
@@ -258,16 +308,38 @@ const Projects: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4"
+            className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4 mb-8"
           >
             Discover how we've helped leading companies achieve remarkable results through 
             cutting-edge engineering solutions and strategic implementations.
           </motion.p>
+
+          {/* Enhanced Filter Tabs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8"
+          >
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveFilter(category)}
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 ${
+                  activeFilter === category
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25'
+                    : 'bg-white/70 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-md border border-gray-200/50'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </motion.div>
         </div>
 
-        {/* Projects Grid - Mobile Responsive */}
-        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 mb-16 sm:mb-20 lg:mb-24">
-          {projects.map((project, index) => {
+        {/* Enhanced Projects Grid - Consistent Card Heights */}
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20 lg:mb-24">
+          {filteredProjects.map((project, index) => {
             const colors = getColorClasses(project.color);
             const isHovered = hoveredProject === index;
 
@@ -276,18 +348,28 @@ const Projects: React.FC = () => {
                 key={project.id}
                 initial={{ opacity: 0, y: 40 }}
                 animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: index * 0.15, duration: 0.6 }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
                 onMouseEnter={() => setHoveredProject(index)}
                 onMouseLeave={() => setHoveredProject(null)}
-                className={`group relative bg-white/80 backdrop-blur-sm border ${colors.border} ${colors.hover} rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-black/5 ${
-                  isHovered ? "scale-[1.02] shadow-2xl shadow-black/10" : "hover:scale-[1.01]"
-                } ${index % 2 === 1 ? 'lg:mt-8' : ''}`}
+                className={`group relative bg-white/80 backdrop-blur-sm border ${colors.border} ${colors.hover} rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl ${colors.shadow} ${
+                  isHovered ? "scale-[1.02] shadow-2xl" : "hover:scale-[1.01]"
+                } ${project.featured ? 'ring-2 ring-blue-200/50' : ''} h-full flex flex-col`}
               >
+                {/* Featured Badge */}
+                {project.featured && (
+                  <div className="absolute top-4 left-4 z-20">
+                    <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
+                      <Star className="w-3 h-3 fill-current" />
+                      FEATURED
+                    </div>
+                  </div>
+                )}
+
                 {/* Background gradient on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
 
-                {/* Project Image */}
-                <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                {/* Project Image - Fixed Height */}
+                <div className="relative h-48 overflow-hidden">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -296,25 +378,28 @@ const Projects: React.FC = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                   
-                  {/* Category Badge */}
-                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
-                    <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r ${colors.gradient} text-white shadow-lg`}>
+                  {/* Enhanced Overlays */}
+                  <div className="absolute top-4 right-4 flex flex-col gap-2">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${colors.gradient} text-white shadow-lg`}>
                       {project.category}
                     </span>
-                  </div>
-                  
-                  {/* Year Badge */}
-                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
-                    <span className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-white/90 backdrop-blur-sm text-gray-900">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/90 backdrop-blur-sm text-gray-900">
                       <Calendar className="w-3 h-3 mr-1" />
                       {project.year}
                     </span>
                   </div>
 
+                  {/* Rating Stars */}
+                  <div className="absolute bottom-4 left-4 flex items-center gap-1">
+                    {[...Array(project.rating)].map((_, i) => (
+                      <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
+                    ))}
+                  </div>
+
                   {/* Stats Overlay */}
-                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4">
-                    <div className="bg-white/90 backdrop-blur-sm rounded-lg px-2 sm:px-3 py-1 sm:py-2">
-                      <div className={`text-lg sm:text-xl font-bold ${colors.text}`}>
+                  <div className="absolute bottom-4 right-4">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2">
+                      <div className={`text-lg font-bold ${colors.text}`}>
                         {project.stats.value}
                       </div>
                       <div className="text-xs text-gray-600 font-medium">
@@ -324,41 +409,44 @@ const Projects: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Project Content */}
-                <div className="relative p-4 sm:p-6 lg:p-8">
-                  <div className="flex items-start justify-between mb-3 sm:mb-4">
+                {/* Project Content - Flexible Height */}
+                <div className="relative p-6 flex-1 flex flex-col">
+                  <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors duration-300 mb-1">
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors duration-300 mb-2 line-clamp-2">
                         {project.title}
                       </h3>
-                      <p className={`text-sm sm:text-base font-medium ${colors.text} mb-2 sm:mb-3`}>
+                      <p className={`text-sm font-medium ${colors.text} mb-3`}>
                         {project.subtitle}
                       </p>
                     </div>
-                    <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-blue-600 transition-colors duration-300 ml-2 flex-shrink-0" />
+                    <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors duration-300 ml-2 flex-shrink-0" />
                   </div>
 
-                  <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
+                  <p className="text-gray-600 mb-6 leading-relaxed text-sm line-clamp-3 flex-1">
                     {project.description}
                   </p>
 
-                  {/* Project Meta */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+                  {/* Enhanced Project Meta */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="flex items-center">
-                      <Users className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 mr-2" />
-                      <span className="text-xs sm:text-sm text-gray-600">{project.client}</span>
+                      <Users className="w-4 h-4 text-gray-400 mr-2" />
+                      <span className="text-sm text-gray-600 truncate">{project.client}</span>
                     </div>
                     <div className="flex items-center">
-                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 mr-2" />
-                      <span className="text-xs sm:text-sm text-gray-600">{project.duration}</span>
+                      <Clock className="w-4 h-4 text-gray-400 mr-2" />
+                      <span className="text-sm text-gray-600">{project.duration}</span>
+                    </div>
+                    <div className="flex items-center col-span-2">
+                      <Layers className="w-4 h-4 text-gray-400 mr-2" />
+                      <span className="text-sm text-gray-600 font-medium">{project.budget}</span>
                     </div>
                   </div>
 
-                  {/* Technologies */}
-                  <div className="mb-4 sm:mb-6">
-                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Technologies:</h4>
-                    <div className="flex flex-wrap gap-1 sm:gap-2">
-                      {project.technologies.map((tech, techIndex) => (
+                  {/* Technologies - Compact */}
+                  <div className="mb-6">
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.slice(0, 3).map((tech, techIndex) => (
                         <span
                           key={techIndex}
                           className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 transition-colors duration-200"
@@ -366,89 +454,98 @@ const Projects: React.FC = () => {
                           {tech}
                         </span>
                       ))}
+                      {project.technologies.length > 3 && (
+                        <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-500">
+                          +{project.technologies.length - 3}
+                        </span>
+                      )}
                     </div>
                   </div>
 
-                  {/* Results */}
-                  <div className="mb-4 sm:mb-6">
-                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3 flex items-center">
-                      <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-green-600" />
+                  {/* Key Results - Compact */}
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center">
+                      <TrendingUp className="w-4 h-4 mr-2 text-green-600" />
                       Key Results:
                     </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2">
-                      {project.results.slice(0, 4).map((result, resultIndex) => (
-                        <div key={resultIndex} className="flex items-center text-xs sm:text-sm text-gray-600">
+                    <div className="space-y-2">
+                      {project.results.slice(0, 2).map((result, resultIndex) => (
+                        <div key={resultIndex} className="flex items-center text-sm text-gray-600">
                           <CheckCircle className="w-3 h-3 text-green-500 mr-2 flex-shrink-0" />
-                          <span>{result}</span>
+                          <span className="line-clamp-1">{result}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  {/* CTA Button */}
-                  <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-3 px-4 rounded-lg sm:rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 group-hover:scale-105 text-sm sm:text-base`}>
-                    <span>View Case Study</span>
-                    <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
-                  </button>
+                  {/* CTA Button - Always at bottom */}
+                  <div className="mt-auto">
+                    <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 group-hover:scale-105`}>
+                      <span>View Case Study</span>
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Enhanced CTA Section - Mobile Responsive */}
+        {/* Enhanced CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 1.0, duration: 0.6 }}
           className="relative z-10"
         >
-          <div className="relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 overflow-hidden shadow-2xl border border-white/20 bg-white/30 backdrop-blur-lg">
-            {/* Background layers */}
+          <div className="relative rounded-3xl p-8 md:p-16 overflow-hidden shadow-2xl border border-white/20 bg-white/30 backdrop-blur-lg">
+            {/* Enhanced Background layers */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-[url('/8410.jpg')] bg-cover opacity-10"></div>
               <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-blue-100/40 to-indigo-100/60"></div>
+              <div className="absolute top-0 left-0 w-32 h-32 bg-blue-400/20 rounded-full blur-3xl animate-float"></div>
+              <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-400/20 rounded-full blur-3xl animate-float-horizontal"></div>
             </div>
 
             {/* Content */}
             <div className="relative z-10 text-center">
-              <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
-                <div className="p-2 sm:p-3 bg-blue-100 rounded-lg sm:rounded-xl shadow-sm">
-                  <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl shadow-sm border border-white/50">
+                  <Zap className="h-6 w-6 text-blue-600" />
                 </div>
-                <span className="text-blue-700 font-semibold text-base sm:text-lg tracking-wide">
+                <span className="text-blue-700 font-semibold text-lg tracking-wide">
                   Ready to Transform Your Business?
                 </span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 leading-tight">
-                Let's Create Your
-                <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+                Let's Create Your Next
+                <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-emerald-600 bg-clip-text text-transparent">
                   Success Story
                 </span>
               </h3>
 
-              <p className="text-gray-700 text-base sm:text-lg mb-6 sm:mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed px-4">
+              <p className="text-gray-700 text-lg mb-10 max-w-3xl mx-auto leading-relaxed px-4">
                 Join the ranks of industry leaders who have transformed their operations with our 
-                innovative engineering solutions. Your next breakthrough is just a conversation away.
+                innovative engineering solutions. Your breakthrough is just a conversation away.
               </p>
 
-              {/* Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              {/* Enhanced Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
                   onClick={() =>
                     document
                       .getElementById("contact")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-300/30 flex items-center justify-center gap-2"
+                  className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-blue-700 hover:via-purple-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-300/30 flex items-center justify-center gap-2"
                 >
                   <span>Start Your Project</span>
-                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <ArrowRight className="h-5 w-5" />
                 </button>
 
-                <button className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold hover:bg-white hover:border-gray-300 transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2">
-                  <Award className="h-4 w-4 sm:h-5 sm:w-5" />
+                <button className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-800 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:border-gray-300 transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2">
+                  <Award className="h-5 w-5" />
                   <span>View All Projects</span>
                 </button>
               </div>
