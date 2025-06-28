@@ -9,9 +9,6 @@ const Header: React.FC = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const location = useLocation();
 
-  // Check if we're on the homepage
-  const isHomePage = location.pathname === '/';
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -21,12 +18,6 @@ const Header: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMenuOpen]);
-
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setIsMenuOpen(false);
-    setIsServicesOpen(false);
-  }, [location]);
 
   const scrollToSection = (sectionId: string) => {
     if (location.pathname !== '/') {
@@ -57,25 +48,20 @@ const Header: React.FC = () => {
     { label: "Supply Chain Optimization", path: "/services/supply-chain" },
   ];
 
-  // Determine if header should use "scrolled" styling
-  const shouldUseScrolledStyling = isScrolled || !isHomePage;
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-500 ${
-        shouldUseScrolledStyling 
-          ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50" 
-          : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
       }`}
     >
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14 sm:h-16 md:h-18 lg:h-20 relative">
+        <div className="flex justify-between items-center h-14 sm:h-16 md:h-18 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 flex-shrink-0 min-w-0 z-[10000] relative">
+          <Link to="/" className="flex items-center space-x-2 flex-shrink-0 min-w-0">
             <img
-              src={shouldUseScrolledStyling ? "/logo_b.png" : "/logo_w.png"}
+              src={isScrolled ? "/logo_b.png" : "/logo_w.png"}
               alt="Pinnakl Technologies Logo"
-              className="h-6 w-auto sm:h-8 md:h-10 lg:h-12 object-contain transition-all duration-500"
+              className="h-6 w-auto sm:h-8 md:h-10 lg:h-12 object-contain transition-all duration-300"
             />
           </Link>
 
@@ -86,7 +72,7 @@ const Header: React.FC = () => {
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap ${
-                  shouldUseScrolledStyling
+                  isScrolled
                     ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                     : "text-white/90 hover:text-white hover:bg-white/10"
                 }`}
@@ -101,7 +87,7 @@ const Header: React.FC = () => {
                 onMouseEnter={() => setIsServicesOpen(true)}
                 onMouseLeave={() => setIsServicesOpen(false)}
                 className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap flex items-center gap-1 ${
-                  shouldUseScrolledStyling
+                  isScrolled
                     ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                     : "text-white/90 hover:text-white hover:bg-white/10"
                 }`}
@@ -119,7 +105,7 @@ const Header: React.FC = () => {
                     transition={{ duration: 0.2 }}
                     onMouseEnter={() => setIsServicesOpen(true)}
                     onMouseLeave={() => setIsServicesOpen(false)}
-                    className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl shadow-2xl z-[10001] overflow-hidden"
+                    className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl shadow-2xl z-50 overflow-hidden"
                   >
                     {serviceItems.map((service, index) => (
                       <Link
@@ -147,8 +133,8 @@ const Header: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`xl:hidden p-2 sm:p-3 rounded-lg transition-colors duration-300 touch-manipulation z-[10000] relative ${
-              shouldUseScrolledStyling ? "text-gray-900 hover:bg-gray-100" : "text-white hover:bg-white/10"
+            className={`xl:hidden p-2 sm:p-3 rounded-lg transition-colors duration-300 touch-manipulation ${
+              isScrolled ? "text-gray-900 hover:bg-gray-100" : "text-white hover:bg-white/10"
             }`}
             aria-label="Toggle menu"
           >
@@ -169,11 +155,11 @@ const Header: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[9998] bg-white/98 backdrop-blur-md flex flex-col justify-center items-center px-4 sm:px-6"
+            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-md flex flex-col justify-center items-center px-4 sm:px-6"
           >
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-gray-100 text-gray-700 hover:text-blue-600 hover:bg-blue-100 transition duration-200 shadow-sm touch-manipulation z-[9999]"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-gray-100 text-gray-700 hover:text-blue-600 hover:bg-blue-100 transition duration-200 shadow-sm touch-manipulation"
               aria-label="Close Menu"
             >
               <X className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -186,10 +172,7 @@ const Header: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  onClick={() => {
-                    scrollToSection(item.id);
-                    setIsMenuOpen(false);
-                  }}
+                  onClick={() => scrollToSection(item.id)}
                   className="w-full text-center text-lg sm:text-xl md:text-2xl text-gray-800 font-semibold hover:text-blue-600 transition duration-200 py-3 px-6 rounded-xl hover:bg-blue-50 touch-manipulation"
                 >
                   {item.label}
@@ -224,10 +207,7 @@ const Header: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: (navItems.length + 1) * 0.1 }}
-                onClick={() => {
-                  scrollToSection("contact");
-                  setIsMenuOpen(false);
-                }}
+                onClick={() => scrollToSection("contact")}
                 className="w-full mt-4 bg-blue-600 text-white px-6 py-4 sm:py-5 rounded-full font-medium hover:bg-blue-700 transition duration-300 shadow-md text-lg sm:text-xl touch-manipulation"
               >
                 Get Quote
