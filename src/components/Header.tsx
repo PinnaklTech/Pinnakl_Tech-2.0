@@ -19,6 +19,12 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMenuOpen]);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setIsServicesOpen(false);
+  }, [location]);
+
   const scrollToSection = (sectionId: string) => {
     if (location.pathname !== '/') {
       window.location.href = `/#${sectionId}`;
@@ -57,7 +63,7 @@ const Header: React.FC = () => {
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16 md:h-18 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 flex-shrink-0 min-w-0">
+          <Link to="/" className="flex items-center space-x-2 flex-shrink-0 min-w-0 z-50">
             <img
               src={isScrolled ? "/logo_b.png" : "/logo_w.png"}
               alt="Pinnakl Technologies Logo"
@@ -133,7 +139,7 @@ const Header: React.FC = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`xl:hidden p-2 sm:p-3 rounded-lg transition-colors duration-300 touch-manipulation ${
+            className={`xl:hidden p-2 sm:p-3 rounded-lg transition-colors duration-300 touch-manipulation z-50 ${
               isScrolled ? "text-gray-900 hover:bg-gray-100" : "text-white hover:bg-white/10"
             }`}
             aria-label="Toggle menu"
@@ -172,7 +178,10 @@ const Header: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => {
+                    scrollToSection(item.id);
+                    setIsMenuOpen(false);
+                  }}
                   className="w-full text-center text-lg sm:text-xl md:text-2xl text-gray-800 font-semibold hover:text-blue-600 transition duration-200 py-3 px-6 rounded-xl hover:bg-blue-50 touch-manipulation"
                 >
                   {item.label}
@@ -207,11 +216,14 @@ const Header: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: (navItems.length + 1) * 0.1 }}
-                onClick={() => scrollToSection("contact")}
+                onClick={() => {
+                  scrollToSection("contact");
+                  setIsMenuOpen(false);
+                }}
                 className="w-full mt-4 bg-blue-600 text-white px-6 py-4 sm:py-5 rounded-full font-medium hover:bg-blue-700 transition duration-300 shadow-md text-lg sm:text-xl touch-manipulation"
               >
                 Get Quote
-              </motion.button>
+              </button>
             </div>
           </motion.div>
         )}
