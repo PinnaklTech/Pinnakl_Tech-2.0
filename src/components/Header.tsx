@@ -165,7 +165,7 @@ const Header: React.FC = () => {
 
       {/* Full Screen Mobile Menu - Only visible on mobile */}
       <div
-        className={`fixed inset-0 z-40 md:hidden transition-all duration-300 ease-in-out ${
+        className={`fixed inset-0 z-[60] md:hidden transition-all duration-300 ease-in-out ${
           isMenuOpen 
             ? 'opacity-100 pointer-events-auto' 
             : 'opacity-0 pointer-events-none'
@@ -183,14 +183,14 @@ const Header: React.FC = () => {
         >
           {/* Menu Content */}
           <div className="flex flex-col h-full">
-            {/* Header with Logo - matches main header height */}
+            {/* Simplified Header - No logo to avoid overlap */}
             <div className="flex items-center justify-between px-4 sm:px-6 h-16 md:h-20 bg-white border-b border-gray-100">
-              <img
-                src="/logo_b.png"
-                alt="Pinnakl Technologies"
-                className="h-8 sm:h-10 w-auto"
-              />
-              {/* Close button for additional accessibility */}
+              <div className="flex items-center space-x-3">
+                <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span className="text-lg font-semibold text-gray-900">Menu</span>
+              </div>
+              
+              {/* Close button */}
               <button
                 onClick={() => setIsMenuOpen(false)}
                 className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
