@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ExternalLink, ArrowRight, Calendar, Tag, Award, TrendingUp, Users, Zap, Target, Sparkles } from 'lucide-react';
+import { ExternalLink, ArrowRight, Calendar, Tag, Award, TrendingUp, Users, Zap, Target, Sparkles, Star, CheckCircle2, Play } from 'lucide-react';
 
 const Projects: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -42,7 +42,8 @@ const Projects: React.FC = () => {
       tags: ['CAD Design', 'Performance Analysis', 'Manufacturing', 'Materials'],
       featured: true,
       impact: 'High',
-      status: 'Completed'
+      status: 'Completed',
+      rating: 4.9
     },
     {
       title: 'Medical Device Development',
@@ -61,7 +62,8 @@ const Projects: React.FC = () => {
       tags: ['Product Development', 'Regulatory Compliance', 'Innovation'],
       featured: true,
       impact: 'High',
-      status: 'Completed'
+      status: 'Completed',
+      rating: 4.8
     },
     {
       title: 'Aerospace Component Manufacturing Optimization',
@@ -80,7 +82,8 @@ const Projects: React.FC = () => {
       tags: ['Process Optimization', 'Quality Systems', 'Lean Manufacturing'],
       featured: false,
       impact: 'High',
-      status: 'Completed'
+      status: 'Completed',
+      rating: 4.9
     },
     {
       title: 'Industrial Automation Solution',
@@ -99,7 +102,8 @@ const Projects: React.FC = () => {
       tags: ['Automation', 'Robotics', 'Process Design'],
       featured: false,
       impact: 'Medium',
-      status: 'Completed'
+      status: 'Completed',
+      rating: 4.7
     },
     {
       title: 'Renewable Energy System Design',
@@ -118,7 +122,8 @@ const Projects: React.FC = () => {
       tags: ['Sustainable Design', 'CFD Analysis', 'Materials Engineering'],
       featured: false,
       impact: 'High',
-      status: 'Completed'
+      status: 'Completed',
+      rating: 4.8
     },
     {
       title: 'Consumer Electronics Redesign',
@@ -137,7 +142,8 @@ const Projects: React.FC = () => {
       tags: ['Product Design', 'UX Optimization', 'Cost Engineering'],
       featured: false,
       impact: 'Medium',
-      status: 'Completed'
+      status: 'Completed',
+      rating: 4.6
     }
   ];
 
@@ -152,95 +158,66 @@ const Projects: React.FC = () => {
 
   const getImpactColor = (impact: string) => {
     switch (impact) {
-      case 'High': return 'bg-emerald-100 text-emerald-800 border-emerald-200';
-      case 'Medium': return 'bg-amber-100 text-amber-800 border-amber-200';
-      default: return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'High': return 'bg-emerald-500/10 text-emerald-700 border-emerald-200';
+      case 'Medium': return 'bg-amber-500/10 text-amber-700 border-amber-200';
+      default: return 'bg-blue-500/10 text-blue-700 border-blue-200';
     }
   };
 
   const getCategoryColor = (category: string) => {
     const colors: { [key: string]: string } = {
-      'Automotive': 'bg-blue-100 text-blue-800',
-      'Aerospace': 'bg-purple-100 text-purple-800',
-      'Medical': 'bg-red-100 text-red-800',
-      'Industrial': 'bg-gray-100 text-gray-800',
-      'Energy': 'bg-green-100 text-green-800',
-      'Electronics': 'bg-indigo-100 text-indigo-800',
+      'Automotive': 'bg-blue-500/10 text-blue-700 border-blue-200',
+      'Aerospace': 'bg-purple-500/10 text-purple-700 border-purple-200',
+      'Medical': 'bg-red-500/10 text-red-700 border-red-200',
+      'Industrial': 'bg-gray-500/10 text-gray-700 border-gray-200',
+      'Energy': 'bg-green-500/10 text-green-700 border-green-200',
+      'Electronics': 'bg-indigo-500/10 text-indigo-700 border-indigo-200',
     };
-    return colors[category] || 'bg-gray-100 text-gray-800';
+    return colors[category] || 'bg-gray-500/10 text-gray-700 border-gray-200';
   };
 
   return (
-    <section id="projects" ref={sectionRef} className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
-      {/* Premium Background Design */}
-      <div className="absolute inset-0">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50/80 to-blue-50/40"></div>
-        
-        {/* Sophisticated geometric patterns */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Animated lines */}
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200/60 to-transparent animate-pulse-slow"></div>
-          <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-200/60 to-transparent animate-pulse-slower"></div>
-          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-200/40 to-transparent animate-slide-up"></div>
-          <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-purple-200/40 to-transparent animate-slide-down"></div>
-          
-          {/* Subtle grid overlay */}
-          <div className="absolute inset-0 opacity-20">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="project-grid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-                  <circle cx="40" cy="40" r="1" fill="rgba(59, 130, 246, 0.3)"/>
-                  <circle cx="0" cy="0" r="0.5" fill="rgba(147, 51, 234, 0.2)"/>
-                  <circle cx="80" cy="80" r="0.5" fill="rgba(147, 51, 234, 0.2)"/>
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#project-grid)"/>
-            </svg>
-          </div>
-        </div>
-        
-        {/* Enhanced corner accents */}
-        <div className="absolute top-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-gradient-to-bl from-blue-100/40 via-purple-100/20 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-gradient-to-tr from-purple-100/40 via-blue-100/20 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 sm:w-48 h-32 sm:h-48 bg-gradient-to-r from-blue-100/30 to-purple-100/30 rounded-full blur-2xl"></div>
+    <section id="projects" ref={sectionRef} className="relative py-20 lg:py-32 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-400/3 to-purple-400/3 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Premium Header Design */}
+        {/* Enhanced Header */}
         <div 
-          className={`text-center mb-12 sm:mb-16 lg:mb-20 transform transition-all duration-1000 ${
+          className={`text-center mb-16 lg:mb-24 transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
         >
-          <div className="inline-flex items-center gap-2 mb-4 sm:mb-6">
-            <div className="p-2 bg-white/80 border border-gray-200 rounded-lg backdrop-blur-sm shadow-sm">
-              <Sparkles className="h-4 w-4 text-blue-600" />
+          <div className="inline-flex items-center gap-3 mb-6">
+            <div className="p-2 bg-blue-500/10 border border-blue-200 rounded-xl">
+              <Sparkles className="h-5 w-5 text-blue-600" />
             </div>
-            <span className="px-3 sm:px-4 py-2 bg-white/80 border border-gray-200 rounded-full text-gray-700 text-sm font-medium backdrop-blur-sm shadow-sm">
+            <span className="px-4 py-2 bg-white border border-gray-200 rounded-full text-gray-700 text-sm font-medium shadow-sm">
               Our Portfolio
             </span>
           </div>
           
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-gray-900 mb-6 sm:mb-8 leading-none tracking-tight">
-            FEATURED
-            <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-600 mt-2">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-gray-900 mb-6 leading-tight tracking-tight">
+            Featured
+            <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
               Projects
             </span>
           </h2>
           
-          <div className="max-w-4xl mx-auto px-4">
-            <p className="text-lg sm:text-xl lg:text-2xl text-gray-700 leading-relaxed font-light">
-              Explore our portfolio of <span className="text-gray-900 font-semibold">successful engineering projects</span> that showcase 
-              our expertise in delivering <span className="text-gray-900 font-semibold">innovative solutions</span> across 
-              <span className="text-gray-900 font-semibold"> diverse industries</span>.
-            </p>
-          </div>
+          <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            Discover how we've helped industry leaders achieve breakthrough results through 
+            <span className="text-gray-900 font-semibold"> innovative engineering solutions</span> and 
+            <span className="text-gray-900 font-semibold"> cutting-edge technology</span>.
+          </p>
         </div>
 
         {/* Enhanced Category Filter */}
         <div 
-          className={`flex flex-wrap justify-center gap-2 sm:gap-3 mb-12 sm:mb-16 transform transition-all duration-1000 ${
+          className={`flex flex-wrap justify-center gap-3 mb-16 transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
           style={{ transitionDelay: '200ms' }}
@@ -249,10 +226,10 @@ const Projects: React.FC = () => {
             <button
               key={category}
               onClick={() => setActiveFilter(category)}
-              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
+              className={`px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105 ${
                 activeFilter === category
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
-                  : 'bg-white/80 text-gray-700 border border-gray-200 hover:bg-white hover:border-gray-300 hover:shadow-md'
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25'
+                  : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 hover:shadow-md'
               }`}
             >
               {category}
@@ -260,85 +237,103 @@ const Projects: React.FC = () => {
           ))}
         </div>
 
-        {/* Premium Featured Projects */}
+        {/* Featured Projects - Hero Style */}
         {featuredProjects.length > 0 && (
-          <div className="mb-16 sm:mb-20 lg:mb-24">
-            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
+          <div className="mb-20 lg:mb-32">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
               {featuredProjects.map((project, index) => (
                 <div
                   key={project.title}
-                  className={`group relative bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-2xl sm:rounded-3xl overflow-hidden hover:bg-white hover:border-gray-300/70 hover:shadow-2xl hover:shadow-black/10 transition-all duration-700 transform hover:scale-[1.02] ${
+                  className={`group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:scale-[1.02] ${
                     isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}
                   style={{ transitionDelay: `${(index + 1) * 200}ms` }}
                   onMouseEnter={() => setHoveredProject(index)}
                   onMouseLeave={() => setHoveredProject(null)}
                 >
-                  {/* Premium Featured Badge */}
-                  <div className="absolute top-6 left-6 z-10">
-                    <div className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg backdrop-blur-sm">
-                      <Award className="h-4 w-4" />
+                  {/* Featured Badge */}
+                  <div className="absolute top-6 left-6 z-20">
+                    <div className="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                      <Star className="h-4 w-4 fill-current" />
                       <span>Featured</span>
                     </div>
                   </div>
 
-                  {/* Enhanced Image Section */}
-                  <div className="relative h-56 sm:h-72 overflow-hidden">
+                  {/* Image Section */}
+                  <div className="relative h-80 overflow-hidden">
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
                     
-                    {/* Enhanced Badges */}
+                    {/* Floating Badges */}
                     <div className="absolute top-6 right-6 flex flex-col gap-3">
-                      <span className={`px-3 py-2 rounded-full text-sm font-medium backdrop-blur-md ${getCategoryColor(project.category)}`}>
+                      <span className={`px-3 py-2 rounded-full text-sm font-semibold border backdrop-blur-md ${getCategoryColor(project.category)}`}>
                         {project.category}
                       </span>
-                      <span className={`px-3 py-2 rounded-full text-sm font-medium border backdrop-blur-md ${getImpactColor(project.impact)}`}>
+                      <span className={`px-3 py-2 rounded-full text-sm font-semibold border backdrop-blur-md ${getImpactColor(project.impact)}`}>
                         {project.impact} Impact
                       </span>
                     </div>
 
-                    {/* Status indicator */}
+                    {/* Rating */}
                     <div className="absolute bottom-6 left-6">
-                      <div className="flex items-center gap-2 bg-white/90 backdrop-blur-md px-3 py-2 rounded-full">
-                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                        <span className="text-green-700 text-sm font-medium">{project.status}</span>
+                      <div className="flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-full">
+                        <div className="flex items-center gap-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Star 
+                              key={i} 
+                              className={`h-3 w-3 ${i < Math.floor(project.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                            />
+                          ))}
+                        </div>
+                        <span className="text-gray-700 text-sm font-semibold">{project.rating}</span>
+                      </div>
+                    </div>
+
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-16 h-16 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300 cursor-pointer">
+                        <Play className="h-6 w-6 text-white ml-1" />
                       </div>
                     </div>
                   </div>
 
-                  {/* Premium Content Section */}
-                  <div className="p-6 sm:p-8 lg:p-10">
+                  {/* Content Section */}
+                  <div className="p-8 lg:p-10">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center text-gray-500 text-sm">
                         <Calendar className="h-4 w-4 mr-2" />
                         <span>{project.duration} • {project.year}</span>
                       </div>
+                      <div className="flex items-center gap-2 bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                        <CheckCircle2 className="h-3 w-3" />
+                        <span>{project.status}</span>
+                      </div>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
+                    <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
                       {project.title}
                     </h3>
                     
-                    <p className="text-gray-600 text-sm mb-4">
-                      Client: <span className="font-semibold text-gray-800">{project.client}</span>
+                    <p className="text-gray-600 text-sm mb-4 font-medium">
+                      Client: <span className="text-gray-800">{project.client}</span>
                     </p>
 
-                    <p className="text-gray-700 mb-8 leading-relaxed text-base">
+                    <p className="text-gray-700 mb-8 leading-relaxed">
                       {project.description}
                     </p>
 
-                    {/* Enhanced Results Grid */}
+                    {/* Results Grid */}
                     <div className="grid grid-cols-2 gap-4 mb-8">
                       {project.results.slice(0, 4).map((result, idx) => {
                         const IconComponent = result.icon;
                         return (
-                          <div key={idx} className="bg-gradient-to-br from-gray-50 to-gray-100/50 border border-gray-200/50 rounded-xl p-4 text-center hover:shadow-md transition-all duration-300 group/result">
-                            <div className="w-10 h-10 bg-white border border-gray-200 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover/result:scale-110 transition-transform duration-300">
+                          <div key={idx} className="bg-gray-50 border border-gray-100 rounded-2xl p-4 text-center hover:bg-gray-100 transition-colors duration-300 group/result">
+                            <div className="w-12 h-12 bg-white border border-gray-200 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover/result:scale-110 transition-transform duration-300">
                               <IconComponent className="h-5 w-5 text-blue-600" />
                             </div>
                             <div className="text-xl font-bold text-gray-900 mb-1">{result.value}</div>
@@ -348,25 +343,20 @@ const Projects: React.FC = () => {
                       })}
                     </div>
 
-                    {/* Enhanced Tags */}
+                    {/* Tags */}
                     <div className="flex flex-wrap gap-2 mb-8">
-                      {project.tags.slice(0, 4).map((tag) => (
+                      {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="bg-gray-100 border border-gray-200 text-gray-700 px-3 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors duration-200"
+                          className="bg-blue-50 border border-blue-200 text-blue-700 px-3 py-2 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors duration-200"
                         >
                           {tag}
                         </span>
                       ))}
-                      {project.tags.length > 4 && (
-                        <span className="text-gray-400 text-sm font-medium py-2">
-                          +{project.tags.length - 4} more
-                        </span>
-                      )}
                     </div>
 
-                    {/* Premium CTA Button */}
-                    <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center space-x-3 group-hover:shadow-lg group-hover:shadow-blue-500/30 hover:scale-[1.02]">
+                    {/* CTA Button */}
+                    <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-2xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 flex items-center justify-center space-x-3 group-hover:shadow-lg group-hover:shadow-blue-500/25 hover:scale-[1.02]">
                       <span>View Case Study</span>
                       <ExternalLink className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                     </button>
@@ -377,65 +367,81 @@ const Projects: React.FC = () => {
           </div>
         )}
 
-        {/* Enhanced Regular Projects Grid */}
-        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
+        {/* Regular Projects - Modern Card Grid */}
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-8 mb-20">
           {regularProjects.filter(project => 
             activeFilter === 'All' || project.category === activeFilter
           ).map((project, index) => (
             <div
               key={project.title}
-              className={`group bg-white/80 backdrop-blur-sm border border-gray-200/50 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-black/5 transition-all duration-500 transform hover:scale-105 overflow-hidden hover:bg-white hover:border-gray-300/70 ${
+              className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden border border-gray-100 hover:border-gray-200 ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
-              style={{ transitionDelay: `${(index + featuredProjects.length + 1) * 150}ms` }}
+              style={{ transitionDelay: `${(index + featuredProjects.length + 1) * 100}ms` }}
             >
-              {/* Enhanced Image */}
+              {/* Image */}
               <div className="relative overflow-hidden">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-44 sm:h-52 object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
+                {/* Floating Elements */}
                 <div className="absolute top-4 left-4">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium backdrop-blur-md ${getCategoryColor(project.category)}`}>
+                  <span className={`px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur-md ${getCategoryColor(project.category)}`}>
                     {project.category}
                   </span>
                 </div>
+                
                 <div className="absolute top-4 right-4">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium border backdrop-blur-md ${getImpactColor(project.impact)}`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-semibold border backdrop-blur-md ${getImpactColor(project.impact)}`}>
                     {project.impact}
                   </span>
                 </div>
+
+                {/* Rating */}
+                <div className="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex items-center gap-1 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full">
+                    <Star className="h-3 w-3 text-yellow-400 fill-current" />
+                    <span className="text-gray-700 text-sm font-semibold">{project.rating}</span>
+                  </div>
+                </div>
               </div>
 
-              {/* Enhanced Content */}
-              <div className="p-5 sm:p-6">
-                <div className="flex items-center text-gray-500 text-xs sm:text-sm mb-3">
-                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
-                  <span>{project.duration} • {project.year}</span>
+              {/* Content */}
+              <div className="p-6">
+                <div className="flex items-center justify-between text-gray-500 text-sm mb-3">
+                  <div className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    <span>{project.duration} • {project.year}</span>
+                  </div>
+                  <div className="flex items-center gap-1 bg-green-50 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
+                    <CheckCircle2 className="h-3 w-3" />
+                    <span>{project.status}</span>
+                  </div>
                 </div>
 
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
                   {project.title}
                 </h3>
                 
-                <p className="text-gray-600 text-xs sm:text-sm mb-4">
-                  Client: <span className="font-medium text-gray-800">{project.client}</span>
+                <p className="text-gray-600 text-sm mb-4 font-medium">
+                  Client: <span className="text-gray-800">{project.client}</span>
                 </p>
 
-                <p className="text-gray-600 text-sm mb-5 leading-relaxed line-clamp-3">
+                <p className="text-gray-600 text-sm mb-6 leading-relaxed line-clamp-3">
                   {project.description}
                 </p>
 
                 {/* Compact Results */}
-                <div className="grid grid-cols-2 gap-3 mb-5">
+                <div className="grid grid-cols-2 gap-3 mb-6">
                   {project.results.slice(0, 2).map((result, idx) => {
                     const IconComponent = result.icon;
                     return (
-                      <div key={idx} className="bg-gray-50 border border-gray-200/50 rounded-lg p-3 text-center hover:bg-gray-100 transition-colors duration-200">
+                      <div key={idx} className="bg-gray-50 border border-gray-100 rounded-xl p-3 text-center hover:bg-gray-100 transition-colors duration-200">
                         <IconComponent className="h-4 w-4 text-blue-600 mx-auto mb-2" />
                         <div className="text-sm font-bold text-gray-900 mb-1">{result.value}</div>
                         <div className="text-xs text-gray-600">{result.label}</div>
@@ -444,12 +450,12 @@ const Projects: React.FC = () => {
                   })}
                 </div>
 
-                {/* Compact Tags */}
-                <div className="flex flex-wrap gap-2 mb-5">
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-6">
                   {project.tags.slice(0, 2).map((tag) => (
                     <span
                       key={tag}
-                      className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs font-medium"
+                      className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium"
                     >
                       {tag}
                     </span>
@@ -461,8 +467,8 @@ const Projects: React.FC = () => {
                   )}
                 </div>
 
-                {/* Enhanced CTA Button */}
-                <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-[1.02] text-sm sm:text-base">
+                {/* CTA Button */}
+                <button className="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg hover:scale-[1.02]">
                   <span>View Details</span>
                   <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
@@ -471,74 +477,82 @@ const Projects: React.FC = () => {
           ))}
         </div>
 
-        {/* Premium CTA Section */}
+        {/* Enhanced CTA Section */}
         <div 
-          className={`text-center transform transition-all duration-1000 ${
+          className={`relative transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
           style={{ transitionDelay: '800ms' }}
         >
-          <div className="relative overflow-hidden">
-            {/* Background layers */}
+          <div className="relative overflow-hidden rounded-3xl">
+            {/* Dynamic Background */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700"></div>
               <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width=%2260%22%20height=%2260%22%20viewBox=%220%200%2060%2060%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg%20fill=%22none%22%20fill-rule=%22evenodd%22%3E%3Cg%20fill=%22%23ffffff%22%20fill-opacity=%220.1%22%3E%3Ccircle%20cx=%2230%22%20cy=%2230%22%20r=%221%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              
+              {/* Animated Elements */}
+              <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+              <div className="absolute bottom-10 right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl animate-pulse"></div>
+              <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-yellow-400/20 rounded-full blur-xl animate-bounce"></div>
             </div>
             
             {/* Content */}
-            <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-3xl p-8 sm:p-12 lg:p-16">
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <div className="p-3 bg-white/20 backdrop-blur-md rounded-xl">
-                  <Target className="h-6 w-6 text-white" />
+            <div className="relative p-12 lg:p-20 text-center">
+              <div className="flex items-center justify-center gap-3 mb-8">
+                <div className="p-4 bg-white/20 backdrop-blur-md rounded-2xl border border-white/30">
+                  <Target className="h-8 w-8 text-white" />
                 </div>
-                <span className="text-white/90 font-semibold text-lg tracking-wide">Ready to get started?</span>
+                <span className="text-white/90 font-bold text-xl tracking-wide">Ready to Transform?</span>
               </div>
 
-              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-                Transform Your Engineering
-                <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                  Vision Into Reality
+              <h3 className="text-4xl lg:text-6xl font-black text-white mb-6 leading-tight">
+                Let's Build Something
+                <span className="block bg-gradient-to-r from-yellow-300 via-orange-300 to-red-300 bg-clip-text text-transparent">
+                  Extraordinary Together
                 </span>
               </h3>
 
-              <p className="text-white/90 text-lg sm:text-xl mb-10 max-w-3xl mx-auto leading-relaxed">
-                Join over <strong className="text-yellow-300">250+ forward-thinking companies</strong> that trust us to solve their toughest engineering challenges. 
-                Let's create something extraordinary together.
+              <p className="text-white/90 text-xl lg:text-2xl mb-12 max-w-4xl mx-auto leading-relaxed">
+                Join <strong className="text-yellow-300">250+ industry leaders</strong> who trust us to solve their most complex engineering challenges. 
+                Your next breakthrough starts here.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {/* Enhanced Buttons */}
+              <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
                 <button 
                   onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-white/30 flex items-center justify-center gap-3"
+                  className="group bg-white text-blue-600 px-10 py-5 rounded-2xl text-xl font-bold hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-white/30 flex items-center justify-center gap-3"
                 >
                   <span>Start Your Project</span>
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" />
                 </button>
                 
-                <button className="bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/30 transition-all duration-300 hover:scale-105 shadow-lg">
-                  View All Projects
+                <button className="group bg-white/20 backdrop-blur-md border-2 border-white/30 text-white px-10 py-5 rounded-2xl text-xl font-bold hover:bg-white/30 hover:border-white/50 transition-all duration-300 hover:scale-105 shadow-xl flex items-center justify-center gap-3">
+                  <Play className="h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
+                  <span>Watch Our Story</span>
                 </button>
               </div>
 
-              {/* Trust indicators */}
-              <div className="flex flex-wrap justify-center gap-6 sm:gap-8 mt-10 pt-8 border-t border-white/20">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">250+</div>
-                  <div className="text-white/70 text-sm">Projects Delivered</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">98%</div>
-                  <div className="text-white/70 text-sm">Success Rate</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">15+</div>
-                  <div className="text-white/70 text-sm">Years Experience</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-white">50+</div>
-                  <div className="text-white/70 text-sm">Expert Engineers</div>
-                </div>
+              {/* Enhanced Trust Indicators */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-12 border-t border-white/20">
+                {[
+                  { value: "250+", label: "Projects Delivered", icon: Award },
+                  { value: "98%", label: "Success Rate", icon: TrendingUp },
+                  { value: "15+", label: "Years Experience", icon: Target },
+                  { value: "50+", label: "Expert Engineers", icon: Users }
+                ].map((stat, index) => {
+                  const IconComponent = stat.icon;
+                  return (
+                    <div key={index} className="text-center group">
+                      <div className="w-16 h-16 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <IconComponent className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="text-3xl lg:text-4xl font-black text-white mb-2">{stat.value}</div>
+                      <div className="text-white/70 font-medium">{stat.label}</div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
