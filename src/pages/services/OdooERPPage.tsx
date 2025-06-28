@@ -14,8 +14,6 @@ import {
   Shield,
   TrendingUp,
   Award,
-  ChevronRight,
-  Home,
   Phone,
   Mail,
   Zap,
@@ -152,24 +150,8 @@ const OdooERPPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Breadcrumb */}
-      <div className="bg-gray-50 py-4 sm:py-6 mt-16 sm:mt-20">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
-          <nav className="flex items-center space-x-2 text-sm">
-            <Link to="/" className="text-blue-600 hover:text-blue-700 flex items-center gap-1">
-              <Home className="w-4 h-4" />
-              Home
-            </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-600">Services</span>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-gray-900 font-medium">Odoo ERP Solutions</span>
-          </nav>
-        </div>
-      </div>
-
       {/* Hero Section */}
-      <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden mt-16 sm:mt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50"></div>
         <div className="relative max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
