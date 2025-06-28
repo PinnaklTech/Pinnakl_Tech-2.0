@@ -223,7 +223,7 @@ const Header: React.FC = () => {
                 className="w-full mt-4 bg-blue-600 text-white px-6 py-4 sm:py-5 rounded-full font-medium hover:bg-blue-700 transition duration-300 shadow-md text-lg sm:text-xl touch-manipulation"
               >
                 Get Quote
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         )}
