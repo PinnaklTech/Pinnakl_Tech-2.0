@@ -390,168 +390,175 @@ const Projects: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Full-Section Carousel */}
-        <div className="relative h-[600px] sm:h-[700px] lg:h-[800px] mb-16 sm:mb-20 lg:mb-24">
-          <div className="relative w-full h-full overflow-hidden rounded-3xl">
-            <AnimatePresence initial={false} custom={direction}>
-              <motion.div
-                key={currentSlide}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.4 },
-                  scale: { duration: 0.4 }
-                }}
-                className="absolute inset-0 w-full h-full"
-              >
-                <div className={`relative w-full h-full bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl ${colors.shadow}`}>
-                  {/* Background gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-5`}></div>
+        {/* Full-Section Carousel Container */}
+        <div className="relative mb-16 sm:mb-20 lg:mb-24">
+          {/* Carousel Wrapper with Navigation */}
+          <div className="relative h-[600px] sm:h-[700px] lg:h-[800px]">
+            {/* Main Carousel Content */}
+            <div className="relative w-full h-full overflow-hidden rounded-3xl">
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.div
+                  key={currentSlide}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.4 },
+                    scale: { duration: 0.4 }
+                  }}
+                  className="absolute inset-0 w-full h-full"
+                >
+                  <div className={`relative w-full h-full bg-white/90 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl ${colors.shadow}`}>
+                    {/* Background gradient */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-5`}></div>
 
-                  <div className="grid lg:grid-cols-2 h-full">
-                    {/* Project Image */}
-                    <div className="relative h-64 lg:h-full overflow-hidden">
-                      <img
-                        src={currentProject.image}
-                        alt={currentProject.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent lg:bg-gradient-to-r lg:from-black/60 lg:via-black/20 lg:to-transparent" />
-                      
-                      {/* Overlays */}
-                      <div className="absolute top-6 right-6 flex flex-col gap-3">
-                        <span className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r ${colors.gradient} text-white shadow-lg`}>
-                          {currentProject.category}
-                        </span>
-                        <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/90 backdrop-blur-sm text-gray-900">
-                          <Calendar className="w-4 h-4 mr-2" />
-                          {currentProject.year}
-                        </span>
-                      </div>
-
-                      {/* Rating Stars */}
-                      <div className="absolute bottom-6 left-6 flex items-center gap-1">
-                        {[...Array(currentProject.rating)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                        ))}
-                      </div>
-
-                      {/* Stats Overlay */}
-                      <div className="absolute bottom-6 right-6">
-                        <div className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3">
-                          <div className={`text-2xl font-bold ${colors.text}`}>
-                            {currentProject.stats.value}
-                          </div>
-                          <div className="text-sm text-gray-600 font-medium">
-                            {currentProject.stats.label}
-                          </div>
+                    <div className="grid lg:grid-cols-2 h-full">
+                      {/* Project Image */}
+                      <div className="relative h-64 lg:h-full overflow-hidden">
+                        <img
+                          src={currentProject.image}
+                          alt={currentProject.title}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent lg:bg-gradient-to-r lg:from-black/60 lg:via-black/20 lg:to-transparent" />
+                        
+                        {/* Overlays */}
+                        <div className="absolute top-6 right-6 flex flex-col gap-3">
+                          <span className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r ${colors.gradient} text-white shadow-lg`}>
+                            {currentProject.category}
+                          </span>
+                          <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/90 backdrop-blur-sm text-gray-900">
+                            <Calendar className="w-4 h-4 mr-2" />
+                            {currentProject.year}
+                          </span>
                         </div>
-                      </div>
-                    </div>
 
-                    {/* Project Content */}
-                    <div className="relative p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
-                      <div className="flex items-start justify-between mb-6">
-                        <div className="flex-1">
-                          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
-                            {currentProject.title}
-                          </h3>
-                          <p className={`text-lg font-medium ${colors.text} mb-4`}>
-                            {currentProject.subtitle}
-                          </p>
-                        </div>
-                        <ExternalLink className="w-6 h-6 text-gray-400 hover:text-blue-600 transition-colors duration-300 ml-4 flex-shrink-0" />
-                      </div>
-
-                      <p className="text-gray-600 mb-8 leading-relaxed text-base lg:text-lg">
-                        {currentProject.description}
-                      </p>
-
-                      {/* Project Meta */}
-                      <div className="grid grid-cols-2 gap-6 mb-8">
-                        <div className="flex items-center">
-                          <Users className="w-5 h-5 text-gray-400 mr-3" />
-                          <div>
-                            <div className="text-sm text-gray-500">Client</div>
-                            <div className="font-medium text-gray-900">{currentProject.client}</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center">
-                          <Clock className="w-5 h-5 text-gray-400 mr-3" />
-                          <div>
-                            <div className="text-sm text-gray-500">Duration</div>
-                            <div className="font-medium text-gray-900">{currentProject.duration}</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center col-span-2">
-                          <Layers className="w-5 h-5 text-gray-400 mr-3" />
-                          <div>
-                            <div className="text-sm text-gray-500">Investment</div>
-                            <div className="font-medium text-gray-900">{currentProject.budget}</div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Technologies */}
-                      <div className="mb-8">
-                        <h4 className="text-sm font-semibold text-gray-900 mb-3">Technologies Used:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {currentProject.technologies.map((tech, techIndex) => (
-                            <span
-                              key={techIndex}
-                              className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 transition-colors duration-200"
-                            >
-                              {tech}
-                            </span>
+                        {/* Rating Stars */}
+                        <div className="absolute bottom-6 left-6 flex items-center gap-1">
+                          {[...Array(currentProject.rating)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
                           ))}
                         </div>
-                      </div>
 
-                      {/* Key Results */}
-                      <div className="mb-8">
-                        <h4 className="text-sm font-semibold text-gray-900 mb-4 flex items-center">
-                          <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
-                          Key Results:
-                        </h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                          {currentProject.results.map((result, resultIndex) => (
-                            <div key={resultIndex} className="flex items-center text-sm text-gray-600">
-                              <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
-                              <span>{result}</span>
+                        {/* Stats Overlay */}
+                        <div className="absolute bottom-6 right-6">
+                          <div className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3">
+                            <div className={`text-2xl font-bold ${colors.text}`}>
+                              {currentProject.stats.value}
                             </div>
-                          ))}
+                            <div className="text-sm text-gray-600 font-medium">
+                              {currentProject.stats.label}
+                            </div>
+                          </div>
                         </div>
                       </div>
 
-                      {/* CTA Button */}
-                      <button className={`bg-gradient-to-r ${colors.gradient} text-white py-4 px-8 rounded-xl font-semibold flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 hover:scale-105 text-lg`}>
-                        <span>View Full Case Study</span>
-                        <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                      </button>
+                      {/* Project Content */}
+                      <div className="relative p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
+                        <div className="flex items-start justify-between mb-6">
+                          <div className="flex-1">
+                            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
+                              {currentProject.title}
+                            </h3>
+                            <p className={`text-lg font-medium ${colors.text} mb-4`}>
+                              {currentProject.subtitle}
+                            </p>
+                          </div>
+                          <ExternalLink className="w-6 h-6 text-gray-400 hover:text-blue-600 transition-colors duration-300 ml-4 flex-shrink-0" />
+                        </div>
+
+                        <p className="text-gray-600 mb-8 leading-relaxed text-base lg:text-lg">
+                          {currentProject.description}
+                        </p>
+
+                        {/* Project Meta */}
+                        <div className="grid grid-cols-2 gap-6 mb-8">
+                          <div className="flex items-center">
+                            <Users className="w-5 h-5 text-gray-400 mr-3" />
+                            <div>
+                              <div className="text-sm text-gray-500">Client</div>
+                              <div className="font-medium text-gray-900">{currentProject.client}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center">
+                            <Clock className="w-5 h-5 text-gray-400 mr-3" />
+                            <div>
+                              <div className="text-sm text-gray-500">Duration</div>
+                              <div className="font-medium text-gray-900">{currentProject.duration}</div>
+                            </div>
+                          </div>
+                          <div className="flex items-center col-span-2">
+                            <Layers className="w-5 h-5 text-gray-400 mr-3" />
+                            <div>
+                              <div className="text-sm text-gray-500">Investment</div>
+                              <div className="font-medium text-gray-900">{currentProject.budget}</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Technologies */}
+                        <div className="mb-8">
+                          <h4 className="text-sm font-semibold text-gray-900 mb-3">Technologies Used:</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {currentProject.technologies.map((tech, techIndex) => (
+                              <span
+                                key={techIndex}
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 transition-colors duration-200"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Key Results */}
+                        <div className="mb-8">
+                          <h4 className="text-sm font-semibold text-gray-900 mb-4 flex items-center">
+                            <TrendingUp className="w-5 h-5 mr-2 text-green-600" />
+                            Key Results:
+                          </h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {currentProject.results.map((result, resultIndex) => (
+                              <div key={resultIndex} className="flex items-center text-sm text-gray-600">
+                                <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
+                                <span>{result}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* CTA Button */}
+                        <button className={`bg-gradient-to-r ${colors.gradient} text-white py-4 px-8 rounded-xl font-semibold flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 hover:scale-105 text-lg`}>
+                          <span>View Full Case Study</span>
+                          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows - Fixed positioning and enhanced visibility */}
             {filteredProjects.length > 1 && (
               <>
+                {/* Previous Button */}
                 <button
                   onClick={() => paginate(-1)}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-10"
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/95 backdrop-blur-sm hover:bg-white text-gray-800 hover:text-blue-600 p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 border border-gray-200/50"
                   aria-label="Previous project"
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
+
+                {/* Next Button */}
                 <button
                   onClick={() => paginate(1)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm hover:bg-white text-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-10"
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/95 backdrop-blur-sm hover:bg-white text-gray-800 hover:text-blue-600 p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 border border-gray-200/50"
                   aria-label="Next project"
                 >
                   <ChevronRight className="w-6 h-6" />
