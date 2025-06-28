@@ -1,124 +1,142 @@
-import React, { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Hero: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const backgroundImages = [
-    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero2.jpg",
-    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero3.jpg",
-    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech/Hero4.jpg",
-    "https://ycoscldrfhbmknqvjepm.supabase.co/storage/v1/object/public/pinnakl.tech//PowerTransmission.webp",
-  ];
+const Header: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
-    const imageInterval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === backgroundImages.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 10000);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+      if (isMenuOpen) setIsMenuOpen(false); // Auto-close on scroll
+    };
 
-    return () => clearInterval(imageInterval);
-  }, [backgroundImages.length]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMenuOpen]);
 
-  const scrollToAbout = () => {
-    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsMenuOpen(false); // Close after navigation
+    }
   };
 
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const navItems = [
+    { label: "About", id: "about" },
+    { label: "Services", id: "services" },
+    { label: "Projects", id: "projects" },
+    { label: "Blog", id: "blog" },
+    { label: "Contact", id: "contact" },
+  ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Images */}
-      <div className="absolute inset-0">
-        {backgroundImages.map((image, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 bg-cover bg-center transition-all duration-3000 ease-in-out ${
-              index === currentImageIndex ? "opacity-90" : "opacity-0"
-            }`}
-            style={{
-              backgroundImage: `url(${image})`,
-              transform: index === currentImageIndex ? "scale(1.02)" : "scale(1)",
-              transitionProperty: "opacity, transform",
-              transitionDuration: "3000ms",
-              transitionTimingFunction: "cubic-bezier(0.4, 0.0, 0.2, 1)",
-            }}
-          />
-        ))}
-
-        {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>
-        <div className="absolute inset-0 bg-black/20"></div>
-      </div>
-
-      {/* Subtle Dot Indicators - Smaller Mobile */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-1.5 sm:space-x-2 z-20">
-        {backgroundImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            className={`rounded-full transition-all duration-300 p-1.5 sm:p-2 ${
-              index === currentImageIndex
-                ? "bg-white/70 w-1 h-1 sm:w-3 sm:h-3 scale-125"
-                : "bg-white/30 hover:bg-white/50 w-0.5 h-0.5 sm:w-2.5 sm:h-2.5 hover:scale-110"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-        <div
-          className={`transform transition-all duration-1000 ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-          }`}
-        >
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-            Engineering
-            <span className="block text-blue-300">Excellence</span>
-            <span className="block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-white/90 mt-2">
-              Delivered
-            </span>
-          </h1>
-
-          <p
-            className={`text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 max-w-4xl mx-auto leading-relaxed px-4 transform transition-all duration-1000 delay-300 ${
-              isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-            }`}
-          >
-            Transforming ideas into reality through cutting-edge engineering
-            solutions, advanced manufacturing processes, and innovative design
-            consultancy.
-          </p>
-
-          <div
-            className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 transform transition-all duration-1000 delay-500 ${
-              isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-            }`}
-          >
-            <button
-              onClick={scrollToContact}
-              className="w-full sm:w-auto text-white border-2 border-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
-            >
-              <span>Get a Quote</span>
-            </button>
-
-            <button
-              onClick={scrollToAbout}
-              className="w-full sm:w-auto text-white border-2 border-white/30 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-white/10 hover:border-white/50 transition-all duration-300 hover:scale-105 backdrop-blur-sm"
-            >
-              Learn More
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-3 md:py-4">
+          {/* Logo */}
+          <div className="flex items-center space-x-2">
+            <img
+              src={isScrolled ? "/logo_b.png" : "/logo_w.png"}
+              alt="Pinnakl Technologies Logo"
+              className="h-8 sm:h-10 w-auto object-contain transition-all duration-300"
+            />
           </div>
+
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`font-medium transition-all duration-300 hover:scale-105 text-sm xl:text-base ${
+                  isScrolled
+                    ? "text-gray-700 hover:text-blue-600"
+                    : "text-white/90 hover:text-white"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="bg-blue-600 text-white px-4 xl:px-6 py-2 xl:py-3 rounded-full font-medium hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm xl:text-base"
+            >
+              Get Quote
+            </button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`lg:hidden p-2 rounded-lg transition-colors duration-300 ${
+              isScrolled ? "text-gray-900" : "text-white"
+            }`}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
         </div>
       </div>
-    </section>
+
+      {/* Mobile Navigation - Fullscreen Animated */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-white/95 backdrop-blur-md flex flex-col justify-center items-center px-6 mobile-menu-fullscreen"
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-gray-100 text-gray-700 hover:text-blue-600 hover:bg-blue-100 transition duration-200 shadow-sm"
+              aria-label="Close Menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Navigation Links */}
+            <div className="flex flex-col items-center space-y-6 sm:space-y-8 mt-8">
+              {navItems.map((item, index) => (
+                <motion.button
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-xl sm:text-2xl text-gray-800 font-semibold hover:text-blue-600 transition duration-200 mobile-nav-item"
+                >
+                  {item.label}
+                </motion.button>
+              ))}
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navItems.length * 0.1 }}
+                onClick={() => scrollToSection("contact")}
+                className="mt-4 bg-blue-600 text-white px-8 py-4 rounded-full font-medium hover:bg-blue-700 transition duration-300 shadow-md text-lg"
+              >
+                Get Quote
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 };
 
-export default Hero;
+export default Header;
