@@ -56,38 +56,19 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* Improved Mobile-Friendly Dot Indicators */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 sm:space-x-2 z-20">
+      {/* Subtle Dot Indicators - Better Mobile */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
         {backgroundImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
-            className={`rounded-full transition-all duration-300 touch-manipulation ${
+            className={`rounded-full transition-all duration-300 p-2 ${
               index === currentImageIndex
-                ? // Active dot - good size on mobile, elegant on desktop
-                  "bg-white w-3 h-3 sm:w-3 sm:h-3 scale-110 shadow-lg"
-                : // Inactive dots - visible and clickable on mobile, subtle on desktop
-                  "bg-white/50 hover:bg-white/70 w-2.5 h-2.5 sm:w-2.5 sm:h-2.5 hover:scale-105 shadow-md"
+                ? "bg-white/80 w-2 h-2 sm:w-3 sm:h-3 scale-110"
+                : "bg-white/40 hover:bg-white/60 w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 hover:scale-105"
             }`}
-            style={{
-              // Ensure minimum touch target size for mobile accessibility
-              minWidth: '44px',
-              minHeight: '44px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
             aria-label={`Go to slide ${index + 1}`}
-          >
-            {/* Inner dot for visual representation */}
-            <div
-              className={`rounded-full transition-all duration-300 ${
-                index === currentImageIndex
-                  ? "bg-white w-3 h-3 sm:w-3 sm:h-3"
-                  : "bg-white/50 w-2.5 h-2.5 sm:w-2.5 sm:h-2.5"
-              }`}
-            />
-          </button>
+          />
         ))}
       </div>
 
