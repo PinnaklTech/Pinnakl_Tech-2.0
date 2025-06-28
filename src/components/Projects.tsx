@@ -22,6 +22,7 @@ const Projects: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState('All');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -152,8 +153,11 @@ const Projects: React.FC = () => {
     ? projects 
     : projects.filter(project => project.category === activeFilter);
 
-  // Carousel navigation
+  // Optimized carousel navigation with animation lock
   const paginate = (newDirection: number) => {
+    if (isAnimating) return; // Prevent rapid clicking
+    
+    setIsAnimating(true);
     setDirection(newDirection);
     setCurrentSlide((prevSlide) => {
       if (newDirection === 1) {
@@ -162,37 +166,37 @@ const Projects: React.FC = () => {
         return prevSlide === 0 ? filteredProjects.length - 1 : prevSlide - 1;
       }
     });
+
+    // Reset animation lock after transition
+    setTimeout(() => setIsAnimating(false), 400);
   };
 
-  // Auto-advance carousel
+  // Auto-advance carousel with animation check
   useEffect(() => {
-    if (filteredProjects.length > 1) {
+    if (filteredProjects.length > 1 && !isAnimating) {
       const timer = setInterval(() => {
         paginate(1);
-      }, 8000); // Change slide every 8 seconds
+      }, 8000);
 
       return () => clearInterval(timer);
     }
-  }, [filteredProjects.length, currentSlide]);
+  }, [filteredProjects.length, currentSlide, isAnimating]);
 
-  // Animation variants for carousel
+  // Optimized animation variants - reduced complexity
   const variants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 300 : -300,
       opacity: 0,
-      scale: 0.9
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
-      scale: 1
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: direction < 0 ? 300 : -300,
       opacity: 0,
-      scale: 0.9
     })
   };
 
@@ -273,49 +277,26 @@ const Projects: React.FC = () => {
       ref={sectionRef}
       className="relative py-16 sm:py-20 lg:py-24 overflow-hidden"
     >
-      {/* Enhanced Animated Background */}
+      {/* Simplified Background - Reduced animations for better performance */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"></div>
         
-        {/* Complex animated patterns */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Diagonal moving lines */}
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent animate-pulse-slow transform rotate-12"></div>
-            <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent animate-pulse-slower transform -rotate-12"></div>
-          </div>
-          
-          {/* Floating geometric shapes */}
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-100/20 rounded-full blur-xl animate-float"></div>
-          <div className="absolute bottom-1/3 right-1/4 w-24 h-24 bg-purple-100/20 rounded-full blur-xl animate-float-horizontal"></div>
-          <div className="absolute top-1/2 right-1/3 w-20 h-20 bg-emerald-100/20 rounded-full blur-xl animate-float-vertical"></div>
-          
-          {/* Enhanced grid pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <pattern id="projects-grid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-                  <circle cx="40" cy="40" r="1" fill="rgba(59, 130, 246, 0.3)"/>
-                  <circle cx="0" cy="0" r="1" fill="rgba(147, 51, 234, 0.2)"/>
-                  <circle cx="80" cy="0" r="1" fill="rgba(16, 185, 129, 0.2)"/>
-                  <circle cx="0" cy="80" r="1" fill="rgba(245, 158, 11, 0.2)"/>
-                  <circle cx="80" cy="80" r="1" fill="rgba(239, 68, 68, 0.2)"/>
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#projects-grid)"/>
-            </svg>
-          </div>
+        {/* Simplified animated patterns */}
+        <div className="absolute inset-0 overflow-hidden opacity-30">
+          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
+          <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent"></div>
+          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-200/50 to-transparent"></div>
+          <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-200/50 to-transparent"></div>
         </div>
         
-        {/* Enhanced corner accents */}
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 via-purple-100/20 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-emerald-100/30 via-amber-100/20 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-indigo-100/20 to-red-100/20 rounded-full blur-3xl"></div>
+        {/* Static corner accents - removed animations */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-emerald-100/30 to-transparent rounded-full blur-3xl"></div>
       </div>
 
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Enhanced Header Section */}
+        {/* Header Section */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -327,7 +308,7 @@ const Projects: React.FC = () => {
             <span className="text-blue-700 font-medium text-sm">
               Our Success Stories
             </span>
-            <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
           </motion.div>
 
           <motion.h2
@@ -355,7 +336,7 @@ const Projects: React.FC = () => {
             cutting-edge engineering solutions and strategic implementations.
           </motion.p>
 
-          {/* Enhanced Filter Tabs */}
+          {/* Filter Tabs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -366,7 +347,7 @@ const Projects: React.FC = () => {
               <button
                 key={category}
                 onClick={() => setActiveFilter(category)}
-                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 hover:scale-105 ${
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base font-medium transition-all duration-300 ${
                   activeFilter === category
                     ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25'
                     : 'bg-white/70 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-md'
@@ -378,13 +359,12 @@ const Projects: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Full-Section Carousel Container */}
+        {/* Optimized Carousel Container */}
         <div className="relative mb-16 sm:mb-20 lg:mb-24">
-          {/* Carousel Wrapper with Navigation */}
           <div className="relative h-[600px] sm:h-[700px] lg:h-[800px]">
-            {/* Main Carousel Content */}
+            {/* Main Carousel Content with optimized animations */}
             <div className="relative w-full h-full overflow-hidden rounded-3xl">
-              <AnimatePresence initial={false} custom={direction}>
+              <AnimatePresence initial={false} custom={direction} mode="wait">
                 <motion.div
                   key={currentSlide}
                   custom={direction}
@@ -393,9 +373,8 @@ const Projects: React.FC = () => {
                   animate="center"
                   exit="exit"
                   transition={{
-                    x: { type: "spring", stiffness: 300, damping: 30 },
-                    opacity: { duration: 0.4 },
-                    scale: { duration: 0.4 }
+                    x: { type: "tween", duration: 0.3, ease: "easeInOut" },
+                    opacity: { duration: 0.3, ease: "easeInOut" }
                   }}
                   className="absolute inset-0 w-full h-full"
                 >
@@ -425,9 +404,9 @@ const Projects: React.FC = () => {
                           </span>
                         </div>
 
-                        {/* PROMINENT CASE STUDY BUTTON ON IMAGE */}
+                        {/* Case Study Button on Image - Mobile */}
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 lg:hidden">
-                          <button className={`bg-gradient-to-r ${colors.gradient} text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-white/20`}>
+                          <button className={`bg-gradient-to-r ${colors.gradient} text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-2xl transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-white/20`}>
                             <FileText className="h-5 w-5" />
                             <span>View Case Study</span>
                             <ArrowRight className="h-4 w-4" />
@@ -437,7 +416,7 @@ const Projects: React.FC = () => {
 
                       {/* Project Content */}
                       <div className="relative p-6 sm:p-8 lg:p-12 flex flex-col">
-                        {/* Header with prominent case study button */}
+                        {/* Header with case study button */}
                         <div className="flex items-start justify-between mb-6">
                           <div className="flex-1">
                             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
@@ -448,9 +427,9 @@ const Projects: React.FC = () => {
                             </p>
                           </div>
                           
-                          {/* PROMINENT CASE STUDY BUTTON - Desktop */}
+                          {/* Case Study Button - Desktop */}
                           <div className="hidden lg:block ml-4">
-                            <button className={`bg-gradient-to-r ${colors.gradient} text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 whitespace-nowrap`}>
+                            <button className={`bg-gradient-to-r ${colors.gradient} text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg transition-all duration-300 hover:scale-105 whitespace-nowrap`}>
                               <FileText className="h-5 w-5" />
                               <span>View Case Study</span>
                               <ArrowRight className="h-4 w-4" />
@@ -494,7 +473,7 @@ const Projects: React.FC = () => {
                             {currentProject.technologies.slice(0, 4).map((tech, techIndex) => (
                               <span
                                 key={techIndex}
-                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 transition-colors duration-200"
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800"
                               >
                                 {tech}
                               </span>
@@ -523,9 +502,9 @@ const Projects: React.FC = () => {
                           </div>
                         </div>
 
-                        {/* BOTTOM CASE STUDY BUTTON - Mobile */}
+                        {/* Bottom Case Study Button - Mobile */}
                         <div className="lg:hidden mt-auto">
-                          <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-4 px-6 rounded-xl font-semibold flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 hover:scale-105 text-lg`}>
+                          <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-4 px-6 rounded-xl font-semibold flex items-center justify-center gap-3 transition-all duration-300 hover:shadow-lg text-lg`}>
                             <FileText className="h-5 w-5" />
                             <span>View Full Case Study</span>
                             <ArrowRight className="h-5 w-5" />
@@ -538,22 +517,22 @@ const Projects: React.FC = () => {
               </AnimatePresence>
             </div>
 
-            {/* Navigation Arrows - Fixed positioning and enhanced visibility */}
+            {/* Optimized Navigation Arrows */}
             {filteredProjects.length > 1 && (
               <>
-                {/* Previous Button */}
                 <button
                   onClick={() => paginate(-1)}
-                  className="absolute left-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/95 backdrop-blur-sm hover:bg-white text-gray-800 hover:text-blue-600 p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 border border-gray-200/50"
+                  disabled={isAnimating}
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/95 backdrop-blur-sm hover:bg-white text-gray-800 hover:text-blue-600 p-4 rounded-full shadow-xl transition-all duration-200 hover:scale-110 border border-gray-200/50 disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Previous project"
                 >
                   <ChevronLeft className="w-6 h-6" />
                 </button>
 
-                {/* Next Button */}
                 <button
                   onClick={() => paginate(1)}
-                  className="absolute right-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/95 backdrop-blur-sm hover:bg-white text-gray-800 hover:text-blue-600 p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 border border-gray-200/50"
+                  disabled={isAnimating}
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 z-30 bg-white/95 backdrop-blur-sm hover:bg-white text-gray-800 hover:text-blue-600 p-4 rounded-full shadow-xl transition-all duration-200 hover:scale-110 border border-gray-200/50 disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label="Next project"
                 >
                   <ChevronRight className="w-6 h-6" />
@@ -569,10 +548,15 @@ const Projects: React.FC = () => {
                 <button
                   key={index}
                   onClick={() => {
-                    setDirection(index > currentSlide ? 1 : -1);
-                    setCurrentSlide(index);
+                    if (!isAnimating) {
+                      setDirection(index > currentSlide ? 1 : -1);
+                      setCurrentSlide(index);
+                      setIsAnimating(true);
+                      setTimeout(() => setIsAnimating(false), 400);
+                    }
                   }}
-                  className={`transition-all duration-300 rounded-full ${
+                  disabled={isAnimating}
+                  className={`transition-all duration-300 rounded-full disabled:opacity-50 ${
                     index === currentSlide
                       ? `w-12 h-3 bg-gradient-to-r ${colors.gradient} shadow-lg`
                       : 'w-3 h-3 bg-gray-300 hover:bg-gray-400 hover:scale-125'
@@ -584,7 +568,7 @@ const Projects: React.FC = () => {
           )}
         </div>
 
-        {/* Enhanced CTA Section */}
+        {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -592,12 +576,10 @@ const Projects: React.FC = () => {
           className="relative z-10"
         >
           <div className="relative rounded-3xl p-8 md:p-16 overflow-hidden shadow-2xl bg-white/30 backdrop-blur-lg">
-            {/* Enhanced Background layers */}
+            {/* Background layers */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-[url('/8410.jpg')] bg-cover opacity-10"></div>
               <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-blue-100/40 to-indigo-100/60"></div>
-              <div className="absolute top-0 left-0 w-32 h-32 bg-blue-400/20 rounded-full blur-3xl animate-float"></div>
-              <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-400/20 rounded-full blur-3xl animate-float-horizontal"></div>
             </div>
 
             {/* Content */}
@@ -623,7 +605,7 @@ const Projects: React.FC = () => {
                 innovative engineering solutions. Your breakthrough is just a conversation away.
               </p>
 
-              {/* Enhanced Buttons */}
+              {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
                   onClick={() =>
