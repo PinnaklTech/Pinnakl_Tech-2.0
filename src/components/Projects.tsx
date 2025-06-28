@@ -1,168 +1,460 @@
-import React from 'react';
-import { ExternalLink, Calendar, Users, Award } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
+import { 
+  ExternalLink, 
+  Calendar, 
+  Users, 
+  Award, 
+  ArrowRight, 
+  Zap, 
+  Target,
+  TrendingUp,
+  CheckCircle
+} from 'lucide-react';
 
 const Projects: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const projects = [
     {
       id: 1,
       title: "Advanced Manufacturing Solutions",
+      subtitle: "Smart Factory Implementation",
       description: "Comprehensive ERP implementation for a leading manufacturing company, streamlining operations and increasing efficiency by 40%.",
       image: "/Manufacturing.jpg",
       category: "Manufacturing",
       year: "2024",
       client: "Industrial Corp",
-      technologies: ["ERP", "IoT", "Analytics"],
-      results: ["40% efficiency increase", "30% cost reduction", "Real-time monitoring"]
+      duration: "8 months",
+      technologies: ["ERP", "IoT", "Analytics", "Automation"],
+      results: ["40% efficiency increase", "30% cost reduction", "Real-time monitoring", "Predictive maintenance"],
+      stats: { value: "40%", label: "Efficiency Gain" },
+      color: "blue"
     },
     {
       id: 2,
       title: "Supply Chain Optimization",
-      description: "End-to-end supply chain management system with real-time tracking and predictive analytics.",
+      subtitle: "End-to-end logistics transformation",
+      description: "AI-powered supply chain management system with real-time tracking and predictive analytics for global operations.",
       image: "/supply-chain.jpg",
       category: "Logistics",
       year: "2023",
       client: "Global Logistics Ltd",
-      technologies: ["AI/ML", "Blockchain", "Cloud"],
-      results: ["25% faster delivery", "15% cost savings", "99.9% accuracy"]
+      duration: "12 months",
+      technologies: ["AI/ML", "Blockchain", "Cloud", "Analytics"],
+      results: ["25% faster delivery", "15% cost savings", "99.9% accuracy", "Global visibility"],
+      stats: { value: "25%", label: "Faster Delivery" },
+      color: "emerald"
     },
     {
       id: 3,
       title: "Metallurgy Process Control",
-      description: "Automated quality control system for metallurgical processes with advanced sensor integration.",
+      subtitle: "Automated quality assurance",
+      description: "Advanced sensor-based quality control system for metallurgical processes with machine learning integration.",
       image: "/Metallurgy.jpg",
       category: "Metallurgy",
       year: "2023",
       client: "Steel Industries Inc",
-      technologies: ["Sensors", "Automation", "Quality Control"],
-      results: ["50% defect reduction", "20% productivity gain", "Automated reporting"]
+      duration: "6 months",
+      technologies: ["Sensors", "Automation", "ML", "Quality Control"],
+      results: ["50% defect reduction", "20% productivity gain", "Automated reporting", "Zero downtime"],
+      stats: { value: "50%", label: "Defect Reduction" },
+      color: "purple"
     },
     {
       id: 4,
       title: "Power Transmission Systems",
-      description: "Smart grid management solution with predictive maintenance and energy optimization capabilities.",
+      subtitle: "Smart grid modernization",
+      description: "Next-generation smart grid management solution with predictive maintenance and energy optimization capabilities.",
       image: "/PowerTransmission.webp",
       category: "Energy",
       year: "2024",
       client: "Power Grid Solutions",
-      technologies: ["Smart Grid", "Predictive Analytics", "IoT"],
-      results: ["30% energy savings", "Reduced downtime", "Predictive maintenance"]
+      duration: "10 months",
+      technologies: ["Smart Grid", "Predictive Analytics", "IoT", "Energy Management"],
+      results: ["30% energy savings", "Reduced downtime", "Predictive maintenance", "Grid stability"],
+      stats: { value: "30%", label: "Energy Savings" },
+      color: "amber"
+    },
+    {
+      id: 5,
+      title: "Product Development Platform",
+      subtitle: "Innovation acceleration framework",
+      description: "Comprehensive product development platform with integrated design tools, testing protocols, and compliance management.",
+      image: "/Product_development.jpg",
+      category: "Product Development",
+      year: "2024",
+      client: "Innovation Labs",
+      duration: "14 months",
+      technologies: ["CAD Integration", "Testing Automation", "Compliance", "Collaboration"],
+      results: ["60% faster development", "Reduced time-to-market", "Automated testing", "Regulatory compliance"],
+      stats: { value: "60%", label: "Faster Development" },
+      color: "indigo"
+    },
+    {
+      id: 6,
+      title: "ERP Integration Suite",
+      subtitle: "Enterprise-wide digital transformation",
+      description: "Complete Odoo ERP implementation with custom modules, integrations, and advanced analytics for multi-location operations.",
+      image: "/ERP.jpg",
+      category: "ERP Solutions",
+      year: "2023",
+      client: "Enterprise Solutions Inc",
+      duration: "16 months",
+      technologies: ["Odoo", "Custom Modules", "API Integration", "Business Intelligence"],
+      results: ["Unified operations", "Real-time insights", "Process automation", "Scalable architecture"],
+      stats: { value: "100%", label: "Process Integration" },
+      color: "red"
     }
   ];
 
+  const getColorClasses = (color: string) => {
+    const colorMap: {
+      [key: string]: {
+        gradient: string;
+        bg: string;
+        border: string;
+        text: string;
+        accent: string;
+        hover: string;
+      };
+    } = {
+      blue: {
+        gradient: "from-blue-500 to-blue-600",
+        bg: "bg-blue-50/50",
+        border: "border-blue-200/30",
+        text: "text-blue-700",
+        accent: "bg-blue-100",
+        hover: "hover:border-blue-300/50",
+      },
+      emerald: {
+        gradient: "from-emerald-500 to-emerald-600",
+        bg: "bg-emerald-50/50",
+        border: "border-emerald-200/30",
+        text: "text-emerald-700",
+        accent: "bg-emerald-100",
+        hover: "hover:border-emerald-300/50",
+      },
+      purple: {
+        gradient: "from-purple-500 to-purple-600",
+        bg: "bg-purple-50/50",
+        border: "border-purple-200/30",
+        text: "text-purple-700",
+        accent: "bg-purple-100",
+        hover: "hover:border-purple-300/50",
+      },
+      amber: {
+        gradient: "from-amber-500 to-amber-600",
+        bg: "bg-amber-50/50",
+        border: "border-amber-200/30",
+        text: "text-amber-700",
+        accent: "bg-amber-100",
+        hover: "hover:border-amber-300/50",
+      },
+      indigo: {
+        gradient: "from-indigo-500 to-indigo-600",
+        bg: "bg-indigo-50/50",
+        border: "border-indigo-200/30",
+        text: "text-indigo-700",
+        accent: "bg-indigo-100",
+        hover: "hover:border-indigo-300/50",
+      },
+      red: {
+        gradient: "from-red-500 to-red-600",
+        bg: "bg-red-50/50",
+        border: "border-red-200/30",
+        text: "text-red-700",
+        accent: "bg-red-100",
+        hover: "hover:border-red-300/50",
+      },
+    };
+
+    return colorMap[color] || colorMap.blue;
+  };
+
   return (
-    <section id="projects" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-gray-50 to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Our <span className="text-blue-600">Projects</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Discover how we've transformed businesses across industries with innovative solutions 
-            and cutting-edge technology implementations.
-          </p>
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative py-16 sm:py-20 lg:py-24 overflow-hidden"
+    >
+      {/* Animated Background - Same as Services */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"></div>
+        
+        {/* Animated geometric lines */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent animate-pulse-slow"></div>
+          <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-200 to-transparent animate-pulse-slower"></div>
+          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-200/50 to-transparent animate-slide-up"></div>
+          <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-200/50 to-transparent animate-slide-down"></div>
+          
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-30">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="projects-grid" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                  <path d="M60 0H0v60h60V0zM30 30m-1 0a1 1 0 1 1 2 0 1 1 0 1 1-2 0" fill="rgba(59, 130, 246, 0.1)"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#projects-grid)"/>
+            </svg>
+          </div>
+        </div>
+        
+        {/* Corner accents */}
+        <div className="absolute top-0 left-0 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-br from-blue-100/40 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-48 sm:w-96 h-48 sm:h-96 bg-gradient-to-tl from-purple-100/40 to-transparent rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-100/80 backdrop-blur-sm rounded-full mb-4 sm:mb-6"
+          >
+            <Target className="h-4 w-4 text-blue-600" />
+            <span className="text-blue-700 font-medium text-sm">
+              Our Success Stories
+            </span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-4"
+          >
+            Transforming Industries with{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Innovative Solutions
+            </span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-base sm:text-lg lg:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4"
+          >
+            Discover how we've helped leading companies achieve remarkable results through 
+            cutting-edge engineering solutions and strategic implementations.
+          </motion.p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-          {projects.map((project, index) => (
-            <div
-              key={project.id}
-              className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden ${
-                index % 2 === 0 ? 'lg:translate-y-0' : 'lg:translate-y-8'
-              }`}
-            >
-              {/* Project Image */}
-              <div className="relative h-64 sm:h-72 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                <div className="absolute top-4 left-4">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-600 text-white">
-                    {project.category}
-                  </span>
-                </div>
-                <div className="absolute top-4 right-4">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/90 text-gray-900">
-                    <Calendar className="w-3 h-3 mr-1" />
-                    {project.year}
-                  </span>
-                </div>
-              </div>
+        {/* Projects Grid - Mobile Responsive */}
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 mb-16 sm:mb-20 lg:mb-24">
+          {projects.map((project, index) => {
+            const colors = getColorClasses(project.color);
+            const isHovered = hoveredProject === index;
 
-              {/* Project Content */}
-              <div className="p-6 sm:p-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                    {project.title}
-                  </h3>
-                  <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition-colors duration-300" />
-                </div>
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 40 }}
+                animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.15, duration: 0.6 }}
+                onMouseEnter={() => setHoveredProject(index)}
+                onMouseLeave={() => setHoveredProject(null)}
+                className={`group relative bg-white/80 backdrop-blur-sm border ${colors.border} ${colors.hover} rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-black/5 ${
+                  isHovered ? "scale-[1.02] shadow-2xl shadow-black/10" : "hover:scale-[1.01]"
+                } ${index % 2 === 1 ? 'lg:mt-8' : ''}`}
+              >
+                {/* Background gradient on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}></div>
 
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  {project.description}
-                </p>
+                {/* Project Image */}
+                <div className="relative h-48 sm:h-56 lg:h-64 overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  
+                  {/* Category Badge */}
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
+                    <span className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-gradient-to-r ${colors.gradient} text-white shadow-lg`}>
+                      {project.category}
+                    </span>
+                  </div>
+                  
+                  {/* Year Badge */}
+                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+                    <span className="inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-white/90 backdrop-blur-sm text-gray-900">
+                      <Calendar className="w-3 h-3 mr-1" />
+                      {project.year}
+                    </span>
+                  </div>
 
-                {/* Client */}
-                <div className="flex items-center mb-4">
-                  <Users className="w-4 h-4 text-gray-400 mr-2" />
-                  <span className="text-sm text-gray-600">Client: {project.client}</span>
-                </div>
-
-                {/* Technologies */}
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-gray-900 mb-2">Technologies Used:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 transition-colors duration-200"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  {/* Stats Overlay */}
+                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-lg px-2 sm:px-3 py-1 sm:py-2">
+                      <div className={`text-lg sm:text-xl font-bold ${colors.text}`}>
+                        {project.stats.value}
+                      </div>
+                      <div className="text-xs text-gray-600 font-medium">
+                        {project.stats.label}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Results */}
-                <div>
-                  <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center">
-                    <Award className="w-4 h-4 mr-2 text-blue-600" />
-                    Key Results:
-                  </h4>
-                  <ul className="space-y-2">
-                    {project.results.map((result, resultIndex) => (
-                      <li key={resultIndex} className="flex items-center text-sm text-gray-600">
-                        <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-3 flex-shrink-0" />
-                        {result}
-                      </li>
-                    ))}
-                  </ul>
+                {/* Project Content */}
+                <div className="relative p-4 sm:p-6 lg:p-8">
+                  <div className="flex items-start justify-between mb-3 sm:mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors duration-300 mb-1">
+                        {project.title}
+                      </h3>
+                      <p className={`text-sm sm:text-base font-medium ${colors.text} mb-2 sm:mb-3`}>
+                        {project.subtitle}
+                      </p>
+                    </div>
+                    <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover:text-blue-600 transition-colors duration-300 ml-2 flex-shrink-0" />
+                  </div>
+
+                  <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
+                    {project.description}
+                  </p>
+
+                  {/* Project Meta */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
+                    <div className="flex items-center">
+                      <Users className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 mr-2" />
+                      <span className="text-xs sm:text-sm text-gray-600">{project.client}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Calendar className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 mr-2" />
+                      <span className="text-xs sm:text-sm text-gray-600">{project.duration}</span>
+                    </div>
+                  </div>
+
+                  {/* Technologies */}
+                  <div className="mb-4 sm:mb-6">
+                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3">Technologies:</h4>
+                    <div className="flex flex-wrap gap-1 sm:gap-2">
+                      {project.technologies.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800 hover:bg-blue-100 hover:text-blue-800 transition-colors duration-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Results */}
+                  <div className="mb-4 sm:mb-6">
+                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900 mb-2 sm:mb-3 flex items-center">
+                      <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-green-600" />
+                      Key Results:
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2">
+                      {project.results.slice(0, 4).map((result, resultIndex) => (
+                        <div key={resultIndex} className="flex items-center text-xs sm:text-sm text-gray-600">
+                          <CheckCircle className="w-3 h-3 text-green-500 mr-2 flex-shrink-0" />
+                          <span>{result}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* CTA Button */}
+                  <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-3 px-4 rounded-lg sm:rounded-xl font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-black/10 group-hover:scale-105 text-sm sm:text-base`}>
+                    <span>View Case Study</span>
+                    <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
+                  </button>
                 </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Enhanced CTA Section - Mobile Responsive */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 1.0, duration: 0.6 }}
+          className="relative z-10"
+        >
+          <div className="relative rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 lg:p-16 overflow-hidden shadow-2xl border border-white/20 bg-white/30 backdrop-blur-lg">
+            {/* Background layers */}
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-[url('/8410.jpg')] bg-cover opacity-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-blue-100/40 to-indigo-100/60"></div>
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10 text-center">
+              <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
+                <div className="p-2 sm:p-3 bg-blue-100 rounded-lg sm:rounded-xl shadow-sm">
+                  <Zap className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+                </div>
+                <span className="text-blue-700 font-semibold text-base sm:text-lg tracking-wide">
+                  Ready to Transform Your Business?
+                </span>
               </div>
 
-              {/* Hover Effect Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 to-purple-600/0 group-hover:from-blue-600/5 group-hover:to-purple-600/5 transition-all duration-500 pointer-events-none" />
-            </div>
-          ))}
-        </div>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-gray-900 leading-tight">
+                Let's Create Your
+                <span className="block bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  Success Story
+                </span>
+              </h3>
 
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="inline-flex items-center justify-center p-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold text-white mb-2">Ready to Start Your Project?</h3>
-              <p className="text-blue-100 mb-4">Let's discuss how we can help transform your business</p>
-              <button className="inline-flex items-center px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-50 transition-colors duration-200">
-                Get Started Today
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </button>
+              <p className="text-gray-700 text-base sm:text-lg mb-6 sm:mb-8 lg:mb-10 max-w-3xl mx-auto leading-relaxed px-4">
+                Join the ranks of industry leaders who have transformed their operations with our 
+                innovative engineering solutions. Your next breakthrough is just a conversation away.
+              </p>
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("contact")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-blue-300/30 flex items-center justify-center gap-2"
+                >
+                  <span>Start Your Project</span>
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                </button>
+
+                <button className="bg-white/80 backdrop-blur-md border border-gray-200 text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-base sm:text-lg font-semibold hover:bg-white hover:border-gray-300 transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2">
+                  <Award className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <span>View All Projects</span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
