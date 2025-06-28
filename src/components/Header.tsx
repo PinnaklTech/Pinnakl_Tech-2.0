@@ -9,6 +9,9 @@ const Header: React.FC = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const location = useLocation();
 
+  // Check if we're on the homepage
+  const isHomePage = location.pathname === '/';
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -54,10 +57,13 @@ const Header: React.FC = () => {
     { label: "Supply Chain Optimization", path: "/services/supply-chain" },
   ];
 
+  // Determine if header should use "scrolled" styling
+  const shouldUseScrolledStyling = isScrolled || !isHomePage;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-[9999] transition-all duration-500 ${
-        isScrolled 
+        shouldUseScrolledStyling 
           ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200/50" 
           : "bg-transparent"
       }`}
@@ -67,7 +73,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 flex-shrink-0 min-w-0 z-[10000] relative">
             <img
-              src={isScrolled ? "/logo_b.png" : "/logo_w.png"}
+              src={shouldUseScrolledStyling ? "/logo_b.png" : "/logo_w.png"}
               alt="Pinnakl Technologies Logo"
               className="h-6 w-auto sm:h-8 md:h-10 lg:h-12 object-contain transition-all duration-500"
             />
@@ -80,7 +86,7 @@ const Header: React.FC = () => {
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap ${
-                  isScrolled
+                  shouldUseScrolledStyling
                     ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                     : "text-white/90 hover:text-white hover:bg-white/10"
                 }`}
@@ -95,7 +101,7 @@ const Header: React.FC = () => {
                 onMouseEnter={() => setIsServicesOpen(true)}
                 onMouseLeave={() => setIsServicesOpen(false)}
                 className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap flex items-center gap-1 ${
-                  isScrolled
+                  shouldUseScrolledStyling
                     ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                     : "text-white/90 hover:text-white hover:bg-white/10"
                 }`}
@@ -142,7 +148,7 @@ const Header: React.FC = () => {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={`xl:hidden p-2 sm:p-3 rounded-lg transition-colors duration-300 touch-manipulation z-[10000] relative ${
-              isScrolled ? "text-gray-900 hover:bg-gray-100" : "text-white hover:bg-white/10"
+              shouldUseScrolledStyling ? "text-gray-900 hover:bg-gray-100" : "text-white hover:bg-white/10"
             }`}
             aria-label="Toggle menu"
           >
