@@ -56,20 +56,39 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* Subtle Dot Indicators - Better Mobile */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-        {backgroundImages.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            className={`rounded-full transition-all duration-300 p-2 ${
-              index === currentImageIndex
-                ? "bg-white/80 w-2 h-2 sm:w-3 sm:h-3 scale-110"
-                : "bg-white/40 hover:bg-white/60 w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 hover:scale-105"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
+      {/* Mobile-First Carousel Indicators */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        {/* Mobile: Progress bar style */}
+        <div className="flex sm:hidden space-x-1">
+          {backgroundImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`h-1 rounded-full transition-all duration-300 ${
+                index === currentImageIndex
+                  ? "bg-white w-6"
+                  : "bg-white/40 w-4 hover:bg-white/60"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+        
+        {/* Desktop: Classic dots */}
+        <div className="hidden sm:flex space-x-2">
+          {backgroundImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`rounded-full transition-all duration-300 ${
+                index === currentImageIndex
+                  ? "bg-white w-3 h-3 scale-125"
+                  : "bg-white/50 hover:bg-white/70 w-2.5 h-2.5 hover:scale-105"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Content */}
