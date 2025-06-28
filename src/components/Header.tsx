@@ -192,28 +192,13 @@ const Header: React.FC = () => {
         >
           {/* Menu Content */}
           <div className="flex flex-col h-full">
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gray-50">
-              <div className="flex items-center space-x-3">
-                <img
-                  src="/logo_b.png"
-                  alt="Pinnakl Technologies"
-                  className="h-8 w-auto"
-                />
-                <div>
-                  <h2 id="mobile-menu-title" className="text-lg font-semibold text-gray-900">
-                    Menu
-                  </h2>
-                  <p className="text-sm text-gray-600">Navigation</p>
-                </div>
-              </div>
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-800 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                aria-label="Close menu"
-              >
-                <X className="w-5 h-5" />
-              </button>
+            {/* Simplified Header - Just logo */}
+            <div className="flex items-center p-6 border-b border-gray-100 bg-gray-50">
+              <img
+                src="/logo_b.png"
+                alt="Pinnakl Technologies"
+                className="h-8 w-auto"
+              />
             </div>
 
             {/* Navigation Links */}
