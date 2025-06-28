@@ -56,34 +56,34 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
 
-      {/* Mobile-First Carousel Indicators */}
-      <div className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-        {/* Mobile: Progress bar style */}
-        <div className="flex sm:hidden space-x-1">
-          {backgroundImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImageIndex(index)}
-              className={`h-1 rounded-full transition-all duration-300 ${
-                index === currentImageIndex
-                  ? "bg-white w-6"
-                  : "bg-white/40 w-4 hover:bg-white/60"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-        
-        {/* Desktop: Classic dots */}
-        <div className="hidden sm:flex space-x-2">
+      {/* Refined Carousel Indicators */}
+      <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 z-20">
+        {/* Mobile: Small subtle dots */}
+        <div className="flex sm:hidden space-x-1.5 px-3 py-2 bg-black/20 backdrop-blur-sm rounded-full">
           {backgroundImages.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentImageIndex(index)}
               className={`rounded-full transition-all duration-300 ${
                 index === currentImageIndex
-                  ? "bg-white w-3 h-3 scale-125"
-                  : "bg-white/50 hover:bg-white/70 w-2.5 h-2.5 hover:scale-105"
+                  ? "w-2 h-2 bg-white shadow-sm"
+                  : "w-1.5 h-1.5 bg-white/30 hover:bg-white/50"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+        
+        {/* Desktop: Classic dots with enhanced styling */}
+        <div className="hidden sm:flex space-x-2 px-4 py-3 bg-black/20 backdrop-blur-sm rounded-full">
+          {backgroundImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentImageIndex(index)}
+              className={`rounded-full transition-all duration-300 ${
+                index === currentImageIndex
+                  ? "bg-white w-3 h-3 scale-125 shadow-lg"
+                  : "bg-white/50 hover:bg-white/70 w-2.5 h-2.5 hover:scale-110"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
