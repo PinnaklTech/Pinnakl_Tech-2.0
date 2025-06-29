@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Award, Users, Zap, Target, ArrowRight, Cpu, Shield, Globe, TrendingUp } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const About: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -178,11 +179,14 @@ const About: React.FC = () => {
                 </p>
               </div>
 
-              {/* CTA Button */}
-              <button className="group relative overflow-hidden bg-gray-900 text-white px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 md:space-x-3 shadow-lg hover:shadow-xl w-full sm:w-auto justify-center sm:justify-start text-xs sm:text-sm md:text-base lg:text-lg touch-manipulation">
+              {/* CTA Button - Updated to link to /projects */}
+              <Link
+                to="/projects"
+                className="group relative overflow-hidden bg-gray-900 text-white px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 rounded-lg sm:rounded-xl font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 md:space-x-3 shadow-lg hover:shadow-xl w-full sm:w-auto justify-center sm:justify-start text-xs sm:text-sm md:text-base lg:text-lg touch-manipulation"
+              >
                 <span>Explore Our Portfolio</span>
                 <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 transform group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
+              </Link>
             </div>
           </div>
 

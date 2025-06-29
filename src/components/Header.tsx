@@ -362,7 +362,7 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - Updated with solid background and better readability */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -370,36 +370,41 @@ const Header: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-md flex flex-col justify-center items-center px-4 sm:px-6"
+            className="fixed inset-0 z-40 bg-white/98 backdrop-blur-lg flex flex-col justify-center items-center px-4 sm:px-6 shadow-2xl"
           >
+            {/* Enhanced background with better contrast */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50/90 to-blue-50/30 backdrop-blur-xl"></div>
+            
+            {/* Close button with enhanced styling */}
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 rounded-full bg-gray-100 text-gray-700 hover:text-blue-600 hover:bg-blue-100 transition duration-200 shadow-sm touch-manipulation"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 sm:p-4 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-200/50 touch-manipulation z-50"
               aria-label="Close Menu"
             >
               <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            <div className="flex flex-col items-center space-y-4 sm:space-y-6 w-full max-w-sm">
+            {/* Menu content with enhanced readability */}
+            <div className="relative z-10 flex flex-col items-center space-y-4 sm:space-y-6 w-full max-w-sm">
               {navItems.map((item, index) => renderMobileNavItem(item, index))}
               
-              {/* Mobile Services Menu */}
+              {/* Mobile Services Menu with enhanced styling */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navItems.length * 0.1 }}
-                className="w-full"
+                className="w-full bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200/50"
               >
-                <div className="text-center text-lg sm:text-xl md:text-2xl text-gray-800 font-semibold mb-3">
+                <div className="text-center text-lg sm:text-xl md:text-2xl text-gray-900 font-bold mb-4 sm:mb-6">
                   Services
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 sm:space-y-3">
                   {serviceItems.map((service, index) => (
                     <Link
                       key={service.path}
                       to={service.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className="block w-full text-center text-sm sm:text-base text-gray-600 hover:text-blue-600 transition duration-200 py-2 px-4 rounded-lg hover:bg-blue-50 touch-manipulation"
+                      className="block w-full text-center text-sm sm:text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 py-2 sm:py-3 px-4 rounded-lg font-medium border border-transparent hover:border-blue-200 touch-manipulation"
                     >
                       {service.label}
                     </Link>
@@ -407,16 +412,21 @@ const Header: React.FC = () => {
                 </div>
               </motion.div>
 
+              {/* Enhanced CTA button */}
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: (navItems.length + 1) * 0.1 }}
                 onClick={() => scrollToSection("contact")}
-                className="w-full mt-4 bg-blue-600 text-white px-6 py-4 sm:py-5 rounded-full font-medium hover:bg-blue-700 transition duration-300 shadow-md text-lg sm:text-xl touch-manipulation"
+                className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 sm:py-5 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl text-lg sm:text-xl touch-manipulation border border-blue-500/20"
               >
                 Get Quote
               </motion.button>
             </div>
+
+            {/* Decorative elements for visual appeal */}
+            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-100/20 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-purple-100/20 rounded-full blur-2xl"></div>
           </motion.div>
         )}
       </AnimatePresence>
