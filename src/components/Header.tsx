@@ -24,6 +24,32 @@ const Header: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMenuOpen]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+    };
+  }, [isMenuOpen]);
+
   // Section intersection observer for homepage only
   useEffect(() => {
     if (!isHomePage) {
@@ -74,6 +100,7 @@ const Header: React.FC = () => {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
       setIsMenuOpen(false);
+      setIsMobileServicesOpen(false);
     }
   };
 
@@ -197,7 +224,7 @@ const Header: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.1 }}
         onClick={() => scrollToSection(item.id)}
-        className={`w-full text-center text-lg sm:text-xl md:text-2xl font-semibold transition duration-200 py-3 px-6 rounded-xl touch-manipulation relative ${
+        className={`w-full text-center text-lg sm:text-xl font-semibold transition duration-200 py-3 px-6 rounded-xl touch-manipulation relative ${
           isActive 
             ? "text-blue-600 bg-blue-50" 
             : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
@@ -325,19 +352,23 @@ const Header: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-white flex flex-col justify-center items-center px-4 sm:px-6 shadow-2xl"
+            className="fixed inset-0 z-[9999] bg-white flex flex-col justify-start items-center px-4 sm:px-6 overflow-y-auto"
+            style={{ height: '100vh', height: '100dvh' }}
           >
             {/* Close button */}
             <button
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                setIsMenuOpen(false);
+                setIsMobileServicesOpen(false);
+              }}
               className="absolute top-4 right-4 sm:top-6 sm:right-6 p-3 sm:p-4 rounded-full bg-gray-100 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-200 touch-manipulation z-50"
               aria-label="Close Menu"
             >
               <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            {/* Menu content - Updated Order */}
-            <div className="flex flex-col items-center space-y-4 sm:space-y-6 w-full max-w-sm">
+            {/* Menu content - Centered vertically */}
+            <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-6 w-full max-w-sm min-h-full py-20">
               {/* About */}
               {renderMobileNavItem({ label: "About", id: "about" }, 0)}
               
@@ -347,11 +378,8 @@ const Header: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1 * 0.1 }}
-                  onClick={() => {
-                    setIsMobileServicesOpen(!isMobileServicesOpen);
-                    scrollToSection('services');
-                  }}
-                  className={`w-full text-center text-lg sm:text-xl md:text-2xl font-semibold transition duration-200 py-3 px-6 rounded-xl touch-manipulation relative flex items-center justify-center gap-2 ${
+                  onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                  className={`w-full text-center text-lg sm:text-xl font-semibold transition duration-200 py-3 px-6 rounded-xl touch-manipulation relative flex items-center justify-center gap-2 ${
                     isHomePage && activeSection === 'services'
                       ? "text-blue-600 bg-blue-50" 
                       : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
@@ -381,22 +409,24 @@ const Header: React.FC = () => {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="mt-2 w-full bg-gray-50 rounded-xl p-3 border border-gray-200"
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="mt-3 w-full bg-gray-50 rounded-xl p-3 border border-gray-200 overflow-hidden"
                     >
-                      {serviceItems.map((service, index) => (
-                        <Link
-                          key={service.path}
-                          to={service.path}
-                          onClick={() => {
-                            setIsMenuOpen(false);
-                            setIsMobileServicesOpen(false);
-                          }}
-                          className="block w-full text-center text-sm sm:text-base text-gray-600 hover:text-blue-600 hover:bg-white transition-all duration-300 py-2 sm:py-3 px-4 rounded-lg font-medium touch-manipulation"
-                        >
-                          {service.label}
-                        </Link>
-                      ))}
+                      <div className="space-y-2">
+                        {serviceItems.map((service, index) => (
+                          <Link
+                            key={service.path}
+                            to={service.path}
+                            onClick={() => {
+                              setIsMenuOpen(false);
+                              setIsMobileServicesOpen(false);
+                            }}
+                            className="block w-full text-center text-sm sm:text-base text-gray-600 hover:text-blue-600 hover:bg-white transition-all duration-300 py-2.5 sm:py-3 px-4 rounded-lg font-medium touch-manipulation border border-transparent hover:border-blue-200"
+                          >
+                            {service.label}
+                          </Link>
+                        ))}
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -419,8 +449,9 @@ const Header: React.FC = () => {
                 onClick={() => {
                   scrollToSection("contact");
                   setIsMenuOpen(false);
+                  setIsMobileServicesOpen(false);
                 }}
-                className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 sm:py-5 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl text-lg sm:text-xl touch-manipulation"
+                className="w-full mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 sm:py-5 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl text-lg sm:text-xl touch-manipulation"
               >
                 Get Quote
               </motion.button>
