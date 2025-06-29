@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   Wrench,
   ArrowRight,
+  ArrowLeft,
   CheckCircle,
   Clock,
   Users,
@@ -142,6 +143,22 @@ const FailureAnalysisPage: React.FC = () => {
       <section className="relative py-12 sm:py-16 md:py-20 lg:py-24 overflow-hidden mt-16 sm:mt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-teal-50"></div>
         <div className="relative max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+          {/* Back to Services Button */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="mb-6 sm:mb-8"
+          >
+            <Link
+              to="/#services"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg text-gray-600 hover:text-emerald-600 hover:border-emerald-200 hover:bg-emerald-50/50 transition-all duration-300 group shadow-sm hover:shadow-md"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300" />
+              <span className="text-sm font-medium">Back to Services</span>
+            </Link>
+          </motion.div>
+
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
