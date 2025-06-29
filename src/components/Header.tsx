@@ -9,6 +9,9 @@ const Header: React.FC = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const location = useLocation();
 
+  // Check if we're on the homepage
+  const isHomePage = location.pathname === '/';
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -18,6 +21,9 @@ const Header: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMenuOpen]);
+
+  // Force scrolled state on non-home pages for visibility
+  const shouldShowScrolledState = !isHomePage || isScrolled;
 
   const scrollToSection = (sectionId: string) => {
     if (location.pathname !== '/') {
@@ -51,7 +57,7 @@ const Header: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
+        shouldShowScrolledState ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"
       }`}
     >
       <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
@@ -59,7 +65,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 flex-shrink-0 min-w-0">
             <img
-              src={isScrolled ? "/logo_b.png" : "/logo_w.png"}
+              src={shouldShowScrolledState ? "/logo_b.png" : "/logo_w.png"}
               alt="Pinnakl Technologies Logo"
               className="h-6 w-auto sm:h-8 md:h-10 lg:h-12 object-contain transition-all duration-300"
             />
@@ -72,7 +78,7 @@ const Header: React.FC = () => {
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap ${
-                  isScrolled
+                  shouldShowScrolledState
                     ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                     : "text-white/90 hover:text-white hover:bg-white/10"
                 }`}
@@ -87,7 +93,7 @@ const Header: React.FC = () => {
                 onMouseEnter={() => setIsServicesOpen(true)}
                 onMouseLeave={() => setIsServicesOpen(false)}
                 className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap flex items-center gap-1 ${
-                  isScrolled
+                  shouldShowScrolledState
                     ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
                     : "text-white/90 hover:text-white hover:bg-white/10"
                 }`}
@@ -134,7 +140,7 @@ const Header: React.FC = () => {
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={`xl:hidden p-2 sm:p-3 rounded-lg transition-colors duration-300 touch-manipulation ${
-              isScrolled ? "text-gray-900 hover:bg-gray-100" : "text-white hover:bg-white/10"
+              shouldShowScrolledState ? "text-gray-900 hover:bg-gray-100" : "text-white hover:bg-white/10"
             }`}
             aria-label="Toggle menu"
           >
