@@ -46,7 +46,7 @@ const Header: React.FC = () => {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Observe all sections
+    // Observe all sections in the correct order
     const sections = ['about', 'services', 'projects', 'blog', 'contact'];
     sections.forEach((sectionId) => {
       const element = document.getElementById(sectionId);
@@ -76,22 +76,14 @@ const Header: React.FC = () => {
     }
   };
 
-  // Conditional navigation items based on current route
-  const homePageNavItems = [
-    { label: "About", id: "about", type: "scroll" },
-    { label: "Projects", id: "projects", type: "scroll" },
-    { label: "Blog", id: "blog", type: "scroll" },
-    { label: "Contact", id: "contact", type: "scroll" },
+  // Updated navigation items with correct order
+  const navItems = [
+    { label: "About", id: "about" },
+    { label: "Services", id: "services" },
+    { label: "Projects", id: "projects" },
+    { label: "Blog", id: "blog" },
+    { label: "Contact", id: "contact" },
   ];
-
-  const otherPagesNavItems = [
-    { label: "Home", id: "/", type: "link" },
-    { label: "Projects", id: "projects", type: "scroll" },
-    { label: "Services", id: "services", type: "scroll" },
-    { label: "Contact", id: "contact", type: "scroll" },
-  ];
-
-  const navItems = isHomePage ? homePageNavItems : otherPagesNavItems;
 
   const serviceItems = [
     { label: "Product Development", path: "/services/product-development" },
@@ -102,31 +94,21 @@ const Header: React.FC = () => {
     { label: "Supply Chain Optimization", path: "/services/supply-chain" },
   ];
 
-  const handleNavItemClick = (item: any) => {
-    if (item.type === "link") {
-      // Navigate to home page
-      window.location.href = item.id;
-    } else {
-      // Scroll to section
-      scrollToSection(item.id);
-    }
-  };
-
   const getNavItemClasses = (item: any) => {
     const isActive = isHomePage && activeSection === item.id;
-    const baseClasses = "font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap relative";
+    const baseClasses = "font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-3 lg:px-4 py-2 lg:py-3 rounded-md whitespace-nowrap relative";
     
     if (shouldShowScrolledState) {
       return `${baseClasses} ${
         isActive 
-          ? "text-blue-600 bg-blue-50" 
-          : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+          ? "text-blue-600" 
+          : "text-gray-700 hover:text-blue-600"
       }`;
     } else {
       return `${baseClasses} ${
         isActive 
-          ? "text-white bg-white/20" 
-          : "text-white/90 hover:text-white hover:bg-white/10"
+          ? "text-white" 
+          : "text-white/90 hover:text-white"
       }`;
     }
   };
@@ -145,46 +127,36 @@ const Header: React.FC = () => {
         transition={{
           type: "spring",
           stiffness: 500,
-          damping: 30
+          damping: 30,
+          duration: 0.3
         }}
       />
     );
   };
 
   const renderNavItem = (item: any) => {
-    if (item.type === "link") {
-      return (
-        <Link
-          key={item.id}
-          to={item.id}
-          className={getNavItemClasses(item)}
-        >
-          {item.label}
-          {getActiveIndicator(item)}
-        </Link>
-      );
-    } else {
-      return (
-        <button
-          key={item.id}
-          onClick={() => handleNavItemClick(item)}
-          className={getNavItemClasses(item)}
-        >
-          {item.label}
-          {getActiveIndicator(item)}
-        </button>
-      );
-    }
+    return (
+      <button
+        key={item.id}
+        onClick={() => scrollToSection(item.id)}
+        className={getNavItemClasses(item)}
+      >
+        {item.label}
+        {getActiveIndicator(item)}
+      </button>
+    );
   };
 
   const renderMobileNavItem = (item: any, index: number) => {
     const isActive = isHomePage && activeSection === item.id;
     
-    const content = (
-      <motion.div
+    return (
+      <motion.button
+        key={item.id}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: index * 0.1 }}
+        onClick={() => scrollToSection(item.id)}
         className={`w-full text-center text-lg sm:text-xl md:text-2xl font-semibold transition duration-200 py-3 px-6 rounded-xl touch-manipulation relative ${
           isActive 
             ? "text-blue-600 bg-blue-50" 
@@ -200,34 +172,13 @@ const Header: React.FC = () => {
             transition={{
               type: "spring",
               stiffness: 500,
-              damping: 30
+              damping: 30,
+              duration: 0.3
             }}
           />
         )}
-      </motion.div>
+      </motion.button>
     );
-
-    if (item.type === "link") {
-      return (
-        <Link
-          key={item.id}
-          to={item.id}
-          onClick={() => setIsMenuOpen(false)}
-        >
-          {content}
-        </Link>
-      );
-    } else {
-      return (
-        <button
-          key={item.id}
-          onClick={() => handleNavItemClick(item)}
-          className="w-full"
-        >
-          {content}
-        </button>
-      );
-    }
   };
 
   return (
@@ -251,91 +202,46 @@ const Header: React.FC = () => {
           <nav className="hidden xl:flex items-center space-x-2 lg:space-x-4 xl:space-x-6 2xl:space-x-8">
             {navItems.map((item) => renderNavItem(item))}
             
-            {/* Services Dropdown - Only show on non-home pages or as separate item */}
-            {!isHomePage && (
-              <div className="relative">
-                <button
-                  onMouseEnter={() => setIsServicesOpen(true)}
-                  onMouseLeave={() => setIsServicesOpen(false)}
-                  className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap flex items-center gap-1 ${
-                    shouldShowScrolledState
-                      ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                      : "text-white/90 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  Services
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
-                </button>
+            {/* Services Dropdown */}
+            <div className="relative">
+              <button
+                onMouseEnter={() => setIsServicesOpen(true)}
+                onMouseLeave={() => setIsServicesOpen(false)}
+                className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-3 lg:px-4 py-2 lg:py-3 rounded-md whitespace-nowrap flex items-center gap-1 ${
+                  shouldShowScrolledState
+                    ? "text-gray-700 hover:text-blue-600"
+                    : "text-white/90 hover:text-white"
+                }`}
+              >
+                Services
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
+              </button>
 
-                <AnimatePresence>
-                  {isServicesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      onMouseEnter={() => setIsServicesOpen(true)}
-                      onMouseLeave={() => setIsServicesOpen(false)}
-                      className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl shadow-2xl z-50 overflow-hidden"
-                    >
-                      {serviceItems.map((service, index) => (
-                        <Link
-                          key={service.path}
-                          to={service.path}
-                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100 last:border-b-0"
-                          onClick={() => setIsServicesOpen(false)}
-                        >
-                          {service.label}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )}
-
-            {/* Services Dropdown for Homepage */}
-            {isHomePage && (
-              <div className="relative">
-                <button
-                  onMouseEnter={() => setIsServicesOpen(true)}
-                  onMouseLeave={() => setIsServicesOpen(false)}
-                  className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap flex items-center gap-1 ${
-                    shouldShowScrolledState
-                      ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                      : "text-white/90 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  Services
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                <AnimatePresence>
-                  {isServicesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      onMouseEnter={() => setIsServicesOpen(true)}
-                      onMouseLeave={() => setIsServicesOpen(false)}
-                      className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl shadow-2xl z-50 overflow-hidden"
-                    >
-                      {serviceItems.map((service, index) => (
-                        <Link
-                          key={service.path}
-                          to={service.path}
-                          className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100 last:border-b-0"
-                          onClick={() => setIsServicesOpen(false)}
-                        >
-                          {service.label}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            )}
+              <AnimatePresence>
+                {isServicesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    onMouseEnter={() => setIsServicesOpen(true)}
+                    onMouseLeave={() => setIsServicesOpen(false)}
+                    className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-md border border-gray-200 rounded-xl shadow-2xl z-50 overflow-hidden"
+                  >
+                    {serviceItems.map((service, index) => (
+                      <Link
+                        key={service.path}
+                        to={service.path}
+                        className="block px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200 border-b border-gray-100 last:border-b-0"
+                        onClick={() => setIsServicesOpen(false)}
+                      >
+                        {service.label}
+                      </Link>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
 
             <button
               onClick={() => scrollToSection("contact")}
