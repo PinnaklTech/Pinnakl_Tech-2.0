@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   ExternalLink, 
   Calendar, 
@@ -19,6 +20,7 @@ import {
   Grid3X3,
   ChevronDown
 } from 'lucide-react';
+import { getFeaturedProjects } from '../data/projects';
 
 const Projects: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -63,106 +65,9 @@ const Projects: React.FC = () => {
     setCurrentSlide(0);
   }, [activeFilter]);
 
-  const projects = [
-    {
-      id: 1,
-      title: "Advanced Manufacturing Solutions",
-      subtitle: "Smart Factory Implementation",
-      description: "Comprehensive ERP implementation for a leading manufacturing company, streamlining operations and increasing efficiency by 40%.",
-      image: "/Manufacturing.jpg",
-      category: "Manufacturing",
-      year: "2024",
-      client: "Industrial Corp",
-      duration: "8 months",
-      budget: "$2.5M",
-      technologies: ["ERP", "IoT", "Analytics", "Automation"],
-      results: ["40% efficiency increase", "30% cost reduction", "Real-time monitoring", "Predictive maintenance"],
-      color: "blue",
-      featured: false
-    },
-    {
-      id: 2,
-      title: "Supply Chain Optimization",
-      subtitle: "End-to-end logistics transformation",
-      description: "AI-powered supply chain management system with real-time tracking and predictive analytics for global operations.",
-      image: "/supply-chain.jpg",
-      category: "Logistics",
-      year: "2023",
-      client: "Global Logistics Ltd",
-      duration: "12 months",
-      budget: "$3.2M",
-      technologies: ["AI/ML", "Blockchain", "Cloud", "Analytics"],
-      results: ["25% faster delivery", "15% cost savings", "99.9% accuracy", "Global visibility"],
-      color: "emerald",
-      featured: false
-    },
-    {
-      id: 3,
-      title: "Metallurgy Process Control",
-      subtitle: "Automated quality assurance",
-      description: "Advanced sensor-based quality control system for metallurgical processes with machine learning integration.",
-      image: "/Metallurgy.jpg",
-      category: "Metallurgy",
-      year: "2023",
-      client: "Steel Industries Inc",
-      duration: "6 months",
-      budget: "$1.8M",
-      technologies: ["Sensors", "Automation", "ML", "Quality Control"],
-      results: ["50% defect reduction", "20% productivity gain", "Automated reporting", "Zero downtime"],
-      color: "purple",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "Power Transmission Systems",
-      subtitle: "Smart grid modernization",
-      description: "Next-generation smart grid management solution with predictive maintenance and energy optimization capabilities.",
-      image: "/PowerTransmission.webp",
-      category: "Energy",
-      year: "2024",
-      client: "Power Grid Solutions",
-      duration: "10 months",
-      budget: "$4.1M",
-      technologies: ["Smart Grid", "Predictive Analytics", "IoT", "Energy Management"],
-      results: ["30% energy savings", "Reduced downtime", "Predictive maintenance", "Grid stability"],
-      color: "amber",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Product Development Platform",
-      subtitle: "Innovation acceleration framework",
-      description: "Comprehensive product development platform with integrated design tools, testing protocols, and compliance management.",
-      image: "/Product_development.jpg",
-      category: "Product Development",
-      year: "2024",
-      client: "Innovation Labs",
-      duration: "14 months",
-      budget: "$2.9M",
-      technologies: ["CAD Integration", "Testing Automation", "Compliance", "Collaboration"],
-      results: ["60% faster development", "Reduced time-to-market", "Automated testing", "Regulatory compliance"],
-      color: "indigo",
-      featured: false
-    },
-    {
-      id: 6,
-      title: "ERP Integration Suite",
-      subtitle: "Enterprise-wide digital transformation",
-      description: "Complete Odoo ERP implementation with custom modules, integrations, and advanced analytics for multi-location operations.",
-      image: "/ERP.jpg",
-      category: "ERP Solutions",
-      year: "2023",
-      client: "Enterprise Solutions Inc",
-      duration: "16 months",
-      budget: "$3.7M",
-      technologies: ["Odoo", "Custom Modules", "API Integration", "Business Intelligence"],
-      results: ["Unified operations", "Real-time insights", "Process automation", "Scalable architecture"],
-      color: "red",
-      featured: false
-    }
-  ];
+  const projects = getFeaturedProjects();
 
-  const categories = ['All', 'Manufacturing', 'Logistics', 'Metallurgy', 'Energy', 'Product Development', 'ERP Solutions'];
+  const categories = ['All', ...Array.from(new Set(projects.map(project => project.category)))];
 
   // Filter projects based on active filter
   const filteredProjects = activeFilter === 'All' 
@@ -396,11 +301,14 @@ const Projects: React.FC = () => {
           </div>
 
           {/* Case Study Button */}
-          <button className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-2.5 md:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl font-semibold flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] text-xs sm:text-sm group-hover:shadow-xl touch-manipulation`}>
+          <Link
+            to={`/projects/${project.id}`}
+            className={`w-full bg-gradient-to-r ${colors.gradient} text-white py-2 sm:py-2.5 md:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl font-semibold flex items-center justify-center gap-1.5 sm:gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.02] text-xs sm:text-sm group-hover:shadow-xl touch-manipulation`}
+          >
             <FileText className="h-3 w-3 sm:h-4 sm:w-4" />
             <span>View Case Study</span>
             <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
-          </button>
+          </Link>
         </div>
       </motion.div>
     );
@@ -437,7 +345,7 @@ const Projects: React.FC = () => {
           >
             <Target className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
             <span className="text-blue-700 font-medium text-xs sm:text-sm">
-              Our Success Stories
+              Featured Projects
             </span>
             <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-600 rounded-full"></div>
           </motion.div>
@@ -621,11 +529,14 @@ const Projects: React.FC = () => {
                                 </div>
                                 
                                 <div className="ml-3 lg:ml-4">
-                                  <button className={`bg-gradient-to-r ${colors.gradient} text-white px-4 lg:px-6 py-2 lg:py-3 rounded-lg lg:rounded-xl font-semibold flex items-center gap-1.5 lg:gap-2 shadow-lg transition-all duration-300 hover:scale-105 whitespace-nowrap text-sm lg:text-base`}>
+                                  <Link
+                                    to={`/projects/${currentProject.id}`}
+                                    className={`bg-gradient-to-r ${colors.gradient} text-white px-4 lg:px-6 py-2 lg:py-3 rounded-lg lg:rounded-xl font-semibold flex items-center gap-1.5 lg:gap-2 shadow-lg transition-all duration-300 hover:scale-105 whitespace-nowrap text-sm lg:text-base`}
+                                  >
                                     <FileText className="h-4 w-4 lg:h-5 lg:w-5" />
                                     <span>View Case Study</span>
                                     <ArrowRight className="h-3 w-3 lg:h-4 lg:w-4" />
-                                  </button>
+                                  </Link>
                                 </div>
                               </div>
 
@@ -803,10 +714,13 @@ const Projects: React.FC = () => {
                   <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                 </button>
 
-                <button className="bg-white/80 backdrop-blur-md text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-semibold hover:bg-white transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2 touch-manipulation">
+                <Link
+                  to="/projects"
+                  className="bg-white/80 backdrop-blur-md text-gray-800 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base md:text-lg font-semibold hover:bg-white transition-all duration-300 hover:scale-105 shadow-md flex items-center justify-center gap-2 touch-manipulation"
+                >
                   <Award className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>View All Projects</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>

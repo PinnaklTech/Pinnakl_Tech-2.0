@@ -10,6 +10,8 @@ import FailureAnalysisPage from './pages/services/FailureAnalysisPage';
 import TechnicalSpecsPage from './pages/services/TechnicalSpecsPage';
 import ManufacturingPage from './pages/services/ManufacturingPage';
 import SupplyChainPage from './pages/services/SupplyChainPage';
+import AllProjectsPage from './pages/AllProjectsPage';
+import ProjectDetailPage from './pages/ProjectDetailPage';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/services/technical-specifications" element={<TechnicalSpecsPage />} />
           <Route path="/services/manufacturing" element={<ManufacturingPage />} />
           <Route path="/services/supply-chain" element={<SupplyChainPage />} />
+          <Route path="/projects" element={<AllProjectsPage />} />
+          <Route path="/projects/:projectId" element={<ProjectDetailPage />} />
         </Routes>
       </main>
       <Footer />
