@@ -18,6 +18,10 @@ export default {
         "pulse-slower": "pulse 6s ease-in-out infinite",
         "slide-up": "slideUp 20s linear infinite",
         "slide-down": "slideDown 25s linear infinite",
+        // Loading screen animations
+        "loading-bounce": "loadingBounce 1.4s ease-in-out infinite both",
+        "loading-fade": "loadingFade 2s ease-in-out infinite",
+        "loading-slide": "loadingSlide 2s ease-in-out infinite",
       },
       keyframes: {
         float: {
@@ -50,6 +54,25 @@ export default {
           "50%": { opacity: "1" },
           "100%": { transform: "translateY(100%)", opacity: "0" },
         },
+        // Loading screen specific animations
+        loadingBounce: {
+          "0%, 80%, 100%": {
+            transform: "scale(0)",
+            opacity: "0.5",
+          },
+          "40%": {
+            transform: "scale(1)",
+            opacity: "1",
+          },
+        },
+        loadingFade: {
+          "0%, 100%": { opacity: "0.3" },
+          "50%": { opacity: "1" },
+        },
+        loadingSlide: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       colors: {
         blue: {
@@ -67,6 +90,9 @@ export default {
       },
       screens: {
         'xs': '475px',
+      },
+      zIndex: {
+        '9999': '9999',
       },
     },
   },
