@@ -76,7 +76,7 @@ const Header: React.FC = () => {
     }
   };
 
-  // Updated navigation items - Services will have dropdown, others are regular nav items
+  // Updated navigation items in the correct order: About, Services, Projects, Blog, Contact
   const navItems = [
     { label: "About", id: "about" },
     { label: "Projects", id: "projects" },
@@ -237,11 +237,12 @@ const Header: React.FC = () => {
             />
           </Link>
 
-          {/* Desktop Nav */}
+          {/* Desktop Nav - Updated Order: About, Services, Projects, Blog, Contact, Get Quote */}
           <nav className="hidden xl:flex items-center space-x-2 lg:space-x-4 xl:space-x-6 2xl:space-x-8">
-            {navItems.map((item) => renderNavItem(item))}
+            {/* About */}
+            {renderNavItem({ label: "About", id: "about" })}
             
-            {/* Services Dropdown - Now positioned between other nav items */}
+            {/* Services Dropdown - Now positioned after About */}
             <div className="relative">
               <button
                 onMouseEnter={() => setIsServicesOpen(true)}
@@ -280,6 +281,16 @@ const Header: React.FC = () => {
               </AnimatePresence>
             </div>
 
+            {/* Projects */}
+            {renderNavItem({ label: "Projects", id: "projects" })}
+            
+            {/* Blog */}
+            {renderNavItem({ label: "Blog", id: "blog" })}
+            
+            {/* Contact */}
+            {renderNavItem({ label: "Contact", id: "contact" })}
+
+            {/* Get Quote Button */}
             <button
               onClick={() => scrollToSection("contact")}
               className="bg-blue-600 text-white px-3 lg:px-4 xl:px-6 2xl:px-8 py-2 lg:py-2.5 xl:py-3 rounded-full font-medium hover:bg-blue-700 transition-all duration-300 hover:scale-105 hover:shadow-lg text-sm lg:text-base xl:text-lg whitespace-nowrap"
@@ -327,15 +338,16 @@ const Header: React.FC = () => {
               <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            {/* Menu content with enhanced readability */}
+            {/* Menu content with enhanced readability - Updated Order */}
             <div className="relative z-10 flex flex-col items-center space-y-4 sm:space-y-6 w-full max-w-sm">
-              {navItems.map((item, index) => renderMobileNavItem(item, index))}
+              {/* About */}
+              {renderMobileNavItem({ label: "About", id: "about" }, 0)}
               
               {/* Mobile Services Button */}
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navItems.length * 0.1 }}
+                transition={{ delay: 1 * 0.1 }}
                 onClick={() => scrollToSection('services')}
                 className={`w-full text-center text-lg sm:text-xl md:text-2xl font-semibold transition duration-200 py-3 px-6 rounded-xl touch-manipulation relative ${
                   isHomePage && activeSection === 'services'
@@ -359,11 +371,20 @@ const Header: React.FC = () => {
                 )}
               </motion.button>
               
+              {/* Projects */}
+              {renderMobileNavItem({ label: "Projects", id: "projects" }, 2)}
+              
+              {/* Blog */}
+              {renderMobileNavItem({ label: "Blog", id: "blog" }, 3)}
+              
+              {/* Contact */}
+              {renderMobileNavItem({ label: "Contact", id: "contact" }, 4)}
+              
               {/* Mobile Services Menu with enhanced styling */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: (navItems.length + 1) * 0.1 }}
+                transition={{ delay: 5 * 0.1 }}
                 className="w-full bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200/50"
               >
                 <div className="text-center text-base sm:text-lg text-gray-700 font-semibold mb-3 sm:mb-4">
@@ -383,11 +404,11 @@ const Header: React.FC = () => {
                 </div>
               </motion.div>
 
-              {/* Enhanced CTA button */}
+              {/* Enhanced CTA button - Get Quote */}
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: (navItems.length + 2) * 0.1 }}
+                transition={{ delay: 6 * 0.1 }}
                 onClick={() => scrollToSection("contact")}
                 className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 sm:py-5 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl text-lg sm:text-xl touch-manipulation border border-blue-500/20"
               >
