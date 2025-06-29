@@ -76,10 +76,9 @@ const Header: React.FC = () => {
     }
   };
 
-  // Updated navigation items with correct order
+  // Updated navigation items - Services will have dropdown, others are regular nav items
   const navItems = [
     { label: "About", id: "about" },
-    { label: "Services", id: "services" },
     { label: "Projects", id: "projects" },
     { label: "Blog", id: "blog" },
     { label: "Contact", id: "contact" },
@@ -96,19 +95,38 @@ const Header: React.FC = () => {
 
   const getNavItemClasses = (item: any) => {
     const isActive = isHomePage && activeSection === item.id;
-    const baseClasses = "font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-3 lg:px-4 py-2 lg:py-3 rounded-md whitespace-nowrap relative";
+    const baseClasses = "font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-3 lg:px-4 py-2 lg:py-3 rounded-lg whitespace-nowrap relative";
     
     if (shouldShowScrolledState) {
       return `${baseClasses} ${
         isActive 
           ? "text-blue-600" 
-          : "text-gray-700 hover:text-blue-600"
+          : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
       }`;
     } else {
       return `${baseClasses} ${
         isActive 
           ? "text-white" 
-          : "text-white/90 hover:text-white"
+          : "text-white/90 hover:text-white hover:bg-white/10"
+      }`;
+    }
+  };
+
+  const getServicesClasses = () => {
+    const isActive = isHomePage && activeSection === 'services';
+    const baseClasses = "font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-3 lg:px-4 py-2 lg:py-3 rounded-lg whitespace-nowrap flex items-center gap-1 relative";
+    
+    if (shouldShowScrolledState) {
+      return `${baseClasses} ${
+        isActive 
+          ? "text-blue-600 bg-blue-50" 
+          : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+      }`;
+    } else {
+      return `${baseClasses} ${
+        isActive 
+          ? "text-white bg-white/10" 
+          : "text-white/90 hover:text-white hover:bg-white/10"
       }`;
     }
   };
@@ -120,9 +138,30 @@ const Header: React.FC = () => {
     return (
       <motion.div
         layoutId="activeIndicator"
-        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-8 rounded-full ${
+        className={`absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 rounded-full ${
           shouldShowScrolledState ? "bg-blue-600" : "bg-white"
-        }`}
+        } shadow-lg`}
+        initial={false}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 30,
+          duration: 0.3
+        }}
+      />
+    );
+  };
+
+  const getServicesActiveIndicator = () => {
+    const isActive = isHomePage && activeSection === 'services';
+    if (!isActive) return null;
+
+    return (
+      <motion.div
+        layoutId="activeIndicator"
+        className={`absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 rounded-full ${
+          shouldShowScrolledState ? "bg-blue-600" : "bg-white"
+        } shadow-lg`}
         initial={false}
         transition={{
           type: "spring",
@@ -202,19 +241,17 @@ const Header: React.FC = () => {
           <nav className="hidden xl:flex items-center space-x-2 lg:space-x-4 xl:space-x-6 2xl:space-x-8">
             {navItems.map((item) => renderNavItem(item))}
             
-            {/* Services Dropdown */}
+            {/* Services Dropdown - Now positioned between other nav items */}
             <div className="relative">
               <button
                 onMouseEnter={() => setIsServicesOpen(true)}
                 onMouseLeave={() => setIsServicesOpen(false)}
-                className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-3 lg:px-4 py-2 lg:py-3 rounded-md whitespace-nowrap flex items-center gap-1 ${
-                  shouldShowScrolledState
-                    ? "text-gray-700 hover:text-blue-600"
-                    : "text-white/90 hover:text-white"
-                }`}
+                onClick={() => scrollToSection('services')}
+                className={getServicesClasses()}
               >
                 Services
                 <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isServicesOpen ? 'rotate-180' : ''}`} />
+                {getServicesActiveIndicator()}
               </button>
 
               <AnimatePresence>
@@ -268,7 +305,7 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation - Updated with solid background and better readability */}
+      {/* Mobile Navigation */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -294,15 +331,43 @@ const Header: React.FC = () => {
             <div className="relative z-10 flex flex-col items-center space-y-4 sm:space-y-6 w-full max-w-sm">
               {navItems.map((item, index) => renderMobileNavItem(item, index))}
               
+              {/* Mobile Services Button */}
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navItems.length * 0.1 }}
+                onClick={() => scrollToSection('services')}
+                className={`w-full text-center text-lg sm:text-xl md:text-2xl font-semibold transition duration-200 py-3 px-6 rounded-xl touch-manipulation relative ${
+                  isHomePage && activeSection === 'services'
+                    ? "text-blue-600 bg-blue-50" 
+                    : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
+                }`}
+              >
+                Services
+                {isHomePage && activeSection === 'services' && (
+                  <motion.div
+                    layoutId="mobileActiveIndicator"
+                    className="absolute bottom-1 left-1/2 transform -translate-x-1/2 h-1 w-8 bg-blue-600 rounded-full"
+                    initial={false}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 30,
+                      duration: 0.3
+                    }}
+                  />
+                )}
+              </motion.button>
+              
               {/* Mobile Services Menu with enhanced styling */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navItems.length * 0.1 }}
+                transition={{ delay: (navItems.length + 1) * 0.1 }}
                 className="w-full bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-200/50"
               >
-                <div className="text-center text-lg sm:text-xl md:text-2xl text-gray-900 font-bold mb-4 sm:mb-6">
-                  Services
+                <div className="text-center text-base sm:text-lg text-gray-700 font-semibold mb-3 sm:mb-4">
+                  Our Services
                 </div>
                 <div className="space-y-2 sm:space-y-3">
                   {serviceItems.map((service, index) => (
@@ -310,7 +375,7 @@ const Header: React.FC = () => {
                       key={service.path}
                       to={service.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className="block w-full text-center text-sm sm:text-base text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 py-2 sm:py-3 px-4 rounded-lg font-medium border border-transparent hover:border-blue-200 touch-manipulation"
+                      className="block w-full text-center text-sm sm:text-base text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 py-2 sm:py-3 px-4 rounded-lg font-medium border border-transparent hover:border-blue-200 touch-manipulation"
                     >
                       {service.label}
                     </Link>
@@ -322,7 +387,7 @@ const Header: React.FC = () => {
               <motion.button
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: (navItems.length + 1) * 0.1 }}
+                transition={{ delay: (navItems.length + 2) * 0.1 }}
                 onClick={() => scrollToSection("contact")}
                 className="w-full mt-4 sm:mt-6 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-4 sm:py-5 rounded-full font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl text-lg sm:text-xl touch-manipulation border border-blue-500/20"
               >
