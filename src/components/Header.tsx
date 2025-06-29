@@ -7,6 +7,7 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
   const location = useLocation();
 
   // Check if we're on the homepage
@@ -21,6 +22,43 @@ const Header: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMenuOpen]);
+
+  // Section intersection observer for homepage only
+  useEffect(() => {
+    if (!isHomePage) {
+      setActiveSection('');
+      return;
+    }
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -60% 0px', // Trigger when section is 20% from top
+      threshold: 0.1
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all sections
+    const sections = ['about', 'services', 'projects', 'blog', 'contact'];
+    sections.forEach((sectionId) => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isHomePage]);
 
   // Force scrolled state on non-home pages for visibility
   const shouldShowScrolledState = !isHomePage || isScrolled;
@@ -54,6 +92,45 @@ const Header: React.FC = () => {
     { label: "Supply Chain Optimization", path: "/services/supply-chain" },
   ];
 
+  const getNavItemClasses = (itemId: string) => {
+    const isActive = isHomePage && activeSection === itemId;
+    const baseClasses = "font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap relative";
+    
+    if (shouldShowScrolledState) {
+      return `${baseClasses} ${
+        isActive 
+          ? "text-blue-600 bg-blue-50" 
+          : "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
+      }`;
+    } else {
+      return `${baseClasses} ${
+        isActive 
+          ? "text-white bg-white/20" 
+          : "text-white/90 hover:text-white hover:bg-white/10"
+      }`;
+    }
+  };
+
+  const getActiveIndicator = (itemId: string) => {
+    const isActive = isHomePage && activeSection === itemId;
+    if (!isActive) return null;
+
+    return (
+      <motion.div
+        layoutId="activeIndicator"
+        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-8 rounded-full ${
+          shouldShowScrolledState ? "bg-blue-600" : "bg-white"
+        }`}
+        initial={false}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 30
+        }}
+      />
+    );
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -77,13 +154,10 @@ const Header: React.FC = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`font-medium transition-all duration-300 hover:scale-105 text-sm lg:text-base xl:text-lg px-2 lg:px-3 py-1 lg:py-2 rounded-md whitespace-nowrap ${
-                  shouldShowScrolledState
-                    ? "text-gray-700 hover:text-blue-600 hover:bg-blue-50"
-                    : "text-white/90 hover:text-white hover:bg-white/10"
-                }`}
+                className={getNavItemClasses(item.id)}
               >
                 {item.label}
+                {getActiveIndicator(item.id)}
               </button>
             ))}
             
@@ -172,18 +246,37 @@ const Header: React.FC = () => {
             </button>
 
             <div className="flex flex-col items-center space-y-4 sm:space-y-6 w-full max-w-sm">
-              {navItems.map((item, index) => (
-                <motion.button
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => scrollToSection(item.id)}
-                  className="w-full text-center text-lg sm:text-xl md:text-2xl text-gray-800 font-semibold hover:text-blue-600 transition duration-200 py-3 px-6 rounded-xl hover:bg-blue-50 touch-manipulation"
-                >
-                  {item.label}
-                </motion.button>
-              ))}
+              {navItems.map((item, index) => {
+                const isActive = isHomePage && activeSection === item.id;
+                return (
+                  <motion.button
+                    key={item.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`w-full text-center text-lg sm:text-xl md:text-2xl font-semibold transition duration-200 py-3 px-6 rounded-xl touch-manipulation relative ${
+                      isActive 
+                        ? "text-blue-600 bg-blue-50" 
+                        : "text-gray-800 hover:text-blue-600 hover:bg-blue-50"
+                    }`}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <motion.div
+                        layoutId="mobileActiveIndicator"
+                        className="absolute bottom-1 left-1/2 transform -translate-x-1/2 h-1 w-8 bg-blue-600 rounded-full"
+                        initial={false}
+                        transition={{
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 30
+                        }}
+                      />
+                    )}
+                  </motion.button>
+                );
+              })}
               
               {/* Mobile Services Menu */}
               <motion.div
